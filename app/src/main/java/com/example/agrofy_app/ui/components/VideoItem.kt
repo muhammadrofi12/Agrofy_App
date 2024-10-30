@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Videos
+import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.GreenPrimary
 
 @Composable
@@ -112,15 +113,14 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewVideoItem() {
-    val exampleVideo = Videos(
-        id = 1,
-        judul = "Pembuatan Briket Dari Bongol Jagung",
-        deskripsi = "Arang briket dari bongol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian.",
-        duration = "03:35",
-        photo = R.drawable.video_thumb
-    )
-
-    // Menampilkan VideoItem untuk preview
-    VideoItem(video = exampleVideo)
+    Agrofy_AppTheme { VideoItem(
+        video = Videos(
+            1,
+            "Pembuatan Briket Dari Bongol Jagung",
+            "Arang briket dari bongol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian.",
+            "03:35",
+            R.drawable.video_thumb
+        )
+    ) }
 }
 
