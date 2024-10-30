@@ -10,14 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Videos
+import com.example.agrofy_app.ui.theme.GreenPrimary
 
 @Composable
 fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
@@ -38,6 +42,22 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
                 contentDescription = "Video Thumbnail",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize() // Membuat gambar memenuhi seluruh Card
+            )
+
+            // Warna Gradient
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                GreenPrimary
+                            ),
+                            startY = 0f,
+                            endY = Float.POSITIVE_INFINITY
+                        )
+                    )
             )
 
             // Text Duration
@@ -74,7 +94,10 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
                 // Video description
                 Text(
                     text = video.deskripsi,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 12.sp
+                    ),
                     color = Color.White,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis

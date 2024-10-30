@@ -9,7 +9,7 @@ object DummyData {
         Videos(
             id = 1,
             judul = "Pembuatan Briket Dari Bongol Jagung",
-            deskripsi = "Lorem ipsum djdjddjdhhddahduidadnahdadoad",
+            deskripsi = "Arang briket dari bonggol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian bonggol jagung yang kering. Proses pembuatannya meliputi pirolisis (pembakaran tanpa oksigen), penghalusan arang, pencampuran dengan bahan pengikat, pencetakan, dan pengeringan.",
             duration = "03:35",
             photo = R.drawable.video_thumb
             ),

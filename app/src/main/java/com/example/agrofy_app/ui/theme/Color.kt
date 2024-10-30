@@ -2,10 +2,12 @@ package com.example.agrofy_app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val GreenPrimary = Color(0xFF159847)
+val GreenHover = Color(0xFF15803E)
+val GreenActive = Color(0xFF166535)
+val GreenLight = Color(0xFFF0FDF4)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val BrownPrimary = Color(0xFFAD5A10)
+val BrownHover = Color(0xFF8B4513)
+val BrownActive = Color(0xFF743A13)
+val BrownLight = Color(0xFFFEFCEC)
