@@ -106,10 +106,10 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
 
         // Navbar
         Spacer(modifier = Modifier.weight(1f))
-//        BottomNavigationBar(onItemSelected = { selectedItem ->
-//            // Logika saat item navigasi dipilih
-//            println("Item yang dipilih: $selectedItem")
-//        })
+        BottomNavigationBar(onItemSelected = { selectedItem ->
+            // Logika saat item navigasi dipilih
+            println("Item yang dipilih: $selectedItem")
+        })
     }
 }
 
