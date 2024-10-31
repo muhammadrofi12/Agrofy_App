@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,13 +22,9 @@ import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Videos
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.GreenPrimary
-import com.example.agrofy_app.ui.theme.PoppinsBold14
 import com.example.agrofy_app.ui.theme.PoppinsBold16
 import com.example.agrofy_app.ui.theme.PoppinsMedium10
-import com.example.agrofy_app.ui.theme.PoppinsMedium8
-import com.example.agrofy_app.ui.theme.PoppinsRegular10
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
-import com.example.agrofy_app.ui.theme.PoppinsRegular14
 
 @Composable
 fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
