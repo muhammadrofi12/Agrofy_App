@@ -23,6 +23,13 @@ import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Videos
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.GreenPrimary
+import com.example.agrofy_app.ui.theme.PoppinsBold14
+import com.example.agrofy_app.ui.theme.PoppinsBold16
+import com.example.agrofy_app.ui.theme.PoppinsMedium10
+import com.example.agrofy_app.ui.theme.PoppinsMedium8
+import com.example.agrofy_app.ui.theme.PoppinsRegular10
+import com.example.agrofy_app.ui.theme.PoppinsRegular12
+import com.example.agrofy_app.ui.theme.PoppinsRegular14
 
 @Composable
 fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
@@ -36,7 +43,7 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp) // Tinggi Card
+                .height(200.dp)
         ) {
             Image(
                 painter = painterResource(id = video.photo),
@@ -66,12 +73,12 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(8.dp)
-                    .background(Color.Gray, shape = RoundedCornerShape(8.dp))
+                    .background(Color.Black.copy(alpha = 0.3f), shape = RoundedCornerShape(12.dp))
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
                     text = video.duration,
-                    style = MaterialTheme.typography.labelSmall,
+                    style = PoppinsMedium10,
                     color = Color.White
                 )
             }
@@ -79,12 +86,12 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(16.dp)
+                    .padding(start = 12.dp, end = 12.dp, bottom = 10.dp)
             ) {
                 // Video judul
                 Text(
                     text = video.judul,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = PoppinsBold16,
                     color = Color.White,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -95,10 +102,7 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
                 // Video description
                 Text(
                     text = video.deskripsi,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 12.sp
-                    ),
+                    style = PoppinsRegular12,
                     color = Color.White,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
@@ -117,7 +121,7 @@ fun PreviewVideoItem() {
         video = Videos(
             1,
             "Pembuatan Briket Dari Bongol Jagung",
-            "Arang briket dari bongol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian.",
+            "Arang briket dari bonggol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian bonggol jagung yang kering.",
             "03:35",
             R.drawable.video_thumb
         )

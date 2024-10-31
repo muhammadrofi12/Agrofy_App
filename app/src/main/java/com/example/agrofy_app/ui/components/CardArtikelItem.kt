@@ -11,17 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.style.TextAlign
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Articles
-import com.example.agrofy_app.models.Videos
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.GreenPrimary
+import com.example.agrofy_app.ui.theme.*
 
 @Composable
 fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
@@ -31,6 +30,7 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
         modifier = Modifier
             .width(200.dp)
             .height(250.dp)
+
     ) {
         Box(
             modifier = Modifier
@@ -48,11 +48,11 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(70.dp)
+                    .height(250.dp)
                     .align(Alignment.BottomCenter)
                     .background(
                         brush = Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, GreenPrimary)
+                            colors = listOf(Color.Transparent, GreenPrimary),
                         )
                     )
             )
@@ -64,22 +64,24 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Spacer(modifier = Modifier.width(4.dp))
+                    // Judul
                     Text(
                         text = article.judul,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                        style = PoppinsMedium20.copy(color = Color.White),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier
+                    .height(4.dp))
+
+                // Deskripsi
                 Text(
                     text = article.deskripsi,
-                    fontSize = 12.sp,
-                    color = Color.White,
+                    style = PoppinsRegular14.copy(color = Color.White),
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Justify,
                 )
             }
 
@@ -99,15 +101,15 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun PreviewCustomCard() {
-    Agrofy_AppTheme { CardArtikelItem(
-        article = Articles(
-            1,
-            "\uD83C\uDF3DTransformasi Bonggol Jagung Menjadi Briket Arang Berkualitas\uD83C\uDF31",
-            "Pembuatan kompos dari batang pohon pisang yang cukup mudah ditiru.",
-            R.drawable.video_thumb
-        ),
-        modifier = Modifier.padding(16.dp)
-    ) }
-
+    Agrofy_AppTheme {
+        CardArtikelItem(
+            article = Articles(
+                1,
+                "\uD83C\uDF3DTransformasi Bonggol Jagung Menjadi Briket Arang Berkualitas\uD83C\uDF31",
+                "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
+                R.drawable.video_thumb
+            ),
+            modifier = Modifier.padding(16.dp)
+        )
+    }
 }
-
