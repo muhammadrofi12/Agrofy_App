@@ -3,6 +3,8 @@ package com.example.agrofy_app.models
 data class Articles(
     val id: Int,
     val judul: String,
-    val deskripsi: String,
+    val konten: String,
+    val tanggal: Int,
+    val kategori: String,
     val photo: Int,
 )

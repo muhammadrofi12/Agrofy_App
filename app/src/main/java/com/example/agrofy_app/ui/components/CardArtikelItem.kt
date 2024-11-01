@@ -2,10 +2,11 @@ package com.example.agrofy_app.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,19 +25,21 @@ import com.example.agrofy_app.ui.theme.*
 
 @Composable
 fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
+    // State untuk Bookmark
+    var isBookmarked by remember { mutableStateOf(false) }
+
     Card(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(5.dp),
         modifier = Modifier
             .width(200.dp)
             .height(250.dp)
-
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-
+            // Gambar utama
             Image(
                 painter = painterResource(id = article.photo),
                 contentDescription = null,
@@ -72,12 +75,11 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                Spacer(modifier = Modifier
-                    .height(4.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
                 // Deskripsi
                 Text(
-                    text = article.deskripsi,
+                    text = article.konten,
                     style = PoppinsRegular14.copy(color = Color.White),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -86,13 +88,18 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
             }
 
             Icon(
-                painter = painterResource(id = R.drawable.bookmark_bold),
+                painter = painterResource(
+                    id = if (isBookmarked) R.drawable.bookmark_bold else R.drawable.bookmark
+                ),
                 contentDescription = null,
-                tint = Color(0xFFFFC107),
+                tint = Warning,
                 modifier = Modifier
                     .size(48.dp)
                     .align(Alignment.TopEnd)
                     .padding(8.dp)
+                    .clickable {
+                        isBookmarked = !isBookmarked
+                    }
             )
         }
     }
@@ -107,6 +114,8 @@ fun PreviewCustomCard() {
                 1,
                 "\uD83C\uDF3DTransformasi Bonggol Jagung Menjadi Briket Arang Berkualitas\uD83C\uDF31",
                 "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
+                25-10-2024,
+                "Jagung",
                 R.drawable.video_thumb
             ),
             modifier = Modifier.padding(16.dp)

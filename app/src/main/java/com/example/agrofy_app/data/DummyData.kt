@@ -11,50 +11,71 @@ object DummyData {
             id = 1,
             judul = "Pembuatan Briket Dari Bongol Jagung",
             deskripsi = "Arang briket dari bonggol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian bonggol jagung yang kering. Proses pembuatannya meliputi pirolisis (pembakaran tanpa oksigen), penghalusan arang, pencampuran dengan bahan pengikat, pencetakan, dan pengeringan.",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             duration = "03:35",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            file_video = "path file"
         ),
         Videos(
             id = 2,
             judul = "Pembuatan Briket Dari Bongol Jagung",
             deskripsi = "Lorem ipsum djdjddjdhhddahduidadnahdadoad",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             duration = "03:35",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            file_video = "path file"
         ),
         Videos(
             id = 3,
             judul = "Pembuatan Briket Dari Bongol Jagung",
             deskripsi = "Lorem ipsum djdjddjdhhddahduidadnahdadoad",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             duration = "03:35",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            file_video = "path file"
         ),
         Videos(
             id = 4,
             judul = "Pembuatan Briket Dari Bongol Jagung",
             deskripsi = "Lorem ipsum djdjddjdhhddahduidadnahdadoad",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             duration = "03:35",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            file_video = "path file"
         ),
         Videos(
             id = 5,
             judul = "Pembuatan Briket Dari Bongol Jagung",
             deskripsi = "Lorem ipsum djdjddjdhhddahduidadnahdadoad",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             duration = "03:35",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            file_video = "path file"
         ),
         Videos(
             id = 6,
             judul = "Pembuatan Briket Dari Bongol Jagung",
             deskripsi = "Lorem ipsum djdjddjdhhddahduidadnahdadoad",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             duration = "03:35",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            file_video = "path file"
         ),
         Videos(
             id = 7,
             judul = "Pembuatan Briket Dari Bongol Jagung",
             deskripsi = "Lorem ipsum djdjddjdhhddahduidadnahdadoad",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             duration = "03:35",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            file_video = "path file"
         ),
     )
 
@@ -62,31 +83,41 @@ object DummyData {
         Articles(
             id = 1,
             judul = "\uD83C\uDF3DTransformasi Bonggol Jagung Menjadi Briket Arang Berkualitas\uD83C\uDF31",
-            deskripsi = "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
+            konten = "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             photo = R.drawable.video_thumb
         ),
         Articles(
             id = 2,
             judul = "Cuan Dari Limbah Jagung",
-            deskripsi = "Produk kerajinan dari jagunng ini menghasilkan banyak cuan hingga ke negara tetangga...",
+            konten = "Produk kerajinan dari jagunng ini menghasilkan banyak cuan hingga ke negara tetangga...",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             photo = R.drawable.video_thumb
         ),
         Articles(
             id = 3,
             judul = "Kompos Batang Pisang: Solusi Nutrisi Tanaman Alami",
-            deskripsi = "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
+            konten = "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
+            tanggal = 25-10-2024,
+            kategori = "Pisang",
             photo = R.drawable.video_thumb
         ),
         Articles(
             id = 4,
             judul = "\uD83C\uDF3DTransformasi Bonggol Jagung Menjadi Briket Arang Berkualitas\uD83C\uDF31",
-            deskripsi = "Pembuatan kompos dari batang pohon pisang yang cukup mudah ditiru.",
+            konten = "Pembuatan kompos dari batang pohon pisang yang cukup mudah ditiru.",
+            tanggal = 25-10-2024,
+            kategori = "Jagung",
             photo = R.drawable.video_thumb
         ),
         Articles(
             id = 5,
             judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
-            deskripsi = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
+            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
+            tanggal = 25-10-2024,
+            kategori = "Pisang",
             photo = R.drawable.video_thumb
         ),
 

@@ -117,8 +117,11 @@ fun PreviewVideoItem() {
             1,
             "Pembuatan Briket Dari Bongol Jagung",
             "Arang briket dari bonggol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian bonggol jagung yang kering.",
+            25-10-2024,
+             "Jagung",
             "03:35",
-            R.drawable.video_thumb
+            R.drawable.video_thumb,
+           "path file"
         )
     ) }
 }
