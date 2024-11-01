@@ -38,14 +38,14 @@ fun SplashScreen(navController: NavController) {
             Image(
                 painter = painterResource(id = R.drawable.logo_agrofy),
                 contentDescription = "Agrofy Logo",
-                modifier = Modifier.size(150.dp)
+                modifier = Modifier.size(220.dp)
             )
         }
 
         // Delay 2 detik sebelum pindah ke layar onboarding
         coroutineScope.launch {
             delay(2000)
-            navController.navigate("onboarding") // Pastikan rute ini sudah benar
+            navController.navigate("onboarding")
         }
     }
 }
