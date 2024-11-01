@@ -106,7 +106,7 @@ fun OnboardingScreen(navController: NavController) {
                 ) {
                     // Tombol DAFTAR
                     Button(
-                        onClick = { /* route daftar */ },
+                        onClick = { navController.navigate("register") },
                         modifier = Modifier
                             .weight(1f)
                             .padding(end = 8.dp)
@@ -127,7 +127,7 @@ fun OnboardingScreen(navController: NavController) {
 
                     // Tombol MASUK
                     Button(
-                        onClick = { /* route login */ },
+                        onClick = { navController.navigate("login") },
                         modifier = Modifier
                             .weight(1f)
                             .padding(start = 8.dp)
