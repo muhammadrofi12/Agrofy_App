@@ -32,8 +32,8 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(5.dp),
         modifier = Modifier
-            .width(200.dp)
-            .height(250.dp)
+            .width(120.dp)
+            .height(150.dp)
     ) {
         Box(
             modifier = Modifier
@@ -70,7 +70,7 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
                     // Judul
                     Text(
                         text = article.judul,
-                        style = PoppinsMedium20.copy(color = Color.White),
+                        style = PoppinsMedium14.copy(color = Color.White),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -80,7 +80,7 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
                 // Deskripsi
                 Text(
                     text = article.konten,
-                    style = PoppinsRegular14.copy(color = Color.White),
+                    style = PoppinsRegular10.copy(color = Color.White),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Justify,
@@ -89,12 +89,12 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
 
             Icon(
                 painter = painterResource(
-                    id = if (isBookmarked) R.drawable.bookmark_bold else R.drawable.bookmark
+                    id = if (isBookmarked) R.drawable.bookmark_bold else R.drawable.bookmark,
                 ),
                 contentDescription = null,
                 tint = Warning,
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(24.dp)
                     .align(Alignment.TopEnd)
                     .padding(8.dp)
                     .clickable {

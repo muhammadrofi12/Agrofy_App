@@ -24,6 +24,7 @@ import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold16
 import com.example.agrofy_app.ui.theme.PoppinsMedium10
+import com.example.agrofy_app.ui.theme.PoppinsMedium8
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 
 @Composable
@@ -31,14 +32,14 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(horizontal = 18.dp, vertical = 4.dp),
         shape = RoundedCornerShape(12.dp),
     ) {
         // Thumbnail img
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(160.dp)
         ) {
             Image(
                 painter = painterResource(id = video.photo),
@@ -73,7 +74,7 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = video.duration,
-                    style = PoppinsMedium10,
+                    style = PoppinsMedium8,
                     color = Color.White
                 )
             }
