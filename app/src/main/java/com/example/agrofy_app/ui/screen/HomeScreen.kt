@@ -25,25 +25,22 @@ import com.example.agrofy_app.models.Weather
 import com.example.agrofy_app.ui.components.CardArtikelItem
 import com.example.agrofy_app.ui.components.VideoItem
 import java.util.Calendar
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.ui.theme.BrownLight
 import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold10
-import com.example.agrofy_app.ui.theme.PoppinsBold20
 import com.example.agrofy_app.ui.theme.PoppinsMedium16
 import com.example.agrofy_app.ui.theme.PoppinsMedium20
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
-import com.example.agrofy_app.ui.theme.PoppinsRegular14
-import com.example.agrofy_app.ui.theme.PoppinsRegular16
 import com.example.agrofy_app.ui.theme.PoppinsRegular18
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
-import com.example.agrofy_app.ui.theme.PoppinsRegular8
-import com.example.agrofy_app.ui.theme.PoppinsSemiBold14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
 import com.example.agrofy_app.ui.theme.components.BottomNavigationBar
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -80,7 +77,7 @@ fun HomeScreen() {
                                 style = PoppinsMedium20
                             )
                         }
-                        IconButton(onClick = { /* Handle notification */ }) {
+                        IconButton(onClick = { /* Action notification */ }) {
                             Icon(
                                 imageVector = Icons.Default.Notifications,
                                 contentDescription = "Notifications"
@@ -225,7 +222,7 @@ private fun StatItem(label: String, value: String, imageRes: Int) {
                 .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Text label at the top
+            // Text Judul
             Text(
                 text = label,
                 style = PoppinsMedium16,
@@ -234,14 +231,14 @@ private fun StatItem(label: String, value: String, imageRes: Int) {
                     .padding(bottom = 4.dp)
             )
 
-            // Image and Value side by side
+            // Image and Value
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Green box around the image
+                // Box image
                 Box(
                     modifier = Modifier
                         .size(64.dp)
@@ -259,7 +256,7 @@ private fun StatItem(label: String, value: String, imageRes: Int) {
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                // Number (value) next to the image
+                // Value Angka
                 Text(
                     text = value,
                     style = PoppinsRegular30,
@@ -348,5 +345,7 @@ private fun WeatherItem(weather: Weather, isActive: Boolean) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen()
+    val dummyNavController = rememberNavController()
+    HomeScreen(navController = dummyNavController)
 }
+

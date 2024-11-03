@@ -207,7 +207,7 @@ fun RegisterScreen(navController: NavController) {
 
                 // Button Daftar
                 Button(
-                    onClick = { /* Action Register */ },
+                    onClick = { navController.navigate("login") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary),
                     shape = RoundedCornerShape(6.dp)

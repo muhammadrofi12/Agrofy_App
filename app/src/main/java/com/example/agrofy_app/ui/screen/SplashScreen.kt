@@ -54,7 +54,6 @@ fun SplashScreen(navController: NavController) {
 @Composable
 private fun SplashScreenPrev() {
     Agrofy_AppTheme {
-        // Menggunakan dummy screen tanpa navigasi untuk preview
         SplashScreenDummy()
     }
 }

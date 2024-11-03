@@ -94,7 +94,7 @@ fun CardArtikelItem(article: Articles, modifier: Modifier = Modifier) {
                 contentDescription = null,
                 tint = Warning,
                 modifier = Modifier
-                    .size(24.dp)
+                    .size(42.dp)
                     .align(Alignment.TopEnd)
                     .padding(8.dp)
                     .clickable {

@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.ui.screen.LoginScreen
 import com.example.agrofy_app.ui.screen.RegisterScreen
+import com.example.agrofy_app.ui.screens.HomeScreen
 import com.example.agrofy_app.ui.screens.OnboardingScreen
 import com.example.agrofy_app.ui.screens.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
@@ -55,6 +56,9 @@ fun MainScreen() {
             }
             composable("register") {
                 RegisterScreen(navController = navController)
+            }
+            composable("home") {
+                HomeScreen(navController = navController)
             }
         }
     }

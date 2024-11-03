@@ -25,8 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.theme.GreenPrimary
-import com.example.agrofy_app.ui.theme.PoppinsMedium10
-import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsMedium18
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold12
@@ -155,7 +153,7 @@ fun LoginScreen(navController: NavController) {
 
                 // Button Masuk
                 Button(
-                    onClick = { /* Action Login */ },
+                    onClick = { navController.navigate("home") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary),
                     shape = RoundedCornerShape(6.dp)
