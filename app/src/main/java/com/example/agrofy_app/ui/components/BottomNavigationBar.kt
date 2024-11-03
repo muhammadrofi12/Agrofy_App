@@ -57,31 +57,37 @@ fun BottomNavigationBar(
         modifier = modifier
             .fillMaxWidth()
             .graphicsLayer {
-                shadowElevation = 8f
+                shadowElevation = 30f
                 shape = RectangleShape
                 clip = true
+                alpha = 1.0f
             }
             .drawBehind {
                 drawIntoCanvas { canvas ->
                     val paint = Paint()
                     val frameworkPaint = paint.asFrameworkPaint()
-                    frameworkPaint.color = android.graphics.Color.TRANSPARENT
+                    frameworkPaint.color = android.graphics.Color.WHITE
+
+                    // Add blur effect
                     frameworkPaint.setShadowLayer(
-                        16.dp.toPx(),
+                        30.dp.toPx(),
                         0f,
-                        -4.dp.toPx(),
-                        android.graphics.Color.argb(128, 0, 0, 0)
+                        -4.dp.toPx(),  // Adjusted upward offset
+                        android.graphics.Color.argb(100, 0, 0, 0)
                     )
+
+                    // Draw the background with blur
                     canvas.drawRect(
                         0f,
-                        0f,
+                        -4.dp.toPx(),
                         size.width,
                         size.height,
                         paint
                     )
                 }
             }
-            .background(Color.White)
+            .background(Color.White.copy(alpha = 0.95f))
+//            .border(1.dp, Color.Gray.copy(alpha = 0.5f), RectangleShape)
     ) {
         Row(
             modifier = Modifier
