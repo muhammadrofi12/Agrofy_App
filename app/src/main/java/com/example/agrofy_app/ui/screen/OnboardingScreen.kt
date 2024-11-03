@@ -12,19 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import com.example.agrofy_app.R
 import com.google.accompanist.pager.*
 import com.example.agrofy_app.ui.theme.BrownLight
 import com.example.agrofy_app.ui.theme.PoppinsBold26
-import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular16
 import androidx.compose.ui.graphics.Color
 import com.example.agrofy_app.ui.theme.GreenPrimary
-import com.example.agrofy_app.ui.theme.PoppinsMedium10
-import com.example.agrofy_app.ui.theme.PoppinsMedium12
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsMedium18
 
@@ -91,7 +87,7 @@ fun OnboardingScreen(navController: NavController) {
                         style = PoppinsMedium18,)
                 }
 
-                TextButton(onClick = { navController.navigate("profile") }) {
+                TextButton(onClick = { navController.navigate("login") }) {
                     Text("Lewati",
                         style = PoppinsMedium14,
                         color = Color.Black.copy(alpha = 0.8f))

@@ -21,14 +21,15 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
 
-import com.example.agrofy_app.ui.theme.components.BottomNavigationBar
-
+import com.example.agrofy_app.ui.components.BottomNavigationBar
 
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier) {
+fun ProfileScreen(modifier: Modifier = Modifier, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -106,10 +107,15 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
 
         // Navbar
         Spacer(modifier = Modifier.weight(1f))
-        BottomNavigationBar(onItemSelected = { selectedItem ->
-            // Logika saat item navigasi dipilih
-            println("Item yang dipilih: $selectedItem")
-        })
+        BottomNavigationBar(
+            navController = navController,
+            onItemSelected = { selectedItem ->
+                // Logika saat item navigasi dipilih
+                println("Item yang dipilih: $selectedItem")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
 }
 
@@ -148,6 +154,7 @@ fun ProfileMenuItem(text: String, icon: ImageVector, iconTint: Color = Color(0xF
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    val dummyNavController = rememberNavController()
+    ProfileScreen(navController = dummyNavController)
 }
 

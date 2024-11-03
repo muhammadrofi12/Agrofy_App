@@ -153,7 +153,7 @@ fun LoginScreen(navController: NavController) {
 
                 // Button Masuk
                 Button(
-                    onClick = { navController.navigate("home") },
+                    onClick = { navController.navigate("beranda") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary),
                     shape = RoundedCornerShape(6.dp)

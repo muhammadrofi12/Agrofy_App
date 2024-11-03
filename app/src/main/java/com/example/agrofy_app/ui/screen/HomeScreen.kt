@@ -24,6 +24,7 @@ import com.example.agrofy_app.data.DummyData
 import com.example.agrofy_app.models.Weather
 import com.example.agrofy_app.ui.components.CardArtikelItem
 import com.example.agrofy_app.ui.components.VideoItem
+import com.example.agrofy_app.ui.components.BottomNavigationBar
 import java.util.Calendar
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -37,10 +38,10 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular18
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
-import com.example.agrofy_app.ui.theme.components.BottomNavigationBar
+
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -190,7 +191,9 @@ fun HomeScreen(navController: NavController) {
             }
         }
 
+        // Navbar
         BottomNavigationBar(
+            navController = navController,
             onItemSelected = { selectedItem ->
                 // Logika saat item navigasi dipilih
                 println("Item yang dipilih: $selectedItem")
@@ -201,8 +204,6 @@ fun HomeScreen(navController: NavController) {
         )
     }
 }
-
-
 
 
 @Composable
