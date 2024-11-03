@@ -16,13 +16,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.core.app.NotificationCompat.Style
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
@@ -30,12 +27,8 @@ import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.theme.BrownPrimary
 import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.PoppinsBold24
-import com.example.agrofy_app.ui.theme.PoppinsBold26
-import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
-import com.example.agrofy_app.ui.theme.PoppinsRegular8
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold12
-import com.example.agrofy_app.ui.theme.PoppinsSemiBold34
 
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier, navController: NavController) {
