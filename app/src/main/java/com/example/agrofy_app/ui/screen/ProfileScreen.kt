@@ -6,150 +6,244 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.zIndex
+import androidx.core.app.NotificationCompat.Style
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
-
 import com.example.agrofy_app.ui.components.BottomNavigationBar
-
+import com.example.agrofy_app.ui.theme.BrownPrimary
+import com.example.agrofy_app.ui.theme.Error
+import com.example.agrofy_app.ui.theme.PoppinsBold24
+import com.example.agrofy_app.ui.theme.PoppinsBold26
+import com.example.agrofy_app.ui.theme.PoppinsRegular12
+import com.example.agrofy_app.ui.theme.PoppinsRegular14
+import com.example.agrofy_app.ui.theme.PoppinsRegular8
+import com.example.agrofy_app.ui.theme.PoppinsSemiBold12
+import com.example.agrofy_app.ui.theme.PoppinsSemiBold34
 
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier, navController: NavController) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Color.White),
     ) {
         // Background Image
-        Box(
+        Image(
+            painter = painterResource(id = R.drawable.background_image),
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.background_image),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        }
+                .height(220.dp)
+                .zIndex(0f),
+            contentScale = ContentScale.Crop
+        )
 
-        // Profile img
+        // White Background with Top Radius
         Box(
-            contentAlignment = Alignment.Center,
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .offset(y = (-40).dp)
-                .size(80.dp)
-                .background(Color.White, shape = CircleShape)
-                .border(2.dp, Color.LightGray, shape = CircleShape)
+                .fillMaxSize()
+                .padding(top = 180.dp)
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp)
+                )
+                .zIndex(1f)
+        )
+
+        // Profile Picture Container
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .offset(y = 120.dp)
+                .size(100.dp)
+                .background(Color.White, CircleShape)
+                .border(2.dp, Color.White, CircleShape)
+                .zIndex(2f),
+            contentAlignment = Alignment.Center
         ) {
             Image(
                 painter = painterResource(id = R.drawable.profil),
                 contentDescription = "Profile Picture",
                 modifier = Modifier
-                    .size(70.dp)
-                    .clip(CircleShape)
+                    .size(96.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Nama & Edit Profile
+        // Main Content
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 228.dp)
+                .zIndex(2f)
         ) {
-            Text(
-                text = "Nama",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
-            TextButton(onClick = { /* Handle Edit Profile */ }) {
+            // Profile Info
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text(
-                    text = "Edit Profil",
-                    color = Color(0xFF007BFF),
-                    fontSize = 14.sp
+                    text = "Rofiul",
+                    style = PoppinsBold24,
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Button(
+                    onClick = { /* Handle Edit Profile */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFAA00)),
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                    shape = RoundedCornerShape(4.dp),
+                    modifier = Modifier.height(24.dp)
+                ) {
+                    Text(
+                        text = "Edit Profil",
+                        color = Color.White,
+                        style = PoppinsSemiBold12,
+
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(36.dp))
+            }
+
+            // Menu Items
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                ProfileMenuItem(
+                    text = "Disimpan",
+                    iconRes = R.drawable.ic_archive_book,
+                    backgroundColor = BrownPrimary,
+                    borderColor = BrownPrimary
+                )
+                ProfileMenuItem(
+                    text = "Pengaturan",
+                    iconRes = R.drawable.ic_setting,
+                    backgroundColor = BrownPrimary,
+                    borderColor = BrownPrimary
+                )
+                ProfileMenuItem(
+                    text = "Pusat Bantuan",
+                    iconRes = R.drawable.ic_help,
+                    backgroundColor = BrownPrimary,
+                    borderColor = BrownPrimary
+                )
+                ProfileMenuItem(
+                    text = "Tentang Aplikasi",
+                    iconRes = R.drawable.ic_info,
+                    backgroundColor = BrownPrimary,
+                    borderColor = BrownPrimary
+                )
+                ProfileMenuItem(
+                    text = "Keluar",
+                    iconRes = R.drawable.ic_keluar,
+                    backgroundColor = Error,
+                    textColor = Error,
+                    borderColor = Error
                 )
             }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            // Bottom Navigation
+            BottomNavigationBar(
+                navController = navController,
+                onItemSelected = { selectedItem ->
+                    println("Selected: $selectedItem")
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
         }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // List Menu
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        ) {
-            ProfileMenuItem("Pesanan", Icons.Default.ShoppingCart)
-            ProfileMenuItem("Disimpan", Icons.Default.Star)
-            ProfileMenuItem("Pengaturan", Icons.Default.Settings)
-            ProfileMenuItem("Pusat Bantuan", Icons.Default.Settings)
-            ProfileMenuItem("Tentang Aplikasi", Icons.Default.Info)
-            ProfileMenuItem("Keluar", Icons.Default.ExitToApp, Color.Red)
-        }
-
-        // Navbar
-        Spacer(modifier = Modifier.weight(1f))
-        BottomNavigationBar(
-            navController = navController,
-            onItemSelected = { selectedItem ->
-                // Logika saat item navigasi dipilih
-                println("Item yang dipilih: $selectedItem")
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-        )
     }
 }
 
 @Composable
-fun ProfileMenuItem(text: String, icon: ImageVector, iconTint: Color = Color(0xFF6F6F6F)) {
-    Row(
+fun ProfileMenuItem(
+    text: String,
+    iconRes: Int,
+    backgroundColor: Color,
+    textColor: Color = Color.Black,
+    borderColor: Color = backgroundColor
+) {
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .background(Color(0xFFF0F0F0), shape = RoundedCornerShape(8.dp))
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .padding(vertical = 4.dp)
+            .border(
+                width = 1.dp,
+                color = borderColor,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = iconTint,
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(
-            text = text,
-            modifier = Modifier.weight(1f),
-            fontSize = 16.sp
-        )
-        Icon(
-            imageVector = Icons.Default.ArrowForward,
-            contentDescription = null,
-            tint = Color.Gray
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Icon Container
+            Box(
+                modifier = Modifier
+                    .size(60.dp)
+                    .background(
+                        color = backgroundColor
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = iconRes),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Text(
+                text = text,
+                color = textColor,
+                style = PoppinsRegular14,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(1f)
+            )
+
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowRight,
+                contentDescription = null,
+                tint = Color.Black,
+                modifier = Modifier.size(20.dp)
+
+            )
+        }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -157,4 +251,3 @@ fun ProfileScreenPreview() {
     val dummyNavController = rememberNavController()
     ProfileScreen(navController = dummyNavController)
 }
-
