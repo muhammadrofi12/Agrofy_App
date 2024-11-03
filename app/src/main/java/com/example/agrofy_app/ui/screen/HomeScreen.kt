@@ -111,7 +111,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 StatItem("Selesai", "27", R.drawable.selesai)
-                                StatItem("Olahan", "30", R.drawable.olahan)
+                                StatItem("Olahan", "130", R.drawable.olahan)
                             }
 
                             // Garis Pembatas
@@ -221,53 +221,60 @@ private fun StatItem(label: String, value: String, imageRes: Int) {
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Text Judul
             Text(
                 text = label,
                 style = PoppinsMedium16,
                 color = Color.Black,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-                    .padding(bottom = 4.dp)
+                modifier = Modifier.padding(bottom = 4.dp)
             )
 
-            // Image and Value
+            // Icon & Angka
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Box image
-                Box(
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(RoundedCornerShape(4.dp))
-                        .background(GreenPrimary),
-                    contentAlignment = Alignment.Center
+                // Icon
+                Column(
+                    modifier = Modifier.width(70.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painter = painterResource(id = imageRes),
-                        contentDescription = null,
+                    Box(
                         modifier = Modifier
-                            .size(34.dp)
-                    )
+                            .size(64.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(GreenPrimary),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = imageRes),
+                            contentDescription = null,
+                            modifier = Modifier.size(34.dp)
+                        )
+                    }
                 }
 
-                Spacer(modifier = Modifier.width(8.dp))
-
-                // Value Angka
-                Text(
-                    text = value,
-                    style = PoppinsRegular30,
-                    color = Color.Black
-                )
+                Spacer(modifier = Modifier.width(2.dp))
+                // Angka
+                Column(
+                    modifier = Modifier.width(60.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = value,
+                        style = PoppinsRegular30,
+                        color = Color.Black
+                    )
+                }
             }
         }
-
     }
 }
+
 
 @Composable
 private fun WeatherForecast() {
