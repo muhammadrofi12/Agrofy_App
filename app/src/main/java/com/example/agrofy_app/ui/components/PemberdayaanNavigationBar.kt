@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import com.example.agrofy_app.ui.theme.GreenPrimary
 
 @Composable
 fun PemberdayaanNavigationBar(
@@ -28,8 +29,7 @@ fun PemberdayaanNavigationBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    // Define colors
-    val activeColor = Color(0xFF115D45)
+    val activeColor = GreenPrimary
     val inactiveColor = Color.Black
 
     BottomNavigation(

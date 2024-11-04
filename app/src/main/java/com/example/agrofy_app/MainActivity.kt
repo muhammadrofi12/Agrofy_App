@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.agrofy_app.data.DummyData.videoPembelajaran
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.screen.LoginScreen
 import com.example.agrofy_app.ui.screen.RegisterScreen
@@ -25,13 +25,14 @@ import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.screen.ProfileScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.ArtikelScreen
+import com.example.agrofy_app.ui.screen.pemberdayaan.DetailVideoScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
 
 
 data class NavigationItem(
     val title: String,
     val iconResId: Int,
-    val route: String // Tambahkan route untuk navigasi
+    val route: String
 )
 
 
@@ -59,8 +60,8 @@ fun MainScreen() {
         bottomBar = {
             if (currentRoute in listOf("beranda", "manajemen", "forum", "profil")) {
                 BottomNavigationBar(
-                    navController = navController, // Kirim NavController ke BottomNavigationBar
-                    onItemSelected = {} // Kosongkan jika tidak dibutuhkan
+                    navController = navController,
+                    onItemSelected = {}
                 )
             }
         }
@@ -87,6 +88,15 @@ fun MainScreen() {
             }
             composable("profil") {
                 ProfileScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+            }
+
+            // Detail untuk pemberdayaan
+            composable("video_detail/{videoId}") { backStackEntry ->
+                val videoId = backStackEntry.arguments?.getString("videoId")?.toIntOrNull()
+                val video = videoPembelajaran.find { it.id == videoId }
+                if (video != null) {
+                    DetailVideoScreen(video = video)
+                }
             }
         }
     }

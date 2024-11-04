@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,13 +16,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Videos
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold16
-import com.example.agrofy_app.ui.theme.PoppinsMedium10
 import com.example.agrofy_app.ui.theme.PoppinsMedium8
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 
@@ -45,7 +42,7 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
                 painter = painterResource(id = video.photo),
                 contentDescription = "Video Thumbnail",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize() // Membuat gambar memenuhi seluruh Card
+                modifier = Modifier.fillMaxSize()
             )
 
             // Warna Gradient
@@ -122,7 +119,7 @@ fun PreviewVideoItem() {
              "Jagung",
             "03:35",
             R.drawable.video_thumb,
-            R.drawable.video_thumb,
+            "https://youtu.be/mMCNwUJMKNI?si=cmwTjQgzm4falwCm",
             "Willy Candra",
         )
     ) }

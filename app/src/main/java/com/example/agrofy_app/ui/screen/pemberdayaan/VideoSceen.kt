@@ -16,6 +16,7 @@ import com.example.agrofy_app.ui.components.VideoItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -189,8 +190,14 @@ fun VideoScreen(
                     }
 
                     items(filteredVideos) { video ->
-                        VideoItem(video = video)
+                        VideoItem(
+                            video = video,
+                            modifier = Modifier.clickable {
+                                navController.navigate("video_detail/${video.id}")
+                            }
+                        )
                     }
+
                 }
             }
         }

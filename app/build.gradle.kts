@@ -61,5 +61,10 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:0.31.3-beta")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.31.3-beta")
 
+    // exo player
+    implementation("androidx.media3:media3-exoplayer:1.4.1")
+    implementation("androidx.media3:media3-exoplayer-dash:1.4.1")
+    implementation("androidx.media3:media3-ui:1.4.1")
+
 
 }

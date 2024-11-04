@@ -16,7 +16,7 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = R.drawable.video_thumb,
+            file_video = "https://drive.google.com/uc?export=download&id=1N6uujM7zrjK2e1ZBja6OEhflFKZlmHg8",
             author = "Willy Candra",
         ),
         Videos(
@@ -27,7 +27,7 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = R.drawable.video_thumb,
+            file_video = "https://drive.google.com/uc?export=download&id=1N6uujM7zrjK2e1ZBja6OEhflFKZlmHg8",
             author = "Willy Candra",
         ),
         Videos(
@@ -38,7 +38,7 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = R.drawable.video_thumb,
+            file_video = "https://drive.google.com/uc?export=download&id=1N6uujM7zrjK2e1ZBja6OEhflFKZlmHg8",
             author = "Willy Candra",
         ),
         Videos(
@@ -49,7 +49,7 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = R.drawable.video_thumb,
+            file_video = "https://drive.google.com/uc?export=download&id=1N6uujM7zrjK2e1ZBja6OEhflFKZlmHg8",
             author = "Willy Candra",
         ),
         Videos(
@@ -60,7 +60,7 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = R.drawable.video_thumb,
+            file_video = "https://drive.google.com/uc?export=download&id=1N6uujM7zrjK2e1ZBja6OEhflFKZlmHg8",
             author = "Willy Candra",
         ),
         Videos(
@@ -71,7 +71,7 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = R.drawable.video_thumb,
+            file_video = "https://drive.google.com/uc?export=download&id=1N6uujM7zrjK2e1ZBja6OEhflFKZlmHg8",
             author = "Willy Candra",
         ),
         Videos(
@@ -82,7 +82,7 @@ object DummyData {
             kategori = "Pisang",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = R.drawable.video_thumb,
+            file_video = "https://drive.google.com/uc?export=download&id=1N6uujM7zrjK2e1ZBja6OEhflFKZlmHg8",
             author = "Willy Candra",
         ),
     )
