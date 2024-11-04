@@ -8,5 +8,6 @@ data class Videos(
     val kategori: String,
     val duration: String,
     val photo: Int,
-    val file_video: String,
+    val file_video: Int,
+    val author: String,
 )

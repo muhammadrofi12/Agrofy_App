@@ -24,6 +24,8 @@ import com.example.agrofy_app.ui.screens.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.screen.ProfileScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenScreen
+import com.example.agrofy_app.ui.screen.pemberdayaan.ArtikelScreen
+import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
 
 
 data class NavigationItem(
@@ -70,6 +72,12 @@ fun MainScreen() {
             composable("register") { RegisterScreen(navController = navController) }
             composable("beranda") {
                 HomeScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+            }
+            composable("video") {
+                VideoScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+            }
+            composable("artikel") {
+                ArtikelScreen(navController = navController, modifier = Modifier.padding(innerPadding))
             }
             composable("manajemen") {
                 ManajemenScreen(navController = navController, modifier = Modifier.padding(innerPadding))

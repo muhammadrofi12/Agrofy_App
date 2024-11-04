@@ -116,7 +116,8 @@ fun PreviewCustomCard() {
                 "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
                 25-10-2024,
                 "Jagung",
-                R.drawable.video_thumb
+                R.drawable.video_thumb,
+                "Willy Candra",
             ),
             modifier = Modifier.padding(16.dp)
         )

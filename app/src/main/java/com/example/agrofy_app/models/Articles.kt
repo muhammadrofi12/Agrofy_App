@@ -7,4 +7,5 @@ data class Articles(
     val tanggal: Int,
     val kategori: String,
     val photo: Int,
+    val author: String,
 )

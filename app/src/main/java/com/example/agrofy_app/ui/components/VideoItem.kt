@@ -122,7 +122,8 @@ fun PreviewVideoItem() {
              "Jagung",
             "03:35",
             R.drawable.video_thumb,
-           "path file"
+            R.drawable.video_thumb,
+            "Willy Candra",
         )
     ) }
 }

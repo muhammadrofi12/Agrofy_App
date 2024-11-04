@@ -25,10 +25,10 @@
       <SelectionState runConfigName="PreviewHomeScreen">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="BottomNavigationBarPreview">
+      <SelectionState runConfigName="PreviewCustomCard">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ForumScreenPreview">
+      <SelectionState runConfigName="PemberdayaanNavigationBarPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

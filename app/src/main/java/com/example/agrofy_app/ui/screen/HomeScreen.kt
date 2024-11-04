@@ -2,6 +2,7 @@ package com.example.agrofy_app.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -146,13 +147,16 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                     Text(
                         text = "Lihat Semua",
                         style = PoppinsRegular12,
-                        color = Color(0xFF9CA3AF)
+                        color = Color(0xFF9CA3AF),
+                        modifier = Modifier.clickable {
+                            navController.navigate("video")
+                        }
                     )
                 }
 
             }
 
-            items(DummyData.videoPembelajaran.take(2)) { video ->
+            items(DummyData.videoPembelajaran.take(3)) { video ->
                 VideoItem(video = video)
             }
 
@@ -173,7 +177,10 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                     Text(
                         text = "Lihat Semua",
                         style = PoppinsRegular12,
-                        color = Color(0xFF9CA3AF)
+                        color = Color(0xFF9CA3AF),
+                        modifier = Modifier.clickable {
+                            navController.navigate("artikel")
+                        }
                     )
                 }
 
@@ -184,7 +191,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                     contentPadding = PaddingValues(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(DummyData.artikelPembelajaran) { article ->
+                    items(DummyData.artikelPembelajaran.take(6)) { article ->
                         CardArtikelItem(article = article)
                     }
                 }
