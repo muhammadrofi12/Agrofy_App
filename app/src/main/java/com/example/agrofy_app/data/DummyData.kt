@@ -16,7 +16,8 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = "path file"
+            file_video = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Videos(
             id = 2,
@@ -26,7 +27,8 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = "path file"
+            file_video = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Videos(
             id = 3,
@@ -36,7 +38,8 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = "path file"
+            file_video = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Videos(
             id = 4,
@@ -46,7 +49,8 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = "path file"
+            file_video = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Videos(
             id = 5,
@@ -56,7 +60,8 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = "path file"
+            file_video = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Videos(
             id = 6,
@@ -66,17 +71,19 @@ object DummyData {
             kategori = "Jagung",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = "path file"
+            file_video = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Videos(
             id = 7,
-            judul = "Pembuatan Briket Dari Bongol Jagung",
-            deskripsi = "Lorem ipsum djdjddjdhhddahduidadnahdadoad",
+            judul = "Pembuatan Briket Dari Pisang",
+            deskripsi = "Pisang",
             tanggal = 25-10-2024,
-            kategori = "Jagung",
+            kategori = "Pisang",
             duration = "03:35",
             photo = R.drawable.video_thumb,
-            file_video = "path file"
+            file_video = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
     )
 
@@ -87,7 +94,8 @@ object DummyData {
             konten = "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
             tanggal = 25-10-2024,
             kategori = "Jagung",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Articles(
             id = 2,
@@ -95,7 +103,8 @@ object DummyData {
             konten = "Produk kerajinan dari jagunng ini menghasilkan banyak cuan hingga ke negara tetangga...",
             tanggal = 25-10-2024,
             kategori = "Jagung",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Articles(
             id = 3,
@@ -103,7 +112,8 @@ object DummyData {
             konten = "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
             tanggal = 25-10-2024,
             kategori = "Pisang",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Articles(
             id = 4,
@@ -111,7 +121,8 @@ object DummyData {
             konten = "Pembuatan kompos dari batang pohon pisang yang cukup mudah ditiru.",
             tanggal = 25-10-2024,
             kategori = "Jagung",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
         Articles(
             id = 5,
@@ -119,7 +130,53 @@ object DummyData {
             konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
             tanggal = 25-10-2024,
             kategori = "Pisang",
-            photo = R.drawable.video_thumb
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
+        ),
+        Articles(
+            id = 6,
+            judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
+            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
+            tanggal = 25-10-2024,
+            kategori = "Pisang",
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
+        ),
+        Articles(
+            id = 7,
+            judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
+            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
+            tanggal = 25-10-2024,
+            kategori = "Pisang",
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
+        ),
+        Articles(
+            id = 8,
+            judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
+            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
+            tanggal = 25-10-2024,
+            kategori = "Pisang",
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
+        ),
+        Articles(
+            id = 9,
+            judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
+            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
+            tanggal = 25-10-2024,
+            kategori = "Pisang",
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
+        ),
+        Articles(
+            id = 10,
+            judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
+            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
+            tanggal = 25-10-2024,
+            kategori = "Pisang",
+            photo = R.drawable.video_thumb,
+            author = "Willy Candra",
         ),
 
     )
