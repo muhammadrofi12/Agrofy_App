@@ -60,6 +60,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("com.google.accompanist:accompanist-pager:0.31.3-beta")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.31.3-beta")
+    implementation("io.coil-kt:coil-compose:2.0.0")
 
     // exo player
     implementation("androidx.media3:media3-exoplayer:1.4.1")

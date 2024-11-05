@@ -3,6 +3,7 @@ package com.example.agrofy_app.data
 import com.example.agrofy_app.models.Videos
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Articles
+import com.example.agrofy_app.models.Comments
 import com.example.agrofy_app.models.Weather
 
 
@@ -503,5 +504,20 @@ object DummyData {
             temperature = 28,
             icon = R.drawable.sun
         ),
+    )
+
+    val sampleComments = listOf(
+        Comments(
+            authorName = "Rofiul",
+            authorImage = R.drawable.profil,
+            content = "Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using",
+            time = "7 jam"
+        ),
+        Comments(
+            authorName = "Oka Wiyana",
+            authorImage = R.drawable.profile_oka,
+            content = "Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using",
+            time = "8 jam"
+        )
     )
 }
