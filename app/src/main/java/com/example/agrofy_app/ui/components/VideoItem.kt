@@ -114,7 +114,23 @@ fun PreviewVideoItem() {
         video = Videos(
             1,
             "Pembuatan Briket Dari Bongol Jagung",
-            "Arang briket dari bonggol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian bonggol jagung yang kering.",
+            sub_judul = "Arang briket dari bonggol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian bonggol jagung yang kering. Proses pembuatannya meliputi pirolisis (pembakaran tanpa oksigen), penghalusan arang, pencampuran dengan bahan pengikat, pencetakan, dan pengeringan.",
+            deskripsi = """
+                Cara Membuat Arang Briket dari Bonggol Jagung 🌽
+                1. Persiapan: Bonggol jagung dikeringkan hingga benar-benar kering.
+                2. Pirolisis: Bonggol kering dibakar dalam drum tertutup tanpa oksigen agar menjadi arang, bukan abu.
+                3. Penghalusan: Arang yang dihasilkan dihancurkan menjadi serbuk halus. 
+                4. Pencampuran: Serbuk arang dicampur dengan bahan pengikat seperti tepung kanji, ditambahkan air secukupnya hingga menjadi adonan.
+                5. Pencetakan: Adonan dicetak sesuai bentuk yang diinginkan dengan tekanan yang cukup.
+                6. Pengeringan: Briket yang sudah dicetak dijemur atau dikeringkan hingga benar-benar kering.
+                
+                Keunggulan 🌟
+                1. Ramah Lingkungan: Memanfaatkan limbah pertanian.
+                2. Ekonomis: Lebih murah dan mudah didapat.
+                3. Stabil: Panas yang konsisten dan emisi rendah.
+                
+                Proses ini mengubah limbah bonggol jagung menjadi sumber energi alternatif yang efisien dan berkelanjutan!
+                """.trimIndent(),
             25-10-2024,
              "Jagung",
             "03:35",

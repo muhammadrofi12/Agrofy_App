@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.agrofy_app.data.DummyData.artikelPembelajaran
 import com.example.agrofy_app.data.DummyData.videoPembelajaran
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.screen.LoginScreen
@@ -25,6 +26,7 @@ import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.screen.ProfileScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.ArtikelScreen
+import com.example.agrofy_app.ui.screen.pemberdayaan.DetailArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailVideoScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
 
@@ -95,9 +97,20 @@ fun MainScreen() {
                 val videoId = backStackEntry.arguments?.getString("videoId")?.toIntOrNull()
                 val video = videoPembelajaran.find { it.id == videoId }
                 if (video != null) {
-                    DetailVideoScreen(video = video)
+                    DetailVideoScreen(video = video, navController = navController)
                 }
             }
+            composable("artikel_detail/{articleId}") { backStackEntry ->
+                val articleId = backStackEntry.arguments?.getString("articleId")?.toIntOrNull()
+                println("Navigating to artikel_detail with ID: $articleId")
+                val article = artikelPembelajaran.find { it.id == articleId }
+                if (article != null) {
+                    DetailArtikelScreen(article = article, navController = navController)
+                } else {
+                    println("Article with ID $articleId not found")
+                }
+            }
+
         }
     }
 

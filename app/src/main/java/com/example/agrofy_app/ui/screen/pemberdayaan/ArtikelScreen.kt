@@ -3,6 +3,7 @@ package com.example.agrofy_app.ui.screen.pemberdayaan
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -187,7 +188,13 @@ fun ArtikelScreen(
                     }
 
                     items(filteredArticles) { article ->
-                        ArticleCard(article = article)
+                        ArticleCard(
+                            article = article,
+                            modifier = Modifier,
+                            onClick = {
+                                navController.navigate("artikel_detail/${article.id}")
+                            }
+                        )
                     }
                 }
             }
@@ -197,13 +204,14 @@ fun ArtikelScreen(
 
 
 @Composable
-fun ArticleCard(article: Articles) {
+fun ArticleCard(article: Articles, modifier: Modifier, onClick: () -> Unit) {
     var isBookmarked by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
+            .clickable { onClick() }
             .padding(horizontal = 20.dp, vertical = 6.dp)
             .border(
                 width = 1.5.dp,

@@ -157,7 +157,12 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
             }
 
             items(DummyData.videoPembelajaran.take(3)) { video ->
-                VideoItem(video = video)
+                VideoItem(
+                    video = video,
+                    modifier = Modifier.clickable {
+                        navController.navigate("video_detail/${video.id}")
+                    }
+                )
             }
 
             // Artikel Pembelajaran
@@ -192,7 +197,13 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(DummyData.artikelPembelajaran.take(6)) { article ->
-                        CardArtikelItem(article = article)
+                        CardArtikelItem(
+                            article = article,
+                            navController = navController,
+                            modifier = Modifier.clickable {
+                                // Debug log or any additional action
+                            }
+                        )
                     }
                 }
             }
