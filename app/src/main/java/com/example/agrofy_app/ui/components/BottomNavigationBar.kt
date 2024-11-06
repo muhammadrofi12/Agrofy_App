@@ -68,15 +68,14 @@ fun BottomNavigationBar(
                     val frameworkPaint = paint.asFrameworkPaint()
                     frameworkPaint.color = android.graphics.Color.WHITE
 
-                    // Add blur effect
+                    // Blur effect
                     frameworkPaint.setShadowLayer(
                         30.dp.toPx(),
                         0f,
-                        -4.dp.toPx(),  // Adjusted upward offset
+                        -4.dp.toPx(),
                         android.graphics.Color.argb(100, 0, 0, 0)
                     )
 
-                    // Draw the background with blur
                     canvas.drawRect(
                         0f,
                         -4.dp.toPx(),

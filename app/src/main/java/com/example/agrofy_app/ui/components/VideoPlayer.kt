@@ -17,13 +17,11 @@ fun VideoPlayer(videoUrl: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val player = remember { ExoPlayer.Builder(context).build() }
 
-    // Prepare the player with the media item
     val mediaItem = MediaItem.fromUri(videoUrl)
     player.setMediaItem(mediaItem)
     player.prepare()
     player.playWhenReady = true
 
-    // Clean up the player when the composable leaves the composition
     DisposableEffect(player) {
         onDispose {
             player.release()
@@ -36,7 +34,7 @@ fun VideoPlayer(videoUrl: String, modifier: Modifier = Modifier) {
             this.player = player
             useController = true
         }
-    }, modifier = modifier.aspectRatio(16 / 9f) // Ganti dengan aspek rasio yang sesuai
+    }, modifier = modifier.aspectRatio(16 / 9f)
     )
 
 

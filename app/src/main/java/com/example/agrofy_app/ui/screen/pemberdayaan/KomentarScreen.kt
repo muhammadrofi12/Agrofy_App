@@ -61,7 +61,6 @@ fun KomentarScreen() {
                     )
                     setNewCommentText("")
 
-                    // Launch coroutine to scroll to the bottom of the list
                     coroutineScope.launch {
                         listState.animateScrollToItem(comments.size - 1)
                     }

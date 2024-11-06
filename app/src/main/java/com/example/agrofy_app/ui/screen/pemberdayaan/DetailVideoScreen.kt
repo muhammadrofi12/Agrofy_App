@@ -184,7 +184,7 @@ fun formatDate(date: Int): String {
         val parsedDate = parser.parse(dateStr)
         formatter.format(parsedDate)
     } catch (e: Exception) {
-        dateStr // fallback jika parsing gagal
+        dateStr
     }
 }
 

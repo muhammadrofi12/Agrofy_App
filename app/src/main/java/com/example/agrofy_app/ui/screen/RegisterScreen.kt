@@ -20,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.agrofy_app.R
@@ -96,7 +95,7 @@ fun RegisterScreen(navController: NavController) {
                     .weight(4f),
                 horizontalAlignment = Alignment.Start
             ) {
-                // Input Nama Depan dan Nama Belakang dalam satu Row
+                // Input Nama Depan dan Nama Belakang
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)

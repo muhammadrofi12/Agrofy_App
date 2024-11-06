@@ -69,7 +69,7 @@ fun OnboardingScreen(navController: NavController) {
                 .height(16.dp)
             )
 
-            // Menampilkan tombol "Lanjut" atau "Lewati" pada halaman selain halaman terakhir
+            // Menampilkan tombol "Lanjut" atau "Lewati"
             if (pagerState.currentPage < 2) {
                 Button(
                     onClick = {

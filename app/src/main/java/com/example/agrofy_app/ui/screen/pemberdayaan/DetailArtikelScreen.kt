@@ -155,7 +155,6 @@ fun DetailArtikelScreen(
                     // Tambahkan aksi navigasi atau tindakan lainnya di sini
                 })
 
-                // Add space at bottom to prevent content being hidden behind floating button
                 Spacer(modifier = Modifier.height(80.dp))
             }
         }

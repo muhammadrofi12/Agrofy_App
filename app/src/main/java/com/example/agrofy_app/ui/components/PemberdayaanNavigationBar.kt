@@ -25,7 +25,6 @@ fun PemberdayaanNavigationBar(
     onItemSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    // Get current route
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
@@ -61,14 +60,10 @@ fun PemberdayaanNavigationBar(
                 if (currentRoute != "video") {
                     onItemSelected("video")
                     navController.navigate("video") {
-                        // Pop up to the start destination of the graph to
-                        // avoid building up a large stack of destinations
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
-                        // Avoid multiple copies of the same destination
                         launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
                         restoreState = true
                     }
                 }

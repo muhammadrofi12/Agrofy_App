@@ -25,7 +25,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun Agrofy_AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,  // nonaktif dynamic color
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

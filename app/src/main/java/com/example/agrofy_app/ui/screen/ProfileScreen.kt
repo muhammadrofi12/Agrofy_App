@@ -48,7 +48,7 @@ fun ProfileScreen(modifier: Modifier = Modifier, navController: NavController) {
             contentScale = ContentScale.Crop
         )
 
-        // White Background with Top Radius
+        // Background putih
         Box(
             modifier = Modifier
                 .fillMaxSize()
