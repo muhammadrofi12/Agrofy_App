@@ -19,7 +19,7 @@ import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.screen.LoginScreen
 import com.example.agrofy_app.ui.screen.RegisterScreen
 import com.example.agrofy_app.ui.screen.forum.ForumScreen
-import com.example.agrofy_app.ui.screens.HomeScreen
+import com.example.agrofy_app.ui.screen.HomeScreen
 import com.example.agrofy_app.ui.screens.OnboardingScreen
 import com.example.agrofy_app.ui.screens.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
@@ -75,16 +75,16 @@ fun MainScreen() {
             composable("login") { LoginScreen(navController = navController) }
             composable("register") { RegisterScreen(navController = navController) }
             composable("beranda") {
-                HomeScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+                HomeScreen(navController = navController)
             }
             composable("video") {
-                VideoScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+                VideoScreen(navController = navController)
             }
             composable("artikel") {
                 ArtikelScreen(navController = navController, modifier = Modifier.padding(innerPadding))
             }
             composable("manajemen") {
-                ManajemenScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+                ManajemenScreen(navController = navController)
             }
             composable("forum") {
                 ForumScreen(navController = navController, modifier = Modifier.padding(innerPadding))

@@ -29,7 +29,8 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular20
 @Composable
 fun TopAppBar(
     navController: NavController,
-    title: String
+    title: String,
+    img: Int
 ) {
     Box(
         modifier = Modifier
@@ -48,7 +49,7 @@ fun TopAppBar(
                 modifier = Modifier.size(48.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_back_circle),
+                    painter = painterResource(id = img),
                     contentDescription = "Back",
                     modifier = Modifier.size(48.dp)
                 )
@@ -71,7 +72,8 @@ fun TopAppBarPreview() {
     Agrofy_AppTheme {
         TopAppBar(
             navController = rememberNavController(),
-            title = "Artikel"
+            title = "Artikel",
+            img = R.drawable.ic_back_circle
         )
     }
 }

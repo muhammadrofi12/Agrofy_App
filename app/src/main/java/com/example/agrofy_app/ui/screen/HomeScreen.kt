@@ -1,4 +1,4 @@
-package com.example.agrofy_app.ui.screens
+package com.example.agrofy_app.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,9 +40,8 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular18
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
 
-
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun HomeScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -116,11 +115,11 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
                             }
 
                             // Garis Pembatas
-                            Divider(
-                                color = Color.Gray,
-                                thickness = 1.dp,
+                            HorizontalDivider(
                                 modifier = Modifier
-                                    .padding(vertical = 10.dp)
+                                    .padding(vertical = 10.dp),
+                                thickness = 1.dp,
+                                color = Color.Gray
                             )
 
                             // Cuaca
@@ -315,20 +314,21 @@ private fun WeatherForecast() {
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0f))
     ) {
-        Column(
-        ) {
-            Text(
-                text = "Cuaca hari ini",
-                style = PoppinsRegular18,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                displayedWeather.forEachIndexed { index, weather ->
-                    val isActive = (index == 3)
-                    WeatherItem(weather = weather, isActive = isActive)
+        Box {
+            Column {
+                Text(
+                    text = "Cuaca hari ini",
+                    style = PoppinsRegular18,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    displayedWeather.forEachIndexed { index, weather ->
+                        val isActive = (index == 3)
+                        WeatherItem(weather = weather, isActive = isActive)
+                    }
                 }
             }
         }

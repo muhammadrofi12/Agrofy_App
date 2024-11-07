@@ -36,8 +36,7 @@ import com.example.agrofy_app.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VideoScreen(
-    navController: NavController,
-    modifier: Modifier = Modifier
+    navController: NavController
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("Semua") }

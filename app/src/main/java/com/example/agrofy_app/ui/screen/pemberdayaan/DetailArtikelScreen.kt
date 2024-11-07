@@ -40,7 +40,8 @@ fun DetailArtikelScreen(
         topBar = {
             TopAppBar(
                 navController = navController,
-                title = "Artikel"
+                title = "Artikel",
+                img = R.drawable.ic_back_circle
             )
         }
     ) { padding ->

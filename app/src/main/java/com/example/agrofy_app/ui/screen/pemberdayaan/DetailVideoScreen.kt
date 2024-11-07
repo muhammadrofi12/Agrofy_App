@@ -35,7 +35,8 @@ fun DetailVideoScreen(
         topBar = {
             TopAppBar(
                 navController = navController,
-                title = "Video Pembelajaran"
+                title = "Video Pembelajaran",
+                img = R.drawable.ic_back_circle
             )
         }
     ) { padding ->
