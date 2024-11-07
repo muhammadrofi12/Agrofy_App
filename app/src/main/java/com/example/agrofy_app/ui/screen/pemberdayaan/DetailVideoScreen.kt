@@ -1,16 +1,14 @@
 package com.example.agrofy_app.ui.screen.pemberdayaan
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,12 +16,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Videos
+import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.components.VideoPlayer
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
-import com.example.agrofy_app.ui.theme.PoppinsRegular20
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold20
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 @Composable
@@ -32,66 +31,45 @@ fun DetailVideoScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        // Top Bar
-        TopBar(navController)
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Video Player
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-        ) {
-            VideoPlayer(videoUrl = video.file_video)
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        // Video Details
-        VideoDetails(video)
-    }
-}
-
-@Composable
-private fun TopBar(
-    navController: NavController
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .shadow(4.dp, RoundedCornerShape(bottomStart = 4.dp, bottomEnd = 4.dp))
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = { navController.navigate("video") },
-                modifier = Modifier.size(48.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_back_circle),
-                    contentDescription = "Back",
-                    modifier = Modifier.size(48.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Text(
-                text = "Video Pembelajaran",
-                style = PoppinsRegular20,
-                color = Color.Black
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                title = "Video Pembelajaran"
             )
         }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 80.dp)
+        ) {
+
+            // Video Player
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            ) {
+                VideoPlayer(videoUrl = video.file_video)
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                item {
+                    // Video Details
+                    VideoDetails(video)
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            }
+        }
     }
+
 }
 
 @Composable
@@ -110,7 +88,7 @@ fun VideoDetails(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "${video.judul}",
+                text = video.judul,
                 style = PoppinsSemiBold20,
                 color = Color.Black
             )
@@ -182,7 +160,7 @@ fun formatDate(date: Int): String {
 
     return try {
         val parsedDate = parser.parse(dateStr)
-        formatter.format(parsedDate)
+        formatter.format(parsedDate as Date)
     } catch (e: Exception) {
         dateStr
     }

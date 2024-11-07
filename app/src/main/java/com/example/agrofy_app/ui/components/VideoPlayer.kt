@@ -13,7 +13,6 @@ import androidx.media3.ui.PlayerView
 
 @Composable
 fun VideoPlayer(videoUrl: String, modifier: Modifier = Modifier) {
-    // Create a remember block to maintain the player instance
     val context = LocalContext.current
     val player = remember { ExoPlayer.Builder(context).build() }
 
@@ -28,7 +27,6 @@ fun VideoPlayer(videoUrl: String, modifier: Modifier = Modifier) {
         }
     }
 
-    // Use AndroidView to show the ExoPlayer's PlayerView
     AndroidView(factory = { context ->
         PlayerView(context).apply {
             this.player = player

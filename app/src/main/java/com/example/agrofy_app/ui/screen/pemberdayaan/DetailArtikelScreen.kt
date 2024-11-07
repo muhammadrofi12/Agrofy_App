@@ -1,16 +1,13 @@
 package com.example.agrofy_app.ui.screen.pemberdayaan
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,7 +26,9 @@ import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Articles
 import com.example.agrofy_app.ui.theme.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.Scaffold
+import com.example.agrofy_app.ui.components.TopAppBar
 
 @Composable
 fun DetailArtikelScreen(
@@ -37,171 +36,143 @@ fun DetailArtikelScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    println("Displaying article: ${article.judul}")
-
-    Box(modifier = Modifier.fillMaxSize()) {  // Wrap everything in a Box
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
-            // Top Bar
-            TopBar(navController)
-
-            // Article Details (Title, Date, Author)
-            Column(
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                title = "Artikel"
+            )
+        }
+    ) { padding ->
+        Box(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .fillMaxSize()
+                    .padding(top = 64.dp)
             ) {
-                Spacer(modifier = Modifier.height(24.dp))
+                // Article Details (Title, Date, Author)
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                    ) {
+                        Spacer(modifier = Modifier.height(24.dp))
 
-                // Title
-                Text(
-                    text = article.judul,
-                    style = PoppinsSemiBold20,
-                    color = Color.Black
-                )
+                        // Title
+                        Text(
+                            text = article.judul,
+                            style = PoppinsSemiBold20,
+                            color = Color.Black
+                        )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                // Date and Author
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    // Calendar
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_calendar),
-                        contentDescription = "Kalender",
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = formatDate(article.tanggal),
-                        style = PoppinsRegular14,
-                        color = Color.Gray
-                    )
+                        // Date and Author
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            // Calendar
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_calendar),
+                                contentDescription = "Kalender",
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = formatDate(article.tanggal),
+                                style = PoppinsRegular14,
+                                color = Color.Gray
+                            )
 
-                    Spacer(modifier = Modifier.width(12.dp))
+                            Spacer(modifier = Modifier.width(12.dp))
 
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_circle),
-                        contentDescription = "Circle",
-                        modifier = Modifier.size(6.dp)
-                    )
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_circle),
+                                contentDescription = "Circle",
+                                modifier = Modifier.size(6.dp)
+                            )
 
-                    Spacer(modifier = Modifier.width(12.dp))
+                            Spacer(modifier = Modifier.width(12.dp))
 
-                    // Author
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_author),
-                        contentDescription = "Author",
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = article.author,
-                        style = PoppinsRegular14,
-                        color = Color.Gray
-                    )
+                            // Author
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_author),
+                                contentDescription = "Author",
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = article.author,
+                                style = PoppinsRegular14,
+                                color = Color.Gray
+                            )
+                        }
+                    }
+                }
+
+                // Article Image
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = article.photo),
+                            contentDescription = article.judul,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(200.dp)
+                                .border(
+                                    width = 2.dp,
+                                    color = Color(0xFF8B4513),
+                                    shape = RoundedCornerShape(12.dp)
+                                )
+                                .clip(RoundedCornerShape(12.dp))
+                        )
+                    }
+                }
+
+                // Content
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                    ) {
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Description
+                        Text(
+                            text = article.deskripsi,
+                            style = PoppinsRegular14,
+                            color = Color.Black,
+                            textAlign = TextAlign.Justify,
+                        )
+
+                        Spacer(modifier = Modifier.height(14.dp))
+
+                        // button video
+                        VideoButton(onClick = {
+                            // Tambahkan aksi navigasi atau tindakan lainnya di sini
+                        })
+
+                        Spacer(modifier = Modifier.height(80.dp))
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Article Image
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = article.photo),
-                    contentDescription = article.judul,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .border(
-                            width = 2.dp,
-                            color = Color(0xFF8B4513),
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .clip(RoundedCornerShape(12.dp))
-                )
-            }
-
-            // Content
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-            ) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Description
-                Text(
-                    text = article.deskripsi,
-                    style = PoppinsRegular14,
-                    color = Color.Black,
-                    textAlign = TextAlign.Justify,
-                )
-
-                Spacer(modifier = Modifier.height(14.dp))
-
-                // button video
-                VideoButton(onClick = {
-                    // Tambahkan aksi navigasi atau tindakan lainnya di sini
-                })
-
-                Spacer(modifier = Modifier.height(80.dp))
-            }
-        }
-
-        // Floating Comment Button
-        FloatingCommentButton(
-            commentCount = 60,
-            onClick = {
-                // Action when comment button is clicked
-            }
-        )
-    }
-}
-
-@Composable
-private fun TopBar(
-    navController: NavController
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .shadow(4.dp, RoundedCornerShape(bottomStart = 4.dp, bottomEnd = 4.dp))
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = { navController.navigate("artikel") },
-                modifier = Modifier.size(48.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_back_circle),
-                    contentDescription = "Back",
-                    modifier = Modifier.size(48.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Text(
-                text = "Artikel",
-                style = PoppinsRegular20,
-                color = Color.Black
+            // Floating Comment Button
+            FloatingCommentButton(
+                commentCount = 60,
+                onClick = {
+                    navController.navigate("komentar_artikel")
+                },
             )
         }
     }
@@ -229,7 +200,7 @@ fun VideoButton(onClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
-                imageVector = Icons.Default.ArrowForward,
+                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = "Arrow",
                 tint = Color.White,
                 modifier = Modifier.size(20.dp)

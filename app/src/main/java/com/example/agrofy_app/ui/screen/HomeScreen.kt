@@ -327,7 +327,7 @@ private fun WeatherForecast() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 displayedWeather.forEachIndexed { index, weather ->
-                    val isActive = (index == 3)  // Item di posisi ke-3 adalah aktif
+                    val isActive = (index == 3)
                     WeatherItem(weather = weather, isActive = isActive)
                 }
             }

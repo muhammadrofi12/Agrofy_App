@@ -28,6 +28,7 @@ import com.example.agrofy_app.ui.screen.manajemen.ManajemenScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.ArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailVideoScreen
+import com.example.agrofy_app.ui.screen.pemberdayaan.KomentarScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
 
 
@@ -109,6 +110,9 @@ fun MainScreen() {
                 } else {
                     println("Article with ID $articleId not found")
                 }
+            }
+            composable("komentar_artikel") {
+                KomentarScreen(navController = navController, modifier = Modifier.padding(innerPadding))
             }
 
         }
