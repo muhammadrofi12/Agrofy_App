@@ -20,6 +20,8 @@ import com.example.agrofy_app.ui.screen.LoginScreen
 import com.example.agrofy_app.ui.screen.RegisterScreen
 import com.example.agrofy_app.ui.screen.forum.ForumScreen
 import com.example.agrofy_app.ui.screen.HomeScreen
+import com.example.agrofy_app.ui.screen.manajemen.ManajemenLimbahScreen
+import com.example.agrofy_app.ui.screen.manajemen.ManajemenProgressScreen
 import com.example.agrofy_app.ui.screens.OnboardingScreen
 import com.example.agrofy_app.ui.screens.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
@@ -113,6 +115,14 @@ fun MainScreen() {
             }
             composable("komentar_artikel") {
                 KomentarScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+            }
+
+            // Manajemen
+            composable("limbah") {
+                ManajemenLimbahScreen(navController = navController)
+            }
+            composable("progress") {
+                ManajemenProgressScreen(navController = navController)
             }
 
         }
