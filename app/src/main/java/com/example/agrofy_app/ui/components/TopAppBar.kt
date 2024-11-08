@@ -10,13 +10,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +40,13 @@ fun TopAppBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .shadow(4.dp, RoundedCornerShape(bottomStart = 4.dp, bottomEnd = 4.dp))
+            .drawBehind {
+                drawRect(
+                    color = Color.Black.copy(alpha = 0.1f),
+                    topLeft = Offset(0f, size.height),
+                    size = Size(size.width, size.height * 0.09f)
+                )
+            }
     ) {
         Row(
             modifier = Modifier

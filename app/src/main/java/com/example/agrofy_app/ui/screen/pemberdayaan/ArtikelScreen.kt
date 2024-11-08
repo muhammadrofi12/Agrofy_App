@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.agrofy_app.ui.components.TopAppBar
 import androidx.navigation.NavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.data.DummyData
@@ -48,6 +49,15 @@ fun ArtikelScreen(
                     navController.navigate(route)
                 }
             )
+        },
+
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                title = "Artikel",
+                img = R.drawable.ic_back_circle,
+                onIconButtonClick = { navController.navigate("beranda") }
+            )
         }
     ) { paddingValues ->
         Box(
@@ -55,47 +65,12 @@ fun ArtikelScreen(
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(paddingValues)
+                .padding(top = 12.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                // Top Bar
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.White)
-                        .shadow(4.dp, RoundedCornerShape(bottomStart = 4.dp, bottomEnd = 4.dp))
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(
-                            onClick = { navController.navigate("beranda") },
-                            modifier = Modifier.size(48.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_back_circle),
-                                contentDescription = "Back",
-                                modifier = Modifier.size(48.dp)
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        Text(
-                            text = "Artikel",
-                            style = PoppinsRegular20,
-                            color = Color.Black
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
                 // Search Bar
                 Box(
                     modifier = Modifier

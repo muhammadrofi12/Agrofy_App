@@ -4,17 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,9 +33,8 @@ import com.example.agrofy_app.ui.theme.BrownLight
 import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold10
-import com.example.agrofy_app.ui.theme.PoppinsMedium14
+import com.example.agrofy_app.ui.theme.PoppinsMedium10
 import com.example.agrofy_app.ui.theme.PoppinsMedium16
-import com.example.agrofy_app.ui.theme.PoppinsMedium20
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular18
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
@@ -52,54 +47,21 @@ fun ManajemenScreen(navController: NavController) {
             TopAppBar(
                 navController = navController,
                 title = "Dashboard Limbah",
-                img = R.drawable.ic_dashboard_manajemen
+                img = R.drawable.ic_dashboard_manajemen,
+                isIconButtonEnabled = false,
             )
         }
     ) { padding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-        ) {
+            modifier = Modifier.fillMaxSize()) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 60.dp),
+                    .padding(top = 64.dp),
             ) {
                 item {
                     Column {
-                        // Text Selamat datang
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.profil),
-                                    contentDescription = "Profile",
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .clip(CircleShape)
-                                )
-                                Text(
-                                    text = "Selamat Datang Rofiul!",
-                                    style = PoppinsMedium20
-                                )
-                            }
-                            IconButton(onClick = { /* Action notification */ }) {
-                                Icon(
-                                    imageVector = Icons.Default.Notifications,
-                                    contentDescription = "Notifications"
-                                )
-                            }
-                        }
-
+                        Spacer(modifier = Modifier.height(24.dp))
                         // Card Statistik & Cuaca
                         Card(
                             modifier = Modifier
@@ -186,7 +148,7 @@ fun ManajemenScreen(navController: NavController) {
                                     }
 
                                     Button(
-                                        onClick = { /* Action lihat selengkapnya */ },
+                                        onClick = { navController.navigate("limbah") },
                                         modifier = Modifier
                                             .align(Alignment.End)
                                             .width(200.dp)
@@ -239,7 +201,7 @@ fun ManajemenScreen(navController: NavController) {
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
-                                            text = "Limbah",
+                                            text = "Progress",
                                             style = PoppinsMedium16,
                                             color = Color.Black
                                         )
@@ -263,7 +225,7 @@ fun ManajemenScreen(navController: NavController) {
                                     }
 
                                     Button(
-                                        onClick = { /* Action lihat selengkapnya */ },
+                                        onClick = { navController.navigate("progress") },
                                         modifier = Modifier
                                             .align(Alignment.End)
                                             .width(200.dp)
@@ -367,6 +329,24 @@ fun ManajemenScreen(navController: NavController) {
                             }
                         }
 
+                        // Button Laporan
+                        Button(
+                            onClick = { /* Action lihat laporan */},
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(
+                                text = "Lihat Laporan",
+                                color = Color.White,
+                                style = PoppinsMedium10,
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(64.dp))
                     }
                 }
             }
@@ -384,8 +364,10 @@ fun ManajemenScreen(navController: NavController) {
             )
         }
     }
-
 }
+
+
+
 
 
 @Composable
