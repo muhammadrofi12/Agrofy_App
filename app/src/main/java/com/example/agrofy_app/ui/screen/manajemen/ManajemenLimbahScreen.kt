@@ -1,9 +1,11 @@
 package com.example.agrofy_app.ui.screen.manajemen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -14,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
@@ -93,31 +96,45 @@ fun ManajemenLimbahScreen(
                 }
 
                 // Total
-                Card(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(4.dp)
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                            .background(GreenPrimary, shape = RoundedCornerShape(12.dp))
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .zIndex(2f)
                     ) {
                         Text(
                             text = "Total",
-                            style = PoppinsMedium16,
-                            color = Color.Black
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "100 kg",
-                            style = PoppinsMedium20,
-                            color = Color.Black
+                            style = PoppinsBold20,
+                            color = Color.White
                         )
                     }
+
+                    Box(
+                        modifier = Modifier
+                            .offset(x = (-20).dp)
+                            .zIndex(1f)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(GreenLight, shape = RoundedCornerShape(12.dp))
+                                .border(width = 2.dp, color = GreenPrimary, shape = RoundedCornerShape(12.dp))
+                                .padding(start = 28.dp, end = 16.dp, bottom = 8.dp, top = 8.dp)
+
+                        ) {
+                            Text(
+                                text = "100 kg",
+                                style = PoppinsBold18,
+                                color = Color.Black
+                            )
+                        }
+                    }
+
                 }
 
                 // Limbah List
