@@ -41,7 +41,8 @@ fun DetailArtikelScreen(
             TopAppBar(
                 navController = navController,
                 title = "Artikel",
-                img = R.drawable.ic_back_circle
+                img = R.drawable.ic_back_circle,
+                onIconButtonClick = { navController.popBackStack() }
             )
         }
     ) { padding ->

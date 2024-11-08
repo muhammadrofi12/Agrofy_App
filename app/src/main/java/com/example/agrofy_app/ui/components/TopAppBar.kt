@@ -2,6 +2,7 @@ package com.example.agrofy_app.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +31,9 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular20
 fun TopAppBar(
     navController: NavController,
     title: String,
-    img: Int
+    img: Int,
+    isIconButtonEnabled: Boolean = true,
+    onIconButtonClick: (() -> Unit)? = null
 ) {
     Box(
         modifier = Modifier
@@ -45,8 +48,16 @@ fun TopAppBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = { navController.navigate("video") },
-                modifier = Modifier.size(48.dp)
+                onClick = {
+                    if (isIconButtonEnabled) {
+                        onIconButtonClick?.invoke() ?: navController.navigateUp()
+                    }
+                },
+                modifier = Modifier
+                    .size(48.dp)
+                    .then(
+                        if (isIconButtonEnabled) Modifier else Modifier.clickable {  }
+                    )
             ) {
                 Image(
                     painter = painterResource(id = img),
@@ -65,6 +76,8 @@ fun TopAppBar(
         }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
