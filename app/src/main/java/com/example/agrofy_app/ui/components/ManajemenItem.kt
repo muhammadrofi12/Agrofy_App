@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -40,6 +41,7 @@ import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Limbah
 import com.example.agrofy_app.ui.screen.pemberdayaan.formatDate
 import com.example.agrofy_app.ui.theme.BrownActive
+import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.GreenActive
 import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
@@ -327,34 +329,70 @@ fun ProgressItem(limbah: Limbah) {
                     Spacer(modifier = Modifier.height(8.dp))
 
                     // Status & tanggal
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    Column (
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Surface(
-                            modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                            color = GreenActive
+                        // Masuk
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(
-                                text = "On Progress",
-                                style = PoppinsRegular10,
-                                color = Color.White,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                            )
+                            Surface(
+                                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                                color = GreenActive
+                            ) {
+                                Text(
+                                    text = "Masuk",
+                                    style = PoppinsRegular10,
+                                    color = Color.White,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                )
+                            }
+
+                            Surface(
+                                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                                color = BrownActive,
+                            ) {
+                                Text(
+                                    text = formatDate(limbah.tggl_masuk),
+                                    style = PoppinsRegular10,
+                                    color = Color.White,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                )
+                            }
                         }
 
-                        Surface(
-                            modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                            color = BrownActive,
+                        // Tengat / Keluar
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(
-                                text = formatDate(limbah.tggl_masuk),
-                                style = PoppinsRegular10,
-                                color = Color.White,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                            )
+                            Surface(
+                                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                                color = Error
+                            ) {
+                                Text(
+                                    text = "Tenggat",
+                                    style = PoppinsRegular10,
+                                    color = Color.White,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                )
+                            }
+
+                            Surface(
+                                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                                color = BrownActive,
+                            ) {
+                                Text(
+                                    text = formatDate(limbah.tggl_keluar),
+                                    style = PoppinsRegular10,
+                                    color = Color.White,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                )
+                            }
                         }
                     }
+
 
                     Spacer(modifier = Modifier.height(20.dp))
 
