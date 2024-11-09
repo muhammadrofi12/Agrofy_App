@@ -83,7 +83,7 @@ fun MainScreen() {
                 VideoScreen(navController = navController)
             }
             composable("artikel") {
-                ArtikelScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+                ArtikelScreen(navController = navController)
             }
             composable("manajemen") {
                 ManajemenScreen(navController = navController)

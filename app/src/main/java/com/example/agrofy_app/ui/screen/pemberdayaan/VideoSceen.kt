@@ -130,7 +130,7 @@ fun VideoScreen(
                 Text(
                     text = "Kategori",
                     style = PoppinsSemiBold14,
-                    modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 4.dp)
+                    modifier = Modifier.padding(start = 20.dp, top = 2.dp, bottom = 4.dp)
                 )
 
                 // Category Buttons
@@ -170,7 +170,7 @@ fun VideoScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = 16.dp)
+                        .padding(top = 12.dp)
                 ) {
                     val filteredVideos = DummyData.videoPembelajaran.filter { video ->
                         (selectedCategory == "Semua" || video.kategori == selectedCategory) &&
