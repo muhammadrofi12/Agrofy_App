@@ -67,24 +67,6 @@ fun ManajemenProgressScreen(
                 img = R.drawable.ic_back_circle,
                 onIconButtonClick = { navController.popBackStack() }
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Action Add */ },
-                containerColor = GreenPrimary,
-                contentColor = Color.White,
-                modifier = Modifier
-                    .height(120.dp)
-                    .width(70.dp)
-                    .padding(bottom = 48.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.add_button),
-                    contentDescription = "Add",
-                    modifier = Modifier
-                        .size(38.dp)
-                )
-            }
         }
     ) { paddingValues ->
         Box(

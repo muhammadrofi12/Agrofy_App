@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.data.DummyData
+import com.example.agrofy_app.ui.components.AddLimbahModal
 import com.example.agrofy_app.ui.components.LimbahItem
 import com.example.agrofy_app.ui.theme.*
 import com.example.agrofy_app.ui.components.TopAppBar
@@ -30,8 +29,7 @@ import com.example.agrofy_app.ui.components.TopAppBar
 fun ManajemenLimbahScreen(
     navController: NavController
 ) {
-    var selectedTab by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Data Limbah", "Riwayat")
+    var showAddDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -44,7 +42,7 @@ fun ManajemenLimbahScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Action Add */ },
+                onClick = { showAddDialog = true },
                 containerColor = GreenPrimary,
                 contentColor = Color.White,
                 modifier = Modifier
@@ -71,30 +69,6 @@ fun ManajemenLimbahScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                // Tab Layout
-                TabRow(
-                    selectedTabIndex = selectedTab,
-                    containerColor = Color.White,
-                    contentColor = GreenPrimary,
-                    indicator = { tabPositions ->
-                        SecondaryIndicator(
-                            modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTab]),
-                            height = 2.dp,
-                            color = GreenPrimary
-                        )
-                    }
-                ) {
-                    tabs.forEachIndexed { index, title ->
-                        Tab(
-                            text = { Text(title) },
-                            selected = selectedTab == index,
-                            onClick = { selectedTab = index },
-                            selectedContentColor = GreenPrimary,
-                            unselectedContentColor = Color.Gray
-                        )
-                    }
-                }
-
                 // Total
                 Row(
                     modifier = Modifier
@@ -151,6 +125,16 @@ fun ManajemenLimbahScreen(
                 }
             }
         }
+
+        AddLimbahModal(
+            showDialog = showAddDialog,
+            onDismiss = { showAddDialog = false },
+            onSave = { nama, berat, tanggal, deskripsi, imageUri ->
+                // Handle save action here
+                // You can add the new limbah to your data source
+                // Process the imageUri if needed
+            }
+        )
     }
 }
 

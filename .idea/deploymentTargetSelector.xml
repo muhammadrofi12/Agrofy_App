@@ -27,6 +27,14 @@
       </SelectionState>
       <SelectionState runConfigName="ManajemenLimbahScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2024-11-09T16:49:53.819829100Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=8XQGVWWWXWNRUSEI" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
       </SelectionState>
       <SelectionState runConfigName="ManajemenProgressScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />

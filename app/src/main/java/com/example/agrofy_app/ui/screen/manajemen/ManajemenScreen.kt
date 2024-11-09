@@ -2,6 +2,7 @@ package com.example.agrofy_app.ui.screen.manajemen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,6 +39,7 @@ import com.example.agrofy_app.ui.theme.PoppinsMedium16
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular18
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
+import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
 import java.util.Calendar
 
 @Composable
@@ -125,14 +127,22 @@ fun ManajemenScreen(navController: NavController) {
                                     ) {
                                         Text(
                                             text = "Limbah",
-                                            style = PoppinsMedium16,
+                                            style = PoppinsSemiBold16,
                                             color = Color.Black
                                         )
-                                        Text(
-                                            text = "100 kg",
-                                            style = PoppinsMedium16,
-                                            color = Color.Black
-                                        )
+
+                                        Box(
+                                            modifier = Modifier
+                                                .background(Color.Transparent)
+                                                .border(width = 1.dp, color = GreenPrimary, shape = RoundedCornerShape(4.dp))
+                                                .padding(horizontal = 12.dp, vertical = 4.dp)
+                                        ) {
+                                            Text(
+                                                text = "100 kg",
+                                                style = PoppinsMedium16,
+                                                color = Color.Black
+                                            )
+                                        }
                                     }
 
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -202,14 +212,22 @@ fun ManajemenScreen(navController: NavController) {
                                     ) {
                                         Text(
                                             text = "Progress",
-                                            style = PoppinsMedium16,
+                                            style = PoppinsSemiBold16,
                                             color = Color.Black
                                         )
-                                        Text(
-                                            text = "100 kg",
-                                            style = PoppinsMedium16,
-                                            color = Color.Black
-                                        )
+
+                                        Box(
+                                            modifier = Modifier
+                                                .background(Color.Transparent)
+                                                .border(width = 1.dp, color = GreenPrimary, shape = RoundedCornerShape(4.dp))
+                                                .padding(horizontal = 12.dp, vertical = 4.dp)
+                                        ) {
+                                            Text(
+                                                text = "100 kg",
+                                                style = PoppinsMedium16,
+                                                color = Color.Black
+                                            )
+                                        }
                                     }
 
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -277,14 +295,22 @@ fun ManajemenScreen(navController: NavController) {
                                     ) {
                                         Text(
                                             text = "Selesai",
-                                            style = PoppinsMedium16,
+                                            style = PoppinsSemiBold16,
                                             color = Color.Black
                                         )
-                                        Text(
-                                            text = "60 kg",
-                                            style = PoppinsMedium16,
-                                            color = Color.Black
-                                        )
+
+                                        Box(
+                                            modifier = Modifier
+                                                .background(Color.Transparent)
+                                                .border(width = 1.dp, color = GreenPrimary, shape = RoundedCornerShape(4.dp))
+                                                .padding(horizontal = 12.dp, vertical = 4.dp)
+                                        ) {
+                                            Text(
+                                                text = "60 kg",
+                                                style = PoppinsMedium16,
+                                                color = Color.Black
+                                            )
+                                        }
                                     }
 
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -329,21 +355,88 @@ fun ManajemenScreen(navController: NavController) {
                             }
                         }
 
-                        // Button Laporan
-                        Button(
-                            onClick = { /* Action lihat laporan */},
+                        // Riwayat Limbah
+                        Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(50.dp)
-                                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary),
-                            shape = RoundedCornerShape(8.dp)
+                                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                         ) {
-                            Text(
-                                text = "Lihat Laporan",
-                                color = Color.White,
-                                style = PoppinsMedium10,
-                            )
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = CardDefaults.cardElevation(4.dp),
+                                colors = CardDefaults.cardColors(containerColor = GreenLight)
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp)
+                                ) {
+                                    // Title and weight section
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            text = "Riwayat",
+                                            style = PoppinsSemiBold16,
+                                            color = Color.Black
+                                        )
+
+                                        Box(
+                                            modifier = Modifier
+                                                .background(Color.Transparent)
+                                                .border(width = 1.dp, color = GreenPrimary, shape = RoundedCornerShape(4.dp))
+                                                .padding(horizontal = 12.dp, vertical = 4.dp)
+                                        ) {
+                                            Text(
+                                                text = "60 kg",
+                                                style = PoppinsMedium16,
+                                                color = Color.Black
+                                            )
+                                        }
+                                    }
+
+                                    Spacer(modifier = Modifier.height(16.dp))
+
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
+                                        LimbahCardItem("Jerami", "100", "12 Des 2024", R.drawable.jerami)
+                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
+                                        LimbahCardItem("Jerami", "100", "12 Des 2024", R.drawable.jerami)
+                                    }
+
+                                    Button(
+                                        onClick = { /* Action lihat selengkapnya */ },
+                                        modifier = Modifier
+                                            .align(Alignment.End)
+                                            .width(200.dp)
+                                            .height(42.dp)
+                                            .padding(top = 10.dp),
+                                        colors = ButtonDefaults.buttonColors(GreenPrimary),
+                                        shape = RoundedCornerShape(4.dp)
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Text(
+                                                text = "Lihat Selengkapnya",
+                                                style = PoppinsRegular12,
+                                                color = Color.White
+                                            )
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.back_vector_right),
+                                                contentDescription = "Arrow",
+                                                tint = Color.White,
+                                                modifier = Modifier.size(24.dp).padding(start = 8.dp)
+                                            )
+                                        }
+                                    }
+                                }
+                            }
                         }
 
                         Spacer(modifier = Modifier.height(64.dp))

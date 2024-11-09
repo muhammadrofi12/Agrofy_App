@@ -1,6 +1,7 @@
 package com.example.agrofy_app.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,11 +15,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,13 +45,18 @@ import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold12
 import com.example.agrofy_app.ui.theme.PoppinsBold16
+import com.example.agrofy_app.ui.theme.PoppinsBold20
 import com.example.agrofy_app.ui.theme.PoppinsRegular10
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
+import com.example.agrofy_app.ui.theme.PoppinsRegular16
 
 
 // List Limbah
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LimbahItem(limbah: Limbah) {
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = GreenLight),
@@ -92,7 +105,7 @@ fun LimbahItem(limbah: Limbah) {
                             color = GreenActive
                         ) {
                             Text(
-                                text = "On Progress",
+                                text = "Masuk",
                                 style = PoppinsRegular10,
                                 color = Color.White,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -177,16 +190,96 @@ fun LimbahItem(limbah: Limbah) {
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { /* Action opsi lanjut */ }) {
+                IconButton(onClick = { showBottomSheet = true }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_more),
-                        contentDescription = "opsi Lanjut",
+                        contentDescription = "Opsi Lanjut",
                         modifier = Modifier.size(20.dp)
                     )
                 }
             }
+        }
+    }
+    // Modal Option
+    if (showBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showBottomSheet = false },
+            containerColor = Color.White,
+            tonalElevation = 0.dp,
+            sheetState = rememberModalBottomSheetState(),
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+            ) {
+                // Title
+                Text(
+                    text = limbah.nama,
+                    style = PoppinsBold20,
+                    modifier = Modifier.padding(horizontal = 20.dp)
+                )
 
+                Spacer(modifier = Modifier.height(24.dp))
 
+                // Edit
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            showBottomSheet = false
+                            // Action Edit
+                        }
+                        .padding(horizontal = 20.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_edit),
+                        contentDescription = "Edit",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Black
+                    )
+                    Text(
+                        text = "Edit",
+                        style = PoppinsRegular16,
+                        color = Color.Black
+                    )
+                }
+
+                // Hapus
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            showBottomSheet = false
+                            // Action Hapus
+                        }
+                        .padding(horizontal = 20.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_delete),
+                        contentDescription = "Hapus",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Black
+                    )
+                    Text(
+                        text = "Hapus",
+                        style = PoppinsRegular16,
+                        color = Color.Black
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+            }
         }
     }
 }
