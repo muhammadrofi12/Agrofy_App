@@ -21,6 +21,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import androidx.compose.foundation.background
+import com.example.agrofy_app.ui.components.TopAppBar
+import com.example.agrofy_app.ui.theme.GreenPrimary
 
 @Composable
 fun ForumPost(
@@ -33,7 +35,7 @@ fun ForumPost(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 4.dp)
             .border(2.dp, Color.Black, RoundedCornerShape(15.dp))
             .clip(RoundedCornerShape(20.dp))
     ) {
@@ -132,30 +134,38 @@ fun ForumPost(
 fun ForumScreen(modifier: Modifier = Modifier, navController: NavController) {
     Scaffold(
         topBar = {
-
-            com.example.agrofy_app.ui.components.TopAppBar(
+            TopAppBar(
                 navController = navController,
                 title = "Forum Diskusi",
-                img = R.drawable.ic_forum
+                img = R.drawable.ic_forum_diskusi,
+                isIconButtonEnabled = false,
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Tindakan saat tombol tambah diklik */ },
+                onClick = { /* Action menambah diskusi */},
+                containerColor = GreenPrimary,
+                contentColor = Color.White,
                 modifier = Modifier
-                    .padding(16.dp)
-                    .offset(y = (-40).dp) // Menggeser ke atas
+                    .height(120.dp)
+                    .width(60.dp)
+                    .padding(bottom = 56.dp)
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.tambah),
-                    contentDescription = "tambah",
-                    modifier = Modifier.size(15.dp), // Ukuran ikon
-                    tint = Color.Black
+                    painter = painterResource(id = R.drawable.add_button),
+                    contentDescription = "Add",
+                    modifier = Modifier
+                        .size(38.dp)
                 )
             }
         }
     ) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(top = 24.dp)
+        ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 // Postingan Forum pertama
                 ForumPost(
