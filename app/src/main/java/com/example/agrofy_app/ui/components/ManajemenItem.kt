@@ -56,8 +56,9 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular16
 // List Limbah
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LimbahItem(limbah: Limbah) {
+fun LimbahItem(limbah: Limbah, navController: NavController) {
     var showBottomLimbah by remember { mutableStateOf(false) }
+    var showOlahLimbahModal by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -158,7 +159,7 @@ fun LimbahItem(limbah: Limbah) {
                         Surface(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(4.dp))
-                                .clickable { /* action olah limbah */ },
+                                .clickable { showOlahLimbahModal = true },
                             color = GreenPrimary,
                             shadowElevation = 4.dp
                         ) {
@@ -202,6 +203,17 @@ fun LimbahItem(limbah: Limbah) {
             }
         }
     }
+    // Modal Olah Limbah
+    OlahLimbahModal(
+        limbah = limbah,
+        showDialog = showOlahLimbahModal,
+        onDismiss = { showOlahLimbahModal = false },
+        onSave = { jenisOlahan, berat, tanggalMasuk, deskripsi ->
+            // Handle saving the processed waste data
+        },
+        navController = navController
+    )
+
     // Modal Option
     if (showBottomLimbah) {
         ModalBottomSheet(

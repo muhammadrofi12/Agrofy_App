@@ -8,4 +8,6 @@ data class Limbah(
     val deskripsi: String,
     val tggl_masuk: Int, // bisa tggl_progress kalo limbah di bagian progress
     val tggl_keluar: Int, // bisa tggl_selesai kalo limbah di bagian progress
+    val status: String,
+    val kategori: String
 )

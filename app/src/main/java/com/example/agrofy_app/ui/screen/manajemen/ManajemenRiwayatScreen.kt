@@ -61,7 +61,7 @@ fun ManajemenRiwayatScreen(
                 navController = navController,
                 title = "Riwayat Limbah",
                 img = R.drawable.ic_back_circle,
-                onIconButtonClick = { navController.popBackStack() }
+                onIconButtonClick = { navController.navigate("manajemen") }
             )
         }
     ) { paddingValues ->

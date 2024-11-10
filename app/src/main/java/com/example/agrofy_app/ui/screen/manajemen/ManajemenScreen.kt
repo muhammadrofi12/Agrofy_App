@@ -281,7 +281,7 @@ fun ManajemenScreen(navController: NavController) {
                             }
                         }
 
-                        // Selesai Limbah
+                        // Olahan Limbah
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -303,7 +303,7 @@ fun ManajemenScreen(navController: NavController) {
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
-                                            text = "Selesai",
+                                            text = "Hasil Olahan",
                                             style = PoppinsSemiBold16,
                                             color = Color.Black
                                         )
@@ -329,9 +329,9 @@ fun ManajemenScreen(navController: NavController) {
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
                                         LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Jerami", "100", "12 Des 2024", R.drawable.jerami)
                                         LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Jerami", "100", "12 Des 2024", R.drawable.jerami)
+                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
+                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
                                     }
 
                                     Button(
@@ -418,7 +418,7 @@ fun ManajemenScreen(navController: NavController) {
                                     }
 
                                     Button(
-                                        onClick = { /* Action lihat selengkapnya */ },
+                                        onClick = { navController.navigate("riwayat") },
                                         modifier = Modifier
                                             .align(Alignment.End)
                                             .width(200.dp)

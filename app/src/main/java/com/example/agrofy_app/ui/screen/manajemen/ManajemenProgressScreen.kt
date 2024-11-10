@@ -54,7 +54,7 @@ fun ManajemenProgressScreen(
                 navController = navController,
                 title = "Progres Limbah",
                 img = R.drawable.ic_back_circle,
-                onIconButtonClick = { navController.popBackStack() }
+                onIconButtonClick = { navController.navigate("manajemen") }
             )
         }
     ) { paddingValues ->

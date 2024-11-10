@@ -17,7 +17,9 @@ object DummyData {
             berat = 14,
             deskripsi = "Jerami dengan kualitas yang bagus dan sangat kering",
             tggl_masuk = 20241025,
-            tggl_keluar = 20241101
+            tggl_keluar = 20241101,
+            status = "", // masuk, tenggat, sukses, gagal
+            kategori = "Limbah"
         ),
         Limbah(
             id = 2,
@@ -26,16 +28,20 @@ object DummyData {
             berat = 14,
             deskripsi = "Atap Jerami dengan kualitas yang tinggi.",
             tggl_masuk = 20241025,
-            tggl_keluar = 20241101
+            tggl_keluar = 20241101,
+            status = "",
+            kategori = "Progres"
         ),
         Limbah(
             id = 3,
-            nama = "Jerami",
+            nama = "Jeramiiii",
             photo = R.drawable.jerami,
             berat = 14,
             deskripsi = "Jerami dengan kualitas yang bagus dan sangat kering",
             tggl_masuk = 20241025,
-            tggl_keluar = 20241101
+            tggl_keluar = 20241101,
+            status = "",
+            kategori = "limbah"
         ),
         Limbah(
             id = 4,
@@ -44,7 +50,53 @@ object DummyData {
             berat = 14,
             deskripsi = "Atap Jerami dengan kualitas yang tinggi.",
             tggl_masuk = 20241025,
-            tggl_keluar = 20241101
+            tggl_keluar = 20241101,
+            status = "",
+            kategori = "'Progres"
+        ),
+        Limbah(
+            id = 5,
+            nama = "Jeramiiiiiii",
+            photo = R.drawable.jerami,
+            berat = 14,
+            deskripsi = "Jerami dengan kualitas yang bagus dan sangat kering",
+            tggl_masuk = 20241025,
+            tggl_keluar = 20241101,
+            status = "",
+            kategori = "Limbah"
+        ),
+        Limbah(
+            id = 6,
+            nama = "Jerami",
+            photo = R.drawable.jerami,
+            berat = 14,
+            deskripsi = "Jerami dengan kualitas yang bagus dan sangat kering",
+            tggl_masuk = 20241025,
+            tggl_keluar = 20241101,
+            status = "",
+            kategori = "Limbah"
+        ),
+        Limbah(
+            id = 7,
+            nama = "Jerami",
+            photo = R.drawable.jerami,
+            berat = 14,
+            deskripsi = "Jerami dengan kualitas yang bagus dan sangat kering",
+            tggl_masuk = 20241025,
+            tggl_keluar = 20241101,
+            status = "",
+            kategori = "Limbah"
+        ),
+        Limbah(
+            id = 8,
+            nama = "Jerami",
+            photo = R.drawable.jerami,
+            berat = 14,
+            deskripsi = "Jerami dengan kualitas yang bagus dan sangat kering",
+            tggl_masuk = 20241025,
+            tggl_keluar = 20241101,
+            status = "",
+            kategori = "Limbah"
         ),
     )
     val videoPembelajaran = listOf(

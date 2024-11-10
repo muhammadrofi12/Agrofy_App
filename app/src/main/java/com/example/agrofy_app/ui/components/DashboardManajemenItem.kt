@@ -58,10 +58,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.agrofy_app.R
+import com.example.agrofy_app.models.Limbah
 import com.example.agrofy_app.ui.theme.BrownActive
 import com.example.agrofy_app.ui.theme.BrownPrimary
+import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold12
 import com.example.agrofy_app.ui.theme.PoppinsBold20
@@ -279,31 +282,284 @@ fun AddLimbahModal(
                         }
                     }
 
-                    // Simpan Button
-                    val isActive = namaLimbah.isNotBlank() && berat.isNotBlank() && tanggalMasuk.isNotBlank()
-                    Button(
-                        onClick = {
-                            if (isActive) {
-                                onSave(namaLimbah, berat, tanggalMasuk, deskripsi, imageUri)
-                                onDismiss()
-                            }
-                        },
+                    Row(
                         modifier = Modifier
-                            .fillMaxWidth(0.4f)
-                            .align(Alignment.End)
+                            .fillMaxWidth()
                             .padding(top = 24.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isActive) Color(0xFF159847) else Color.Gray
-                        ),
-                        shape = RoundedCornerShape(8.dp),
-                        enabled = isActive
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        // Cancel Button
+                        Button(
+                            onClick = onDismiss,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Gray
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(
+                                text = "Batal",
+                                style = PoppinsRegular12,
+                                color = Color.White
+                            )
+                        }
+
+                        // Simpan Button
+                        val isActive = namaLimbah.isNotBlank() && berat.isNotBlank() && tanggalMasuk.isNotBlank()
+                        Button(
+                            onClick = {
+                                if (isActive) {
+                                    onSave(namaLimbah, berat, tanggalMasuk, deskripsi, imageUri)
+                                    onDismiss()
+                                }
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isActive) GreenPrimary else Color.Gray
+                            ),
+                            shape = RoundedCornerShape(8.dp),
+                            enabled = isActive
+                        ) {
+                            Text(
+                                text = "Simpan",
+                                style = PoppinsRegular12,
+                                color = Color.White
+                            )
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+// Modal Olah Limbah
+@Composable
+fun OlahLimbahModal(
+    limbah: Limbah,
+    showDialog: Boolean,
+    onDismiss: () -> Unit,
+    onSave: (String, String, String, String) -> Unit,
+    navController: NavController
+) {
+    var jenisOlahan by remember { mutableStateOf("") }
+    var berat by remember { mutableStateOf("") }
+    var tanggalMasuk by remember { mutableStateOf("") }
+    var tanggalSelesai by remember { mutableStateOf("") }
+    var deskripsi by remember { mutableStateOf("") }
+
+    // Date Picker for Tanggal Masuk
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+
+    val datePickerDialogMasuk = DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+            tanggalMasuk = "$dayOfMonth/${month + 1}/$year"
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
+
+    // Date Picker for Tanggal Selesai
+    val datePickerDialogSelesai = DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+            tanggalSelesai = "$dayOfMonth/${month + 1}/$year"
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
+
+    if (showDialog) {
+        Dialog(
+            onDismissRequest = onDismiss,
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true
+            )
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White, shape = RoundedCornerShape(16.dp))
+                    .padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    // Judul
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "Simpan",
-                            style = PoppinsMedium14,
-                            color = Color.White,
-                            modifier = Modifier.padding(vertical = 2.dp)
+                            text = limbah.nama,
+                            style = PoppinsBold20,
+                            color = Color.Black
                         )
+                        AsyncImage(
+                            model = limbah.photo,
+                            contentDescription = limbah.nama,
+                            modifier = Modifier
+                                .size(60.dp)
+                                .clip(RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    // Jenis Olahan
+                    TextFieldWithLabel(
+                        label = "Jenis Olahan",
+                        value = jenisOlahan,
+                        onValueChange = { jenisOlahan = it }
+                    )
+
+                    // Berat
+                    TextFieldWithLabel(
+                        label = "Berat (Kg)",
+                        value = berat,
+                        onValueChange = { berat = it }
+                    )
+
+                    // Tanggal Section with Row
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        // Tanggal Masuk Column
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                text = "Tanggal Masuk",
+                                style = PoppinsRegular12,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                            TextField(
+                                value = tanggalMasuk,
+                                onValueChange = { tanggalMasuk = it },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color.LightGray,
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .clickable { datePickerDialogMasuk.show() },
+                                enabled = false,
+                                colors = TextFieldDefaults.textFieldColors(
+                                    backgroundColor = Color(0xFFF5F5F5),
+                                    disabledTextColor = Color.Black,
+                                    disabledIndicatorColor = Color.Transparent
+                                ),
+                                textStyle = PoppinsRegular12
+                            )
+                        }
+
+                        // Tanggal Selesai Column
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                text = "Tanggal Selesai",
+                                style = PoppinsRegular12,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                            TextField(
+                                value = tanggalSelesai,
+                                onValueChange = { tanggalSelesai = it },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color.LightGray,
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .clickable { datePickerDialogSelesai.show() },
+                                enabled = false,
+                                colors = TextFieldDefaults.textFieldColors(
+                                    backgroundColor = Color(0xFFF5F5F5),
+                                    disabledTextColor = Color.Black,
+                                    disabledIndicatorColor = Color.Transparent
+                                ),
+                                textStyle = PoppinsRegular12
+                            )
+                        }
+                    }
+
+                    // Deskripsi
+                    TextFieldWithLabel(
+                        label = "Deskripsi",
+                        value = deskripsi,
+                        onValueChange = { deskripsi = it }
+                    )
+
+                    // Buttons
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        // Cancel Button
+                        Button(
+                            onClick = onDismiss,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Gray
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(
+                                text = "Batal",
+                                style = PoppinsRegular12,
+                                color = Color.White
+                            )
+                        }
+
+                        // Save Button
+                        val isActive = jenisOlahan.isNotBlank() &&
+                                berat.isNotBlank() &&
+                                tanggalMasuk.isNotBlank() &&
+                                tanggalSelesai.isNotBlank()
+
+                        Button(
+                            onClick = {
+                                if (isActive) {
+                                    onSave(jenisOlahan, berat, tanggalMasuk, deskripsi)
+                                    onDismiss()
+                                }
+                                navController.navigate("progress")
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isActive) GreenPrimary else Color.Gray
+                            ),
+                            shape = RoundedCornerShape(8.dp),
+                            enabled = isActive
+                        ) {
+                            Text(
+                                text = "Olah Limbah",
+                                style = PoppinsRegular12,
+                                color = Color.White
+                            )
+                        }
                     }
                 }
             }
@@ -388,13 +644,17 @@ fun ProgressDialog(
                                 }
                             },
                             shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Error,
+                                contentColor = Color.White
+                            ),
                             modifier = Modifier
                                 .weight(2f)
                                 .height(34.dp),
                         ) {
                             Text(
                                 text = "Gagal",
-                                color = Color.White
+                                color = Color.White,
                             )
                         }
 

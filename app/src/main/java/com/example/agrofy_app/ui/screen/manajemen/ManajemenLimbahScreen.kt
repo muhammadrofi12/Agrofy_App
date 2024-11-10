@@ -49,6 +49,9 @@ import com.example.agrofy_app.ui.theme.PoppinsBold20
 fun ManajemenLimbahScreen(
     navController: NavController
 ) {
+    val filteredLimbah = DummyData.limbahItem.filter {
+        it.kategori.equals("Limbah", ignoreCase = true)
+    }
     var showAddDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -57,7 +60,7 @@ fun ManajemenLimbahScreen(
                 navController = navController,
                 title = "Limbah",
                 img = R.drawable.ic_back_circle,
-                onIconButtonClick = { navController.popBackStack() }
+                onIconButtonClick = { navController.navigate("manajemen") }
             )
         },
         floatingActionButton = {
@@ -139,8 +142,8 @@ fun ManajemenLimbahScreen(
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(DummyData.limbahItem) { limbah ->
-                        LimbahItem(limbah)
+                    items(filteredLimbah) { limbah ->
+                        LimbahItem(limbah, navController = navController)
                     }
                 }
             }
