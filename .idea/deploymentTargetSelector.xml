@@ -16,9 +16,6 @@
       <SelectionState runConfigName="SplashScreenPrev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="KomentarScreenPreview">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="ManajemenScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
@@ -37,6 +34,9 @@
         <DialogSelection />
       </SelectionState>
       <SelectionState runConfigName="ManajemenProgressScreenPreview">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="ManajemenRiwayatScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

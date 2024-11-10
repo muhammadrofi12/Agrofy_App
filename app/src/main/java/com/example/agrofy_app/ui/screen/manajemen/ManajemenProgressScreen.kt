@@ -46,13 +46,13 @@ fun ManajemenProgressScreen(
     navController: NavController
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Data Limbah", "Riwayat")
+    val tabs = listOf("Progres Limbah", "Riwayat")
 
     Scaffold(
         topBar = {
             TopAppBar(
                 navController = navController,
-                title = "Progress",
+                title = "Progres Limbah",
                 img = R.drawable.ic_back_circle,
                 onIconButtonClick = { navController.popBackStack() }
             )
@@ -85,7 +85,14 @@ fun ManajemenProgressScreen(
                         Tab(
                             text = { Text(title) },
                             selected = selectedTab == index,
-                            onClick = { selectedTab = index },
+                            onClick = {
+                                selectedTab = index
+                                if (index == 1) {
+                                    navController.navigate("riwayat") {
+                                        popUpTo("progress") { inclusive = true }
+                                    }
+                                }
+                            },
                             selectedContentColor = GreenPrimary,
                             unselectedContentColor = Color.Gray
                         )
@@ -143,7 +150,10 @@ fun ManajemenProgressScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(DummyData.limbahItem) { limbah ->
-                        ProgressItem(limbah)
+                        ProgressItem(
+                            limbah = limbah,
+                            navController = navController
+                        )
                     }
                 }
             }

@@ -1,7 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.agrofy_app.ui.components
 
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
+
 //noinspection UsingMaterialAndMaterial3Libraries
 //noinspection UsingMaterialAndMaterial3Libraries
 //noinspection UsingMaterialAndMaterial3Libraries
@@ -18,6 +19,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,17 +28,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Card
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TextField
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,15 +52,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.theme.BrownActive
 import com.example.agrofy_app.ui.theme.BrownPrimary
+import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold12
+import com.example.agrofy_app.ui.theme.PoppinsBold20
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular8
@@ -222,8 +227,8 @@ fun AddLimbahModal(
                                 color = Color.LightGray,
                                 shape = RoundedCornerShape(8.dp)
                             )
-                            .clickable { datePickerDialog.show() }, // Memunculkan DatePicker ketika diklik
-                        enabled = false, // Mencegah input manual
+                            .clickable { datePickerDialog.show() },
+                        enabled = false,
                         colors = TextFieldDefaults.textFieldColors(
                             backgroundColor = Color(0xFFF5F5F5),
                             disabledTextColor = Color.Black,
@@ -337,3 +342,88 @@ fun TextFieldWithLabel(
     )
 }
 
+// Modal Progress
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProgressDialog(
+    showDialog: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+    navController: NavController
+) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true
+            ),
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                color = Color.White
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Apakah limbah berhasil diolah?",
+                        style = PoppinsBold20,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Button(
+                            onClick = {
+                                onDismiss()
+                                navController.navigate("riwayat") {
+                                    popUpTo(0) { inclusive = true }
+                                }
+                            },
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier
+                                .weight(2f)
+                                .height(34.dp),
+                        ) {
+                            Text(
+                                text = "Gagal",
+                                color = Color.White
+                            )
+                        }
+
+                        Button(
+                            onClick = {
+                                onConfirm()
+                                navController.navigate("riwayat") {
+                                    popUpTo(0) {
+                                        inclusive = true
+                                    }
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = GreenPrimary,
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier
+                                .weight(2f)
+                                .height(34.dp)
+                        ) {
+                            Text(
+                                text = "Sukses",
+                                color = Color.White
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
