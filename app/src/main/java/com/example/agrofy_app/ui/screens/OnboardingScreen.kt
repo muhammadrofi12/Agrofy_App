@@ -1,28 +1,46 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.agrofy_app.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.coroutines.launch
 import com.example.agrofy_app.R
-import com.google.accompanist.pager.*
 import com.example.agrofy_app.ui.theme.BrownLight
-import com.example.agrofy_app.ui.theme.PoppinsBold26
-import com.example.agrofy_app.ui.theme.PoppinsRegular16
-import androidx.compose.ui.graphics.Color
 import com.example.agrofy_app.ui.theme.GreenPrimary
+import com.example.agrofy_app.ui.theme.PoppinsBold26
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsMedium18
+import com.example.agrofy_app.ui.theme.PoppinsRegular16
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
+import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
 
 @Composable
 fun OnboardingScreen(navController: NavController) {

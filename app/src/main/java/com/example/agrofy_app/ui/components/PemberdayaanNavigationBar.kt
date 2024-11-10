@@ -1,29 +1,32 @@
 package com.example.agrofy_app.ui.components
 
+import androidx.compose.foundation.layout.size
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigation
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigationItem
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Icon
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.agrofy_app.R
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.size
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.theme.GreenPrimary
 
 @Composable
 fun PemberdayaanNavigationBar(
     navController: NavController,
     onItemSelected: (String) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route

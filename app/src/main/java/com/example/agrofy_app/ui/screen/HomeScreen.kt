@@ -200,7 +200,6 @@ fun HomeScreen(navController: NavController) {
                             article = article,
                             navController = navController,
                             modifier = Modifier.clickable {
-                                // Debug log or any additional action
                             }
                         )
                     }

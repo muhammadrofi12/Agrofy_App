@@ -5,9 +5,48 @@ import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Articles
 import com.example.agrofy_app.models.Comments
 import com.example.agrofy_app.models.Weather
+import com.example.agrofy_app.models.Limbah
 
 
 object DummyData {
+    val limbahItem = listOf(
+        Limbah(
+            id = 1,
+            nama = "Jerami",
+            photo = R.drawable.jerami,
+            berat = 14,
+            deskripsi = "Jerami dengan kualitas yang bagus dan sangat kering",
+            tggl_masuk = 20241025,
+            tggl_keluar = 20241101
+        ),
+        Limbah(
+            id = 2,
+            nama = "Atap Jerami",
+            photo = R.drawable.atap_jerami,
+            berat = 14,
+            deskripsi = "Atap Jerami dengan kualitas yang tinggi.",
+            tggl_masuk = 20241025,
+            tggl_keluar = 20241101
+        ),
+        Limbah(
+            id = 3,
+            nama = "Jerami",
+            photo = R.drawable.jerami,
+            berat = 14,
+            deskripsi = "Jerami dengan kualitas yang bagus dan sangat kering",
+            tggl_masuk = 20241025,
+            tggl_keluar = 20241101
+        ),
+        Limbah(
+            id = 4,
+            nama = "Atap Jerami",
+            photo = R.drawable.atap_jerami,
+            berat = 14,
+            deskripsi = "Atap Jerami dengan kualitas yang tinggi.",
+            tggl_masuk = 20241025,
+            tggl_keluar = 20241101
+        ),
+    )
     val videoPembelajaran = listOf(
         Videos(
             id = 1,

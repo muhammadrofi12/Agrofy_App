@@ -2,12 +2,25 @@ package com.example.agrofy_app.ui.screen.pemberdayaan
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,24 +37,26 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.Articles
-import com.example.agrofy_app.ui.theme.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material3.Scaffold
 import com.example.agrofy_app.ui.components.TopAppBar
+import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
+import com.example.agrofy_app.ui.theme.GreenLight
+import com.example.agrofy_app.ui.theme.GreenPrimary
+import com.example.agrofy_app.ui.theme.PoppinsMedium14
+import com.example.agrofy_app.ui.theme.PoppinsRegular14
+import com.example.agrofy_app.ui.theme.PoppinsSemiBold20
 
 @Composable
 fun DetailArtikelScreen(
     article: Articles,
     navController: NavController,
-    modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 navController = navController,
                 title = "Artikel",
-                img = R.drawable.ic_back_circle
+                img = R.drawable.ic_back_circle,
+                onIconButtonClick = { navController.popBackStack() }
             )
         }
     ) { padding ->

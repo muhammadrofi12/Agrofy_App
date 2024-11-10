@@ -20,10 +20,12 @@ import com.example.agrofy_app.ui.screen.LoginScreen
 import com.example.agrofy_app.ui.screen.RegisterScreen
 import com.example.agrofy_app.ui.screen.forum.ForumScreen
 import com.example.agrofy_app.ui.screen.HomeScreen
+import com.example.agrofy_app.ui.screen.manajemen.ManajemenLimbahScreen
+import com.example.agrofy_app.ui.screen.manajemen.ManajemenProgressScreen
 import com.example.agrofy_app.ui.screens.OnboardingScreen
 import com.example.agrofy_app.ui.screens.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
-import com.example.agrofy_app.ui.theme.screen.ProfileScreen
+import com.example.agrofy_app.ui.screen.ProfileScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.ArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailArtikelScreen
@@ -81,7 +83,7 @@ fun MainScreen() {
                 VideoScreen(navController = navController)
             }
             composable("artikel") {
-                ArtikelScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+                ArtikelScreen(navController = navController)
             }
             composable("manajemen") {
                 ManajemenScreen(navController = navController)
@@ -90,7 +92,7 @@ fun MainScreen() {
                 ForumScreen(navController = navController, modifier = Modifier.padding(innerPadding))
             }
             composable("profil") {
-                ProfileScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+                ProfileScreen(navController = navController)
             }
 
             // Detail untuk pemberdayaan
@@ -113,6 +115,14 @@ fun MainScreen() {
             }
             composable("komentar_artikel") {
                 KomentarScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+            }
+
+            // Manajemen
+            composable("limbah") {
+                ManajemenLimbahScreen(navController = navController)
+            }
+            composable("progress") {
+                ManajemenProgressScreen(navController = navController)
             }
 
         }

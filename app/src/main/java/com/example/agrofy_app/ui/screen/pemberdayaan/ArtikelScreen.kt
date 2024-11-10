@@ -4,18 +4,42 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
@@ -28,13 +52,21 @@ import com.example.agrofy_app.R
 import com.example.agrofy_app.data.DummyData
 import com.example.agrofy_app.models.Articles
 import com.example.agrofy_app.ui.components.PemberdayaanNavigationBar
-import com.example.agrofy_app.ui.theme.*
+import com.example.agrofy_app.ui.components.TopAppBar
+import com.example.agrofy_app.ui.theme.BrownPrimary
+import com.example.agrofy_app.ui.theme.GreenActive
+import com.example.agrofy_app.ui.theme.GreenLight
+import com.example.agrofy_app.ui.theme.GreenPrimary
+import com.example.agrofy_app.ui.theme.PoppinsMedium14
+import com.example.agrofy_app.ui.theme.PoppinsRegular12
+import com.example.agrofy_app.ui.theme.PoppinsRegular14
+import com.example.agrofy_app.ui.theme.PoppinsSemiBold14
+import com.example.agrofy_app.ui.theme.Warning
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtikelScreen(
     navController: NavController,
-    modifier: Modifier = Modifier
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("Semua") }
@@ -48,6 +80,15 @@ fun ArtikelScreen(
                     navController.navigate(route)
                 }
             )
+        },
+
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                title = "Artikel",
+                img = R.drawable.ic_back_circle,
+                onIconButtonClick = { navController.navigate("beranda") }
+            )
         }
     ) { paddingValues ->
         Box(
@@ -55,47 +96,12 @@ fun ArtikelScreen(
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(paddingValues)
+                .padding(top = 12.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                // Top Bar
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.White)
-                        .shadow(4.dp, RoundedCornerShape(bottomStart = 4.dp, bottomEnd = 4.dp))
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(
-                            onClick = { navController.navigate("beranda") },
-                            modifier = Modifier.size(48.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_back_circle),
-                                contentDescription = "Back",
-                                modifier = Modifier.size(48.dp)
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        Text(
-                            text = "Artikel",
-                            style = PoppinsRegular20,
-                            color = Color.Black
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
                 // Search Bar
                 Box(
                     modifier = Modifier
@@ -135,12 +141,11 @@ fun ArtikelScreen(
                     )
                 }
 
-
                 // Category Text
                 Text(
                     text = "Kategori",
                     style = PoppinsSemiBold14,
-                    modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 4.dp)
+                    modifier = Modifier.padding(start = 20.dp, top = 2.dp, bottom = 4.dp)
                 )
 
                 // Category Buttons
@@ -180,7 +185,7 @@ fun ArtikelScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = 24.dp)
+                        .padding(top = 12.dp)
                 ) {
                     val filteredArticles = DummyData.artikelPembelajaran.filter { article ->
                         (selectedCategory == "Semua" || article.kategori == selectedCategory) &&
@@ -190,7 +195,6 @@ fun ArtikelScreen(
                     items(filteredArticles) { article ->
                         ArticleCard(
                             article = article,
-                            modifier = Modifier,
                             onClick = {
                                 navController.navigate("artikel_detail/${article.id}")
                             }
@@ -204,7 +208,7 @@ fun ArtikelScreen(
 
 
 @Composable
-fun ArticleCard(article: Articles, modifier: Modifier, onClick: () -> Unit) {
+fun ArticleCard(article: Articles, onClick: () -> Unit) {
     var isBookmarked by remember { mutableStateOf(false) }
 
     Card(
