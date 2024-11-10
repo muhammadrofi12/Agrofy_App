@@ -42,9 +42,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.core.app.NotificationCompat.Style
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.agrofy_app.R
@@ -52,14 +50,12 @@ import com.example.agrofy_app.models.HasilOlah
 import com.example.agrofy_app.models.Limbah
 import com.example.agrofy_app.ui.screen.pemberdayaan.formatDate
 import com.example.agrofy_app.ui.theme.BrownActive
-import com.example.agrofy_app.ui.theme.BrownPrimary
 import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.GreenActive
 import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold12
 import com.example.agrofy_app.ui.theme.PoppinsBold16
-import com.example.agrofy_app.ui.theme.PoppinsBold18
 import com.example.agrofy_app.ui.theme.PoppinsBold20
 import com.example.agrofy_app.ui.theme.PoppinsRegular10
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
