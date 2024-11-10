@@ -13,6 +13,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
+<<<<<<< HEAD
       <SelectionState runConfigName="SplashScreenPrev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
@@ -39,6 +40,8 @@
       <SelectionState runConfigName="ManajemenRiwayatScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+=======
+>>>>>>> 8d8fbd8394301387fbcb2f90fb762aa1bd9c9d72
     </selectionStates>
   </component>
 </project>
