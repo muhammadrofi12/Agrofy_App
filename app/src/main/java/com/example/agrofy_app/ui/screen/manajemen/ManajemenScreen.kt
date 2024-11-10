@@ -335,7 +335,7 @@ fun ManajemenScreen(navController: NavController) {
                                     }
 
                                     Button(
-                                        onClick = { /* Action lihat selengkapnya */ },
+                                        onClick = { navController.navigate("hasil_olah") },
                                         modifier = Modifier
                                             .align(Alignment.End)
                                             .width(200.dp)

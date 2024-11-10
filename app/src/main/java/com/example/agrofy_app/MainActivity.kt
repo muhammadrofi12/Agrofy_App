@@ -26,6 +26,7 @@ import com.example.agrofy_app.ui.screens.OnboardingScreen
 import com.example.agrofy_app.ui.screens.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.screen.ProfileScreen
+import com.example.agrofy_app.ui.screen.manajemen.ManajemenHasilScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenRiwayatScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.ArtikelScreen
@@ -127,6 +128,9 @@ fun MainScreen() {
             }
             composable("riwayat") {
                 ManajemenRiwayatScreen(navController = navController)
+            }
+            composable("hasil_olah") {
+                ManajemenHasilScreen(navController = navController)
             }
 
         }

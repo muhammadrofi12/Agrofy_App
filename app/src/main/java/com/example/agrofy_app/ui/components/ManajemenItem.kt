@@ -1,5 +1,9 @@
 package com.example.agrofy_app.ui.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -9,10 +13,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,18 +42,24 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
+import androidx.core.app.NotificationCompat.Style
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.agrofy_app.R
+import com.example.agrofy_app.models.HasilOlah
 import com.example.agrofy_app.models.Limbah
 import com.example.agrofy_app.ui.screen.pemberdayaan.formatDate
 import com.example.agrofy_app.ui.theme.BrownActive
+import com.example.agrofy_app.ui.theme.BrownPrimary
 import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.GreenActive
 import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold12
 import com.example.agrofy_app.ui.theme.PoppinsBold16
+import com.example.agrofy_app.ui.theme.PoppinsBold18
 import com.example.agrofy_app.ui.theme.PoppinsBold20
 import com.example.agrofy_app.ui.theme.PoppinsRegular10
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
@@ -679,6 +692,130 @@ fun RiwayatItem(limbah: Limbah) {
                     }
                 }
             }
+        }
+    }
+}
+
+// List Hasil Olah
+@Composable
+fun HasilOlahCard(
+    hasilOlah: HasilOlah,
+    onLihatClick: () -> Unit = {},
+    onHapusClick: () -> Unit = {}
+) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .width(160.dp),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(8.dp),
+        border = BorderStroke(1.dp, Color.LightGray)
+    ) {
+        Column {
+            // Image
+            Image(
+                painter = painterResource(id = R.drawable.atap_jerami),
+                contentDescription = hasilOlah.title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            // Title
+            Text(
+                text = hasilOlah.title,
+                style = PoppinsBold16,
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+            )
+
+            // Status and Quantity
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(GreenPrimary, shape = RoundedCornerShape(12.dp))
+                        .padding(4.dp)
+                        .zIndex(2f)
+                ) {
+                    Text(
+                        text = hasilOlah.status,
+                        color = Color.White,
+                        style = PoppinsBold12,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .offset(x = (-20).dp)
+                        .zIndex(1f)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .background(GreenLight, shape = RoundedCornerShape(12.dp))
+                            .border(
+                                width = 2.dp,
+                                color = GreenPrimary,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(start = 28.dp, end = 16.dp, bottom = 8.dp, top = 8.dp)
+
+                    ) {
+                        Text(
+                            text = hasilOlah.quantity,
+                            style = PoppinsBold12
+                        )
+                    }
+                }
+
+            }
+
+            // Lihat Button
+            Button(
+                onClick = onLihatClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(42.dp)
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = GreenPrimary
+                ),
+                shape = RoundedCornerShape(4.dp)
+            ) {
+                Text(
+                    text = "Lihat",
+                    color = Color.White,
+                    style = PoppinsRegular12
+                )
+            }
+
+            // Hapus Button
+            Button(
+                onClick = onHapusClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(38.dp)
+                    .padding(start = 12.dp, end = 12.dp, bottom = 6.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red.copy(alpha = 0.8f)
+                ),
+                shape = RoundedCornerShape(4.dp)
+            ) {
+                Text(
+                    text = "Hapus",
+                    color = Color.White,
+                    style = PoppinsRegular12
+                )
+            }
+
+            // Add some padding at the bottom
+            Spacer(modifier = Modifier.height(4.dp))
         }
     }
 }
