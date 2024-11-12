@@ -69,10 +69,12 @@ import com.example.agrofy_app.models.Limbah
 import com.example.agrofy_app.ui.theme.BrownActive
 import com.example.agrofy_app.ui.theme.BrownPrimary
 import com.example.agrofy_app.ui.theme.Error
+import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold12
 import com.example.agrofy_app.ui.theme.PoppinsBold20
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
+import com.example.agrofy_app.ui.theme.PoppinsRegular10
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular8
 import java.util.Calendar
@@ -86,16 +88,14 @@ fun LimbahCardItem(
 ) {
     Card(
         modifier = Modifier
-            .padding(4.dp)
             .width(80.dp)
             .height(140.dp)
             .border(1.dp, BrownPrimary, RoundedCornerShape(8.dp)),
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = Color.Transparent
+        backgroundColor = GreenLight
     ) {
         Column(
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -137,7 +137,7 @@ fun LimbahCardItem(
             ) {
                 Text(
                     text = expiryDate,
-                    style = PoppinsRegular8,
+                    style = PoppinsRegular10,
                     color = Color.White,
                 )
             }

@@ -127,7 +127,9 @@ fun ManajemenScreen(navController: NavController) {
                                 colors = CardDefaults.cardColors(containerColor = GreenLight)
                             ) {
                                 Column(
-                                    modifier = Modifier.padding(16.dp)
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp)
                                 ) {
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
