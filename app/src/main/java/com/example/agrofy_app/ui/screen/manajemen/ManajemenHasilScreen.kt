@@ -1,5 +1,8 @@
 package com.example.agrofy_app.ui.screen.manajemen
 
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -13,6 +16,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -22,12 +27,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.HasilOlah
+import com.example.agrofy_app.ui.components.AddHasilOlahModal
 import com.example.agrofy_app.ui.components.HasilOlahCard
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.GreenPrimary
 
 @Composable
 fun ManajemenHasilScreen(navController: NavController) {
+    var showAddOlahanDialog by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,7 +47,7 @@ fun ManajemenHasilScreen(navController: NavController) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {  },
+                onClick = { showAddOlahanDialog = true },
                 containerColor = GreenPrimary,
                 contentColor = Color.White,
                 modifier = Modifier
@@ -56,18 +64,27 @@ fun ManajemenHasilScreen(navController: NavController) {
         }
     ) { paddingValues ->
         HasilOlahGrid(paddingValues = paddingValues)
+        AddHasilOlahModal(
+            showDialog = showAddOlahanDialog,
+            onDismiss = { showAddOlahanDialog = false },
+            onSave = { nama, jumlah, deskripsi, selectedImageUri ->
+                // Handle save action here
+                // You can add the new hasil olah to your data source
+                // Process the selectedImageUri if needed
+            }
+        )
     }
 }
 
 @Composable
 fun HasilOlahGrid(paddingValues: PaddingValues) {
     val hasilOlahList = listOf(
-        HasilOlah(R.drawable.atap_jerami, "Atap Jerami", "Ready", "50 Buah"),
-        HasilOlah(R.drawable.atap_jerami, "Atap Jerami", "Ready", "50 Buah"),
-        HasilOlah(R.drawable.atap_jerami, "Atap Jerami", "Ready", "50 Buah"),
-        HasilOlah(R.drawable.atap_jerami, "Atap Jerami", "Ready", "50 Buah"),
-        HasilOlah(R.drawable.atap_jerami, "Atap Jerami", "Ready", "50 Buah"),
-        HasilOlah(R.drawable.atap_jerami, "Atap Jerami", "Ready", "50 Buah"),
+        HasilOlah(R.drawable.atap_jerami, "Atap Jeramiii", "50 Buah", "deskripsi"),
+        HasilOlah(R.drawable.atap_jerami, "Atap Jeramii","50 Buah", "deskripsi"),
+        HasilOlah(R.drawable.atap_jerami, "Atap Jeramiiiii","50 Buah", "deskripsi"),
+        HasilOlah(R.drawable.atap_jerami, "Atap Jerami","50 Buah", "deskripsi"),
+        HasilOlah(R.drawable.atap_jerami, "Atap Jerami","50 Buah", "deskripsi"),
+        HasilOlah(R.drawable.atap_jerami, "Atap Jerami","50 Buah", "deskripsi"),
     )
 
     LazyVerticalGrid(

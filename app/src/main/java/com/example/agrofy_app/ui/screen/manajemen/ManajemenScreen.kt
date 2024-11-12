@@ -64,7 +64,9 @@ fun ManajemenScreen(navController: NavController) {
         }
     ) { padding ->
         Box(
-            modifier = Modifier.fillMaxSize()) {
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()

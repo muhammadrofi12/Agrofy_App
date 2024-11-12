@@ -1,5 +1,11 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.agrofy_app.ui.components
 
+import android.net.Uri
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +34,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,10 +45,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -60,6 +71,7 @@ import com.example.agrofy_app.ui.theme.PoppinsBold20
 import com.example.agrofy_app.ui.theme.PoppinsRegular10
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular16
+import java.io.FileNotFoundException
 
 
 // List Limbah
@@ -693,12 +705,26 @@ fun RiwayatItem(limbah: Limbah) {
 }
 
 // List Hasil Olah
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HasilOlahCard(
     hasilOlah: HasilOlah,
     onLihatClick: () -> Unit = {},
     onHapusClick: () -> Unit = {}
 ) {
+    var showModal by remember { mutableStateOf(false) }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var title by remember { mutableStateOf(TextFieldValue(hasilOlah.title)) }
+    var jumlah by remember { mutableStateOf(TextFieldValue(hasilOlah.quantity)) }
+    var deskripsi by remember { mutableStateOf(TextFieldValue(hasilOlah.deskripsi)) }
+    val context = LocalContext.current
+
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri = uri
+    }
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -711,18 +737,30 @@ fun HasilOlahCard(
         Column {
             // Image
             Image(
-                painter = painterResource(id = R.drawable.atap_jerami),
-                contentDescription = hasilOlah.title,
+//                painter = painterResource(id = R.drawable.atap_jerami),
+                painter = imageUri?.let { uri ->
+                    remember(uri) {
+                        val bitmap = try {
+                            MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+                        } catch (e: FileNotFoundException) {
+                            null
+                        }
+                        bitmap?.asImageBitmap()
+                    }?.let { bitmap -> androidx.compose.ui.graphics.painter.BitmapPainter(bitmap) }
+                        ?: painterResource(id = R.drawable.atap_jerami)
+                } ?: painterResource(id = R.drawable.atap_jerami),
+                contentDescription = title.text,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
-                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
+                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                    .clickable { imagePickerLauncher.launch("image/*") },
                 contentScale = ContentScale.Crop
             )
 
             // Title
             Text(
-                text = hasilOlah.title,
+                text = title.text,
                 style = PoppinsBold16,
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
             )
@@ -741,7 +779,7 @@ fun HasilOlahCard(
                         .zIndex(2f)
                 ) {
                     Text(
-                        text = hasilOlah.status,
+                        text = "Ready",
                         color = Color.White,
                         style = PoppinsBold12,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -764,7 +802,7 @@ fun HasilOlahCard(
 
                     ) {
                         Text(
-                            text = hasilOlah.quantity,
+                            text = jumlah.text,
                             style = PoppinsBold12
                         )
                     }
@@ -774,7 +812,9 @@ fun HasilOlahCard(
 
             // Lihat Button
             Button(
-                onClick = onLihatClick,
+                onClick = {
+                    showModal = true
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(42.dp)
@@ -812,6 +852,88 @@ fun HasilOlahCard(
 
             // Add some padding at the bottom
             Spacer(modifier = Modifier.height(4.dp))
+        }
+
+        // Dialog sebagai modal popup
+        if (showModal) {
+            Dialog(onDismissRequest = { showModal = false }) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        // Klik untuk mengubah Image (tempatkan logika pemilihan image Anda di sini)
+                        Image(
+                            painter = imageUri?.let { uri ->
+                                remember(uri) {
+                                    val bitmap = try {
+                                        MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+                                    } catch (e: FileNotFoundException) {
+                                        null
+                                    }
+                                    bitmap?.asImageBitmap()
+                                }?.let { bitmap -> androidx.compose.ui.graphics.painter.BitmapPainter(bitmap) }
+                                    ?: painterResource(id = R.drawable.atap_jerami)
+                            } ?: painterResource(id = R.drawable.atap_jerami),
+                            contentDescription = title.text,
+                            modifier = Modifier
+                                .size(120.dp)
+                                .padding(bottom = 16.dp)
+                                .clickable { imagePickerLauncher.launch("image/*") },
+                            contentScale = ContentScale.Crop
+                        )
+
+                        // Input Field untuk Title
+                        TextField(
+                            value = title,
+                            onValueChange = { title = it },
+                            label = { Text("Judul") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        )
+
+                        // Input Field untuk Jumlah
+                        TextField(
+                            value = jumlah,
+                            onValueChange = { jumlah = it },
+                            label = { Text("Jumlah (Kg)") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        )
+
+                        // Input Field untuk Deskripsi
+                        TextField(
+                            value = deskripsi,
+                            onValueChange = { deskripsi = it },
+                            label = { Text("Deskripsi") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        )
+
+                        // Tombol Edit
+                        Button(
+                            onClick = {
+                                // Handle simpan atau edit action di sini
+                                showModal = false
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp)
+                        ) {
+                            Text(text = "Edit", color = Color.White)
+                        }
+                    }
+                }
+            }
         }
     }
 }

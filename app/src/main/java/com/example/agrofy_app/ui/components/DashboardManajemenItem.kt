@@ -76,7 +76,6 @@ import com.example.agrofy_app.ui.theme.PoppinsBold20
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular10
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
-import com.example.agrofy_app.ui.theme.PoppinsRegular8
 import java.util.Calendar
 
 @Composable
@@ -316,6 +315,163 @@ fun AddLimbahModal(
                             onClick = {
                                 if (isActive) {
                                     onSave(namaLimbah, berat, tanggalMasuk, deskripsi, imageUri)
+                                    onDismiss()
+                                }
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isActive) GreenPrimary else Color.Gray
+                            ),
+                            shape = RoundedCornerShape(8.dp),
+                            enabled = isActive
+                        ) {
+                            Text(
+                                text = "Simpan",
+                                style = PoppinsRegular12,
+                                color = Color.White
+                            )
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+// Modal Add Hasil Olahan Limbah
+@Composable
+fun AddHasilOlahModal(
+    showDialog: Boolean,
+    onDismiss: () -> Unit,
+    onSave: (String, String, String, Uri?) -> Unit
+) {
+    var namaOlahan by remember { mutableStateOf("") }
+    var jumlah by remember { mutableStateOf("") }
+    var deskripsi by remember { mutableStateOf("") }
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+
+    // Launcher untuk memilih gambar dari galeri
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        selectedImageUri = uri
+    }
+
+    if (showDialog) {
+        Dialog(
+            onDismissRequest = onDismiss,
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true
+            )
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White, shape = RoundedCornerShape(16.dp))
+                    .padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    // Title
+                    Text(
+                        text = "Tambah Hasil Olahan",
+                        style = PoppinsBold12,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    // Nama Limbah
+                    TextFieldWithLabel(
+                        label = "Nama Olahan",
+                        value = namaOlahan,
+                        onValueChange = { namaOlahan = it }
+                    )
+
+                    // Berat
+                    TextFieldWithLabel(
+                        label = "Jumlah",
+                        value = jumlah,
+                        onValueChange = { jumlah = it }
+                    )
+
+                    // Deskripsi
+                    TextFieldWithLabel(
+                        label = "Deskripsi",
+                        value = deskripsi,
+                        onValueChange = { deskripsi = it }
+                    )
+
+                    // Unggah Gambar
+                    Text(
+                        text = "Unggah Gambar",
+                        style = PoppinsRegular12,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .size(120.dp)
+                            .border(
+                                width = 1.dp,
+                                color = Color.LightGray,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .background(Color(0xFFF5F5F5), RoundedCornerShape(8.dp))
+                            .clickable { imagePickerLauncher.launch("image/*") },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (selectedImageUri != null) {
+                            Image(
+                                painter = rememberAsyncImagePainter(model = selectedImageUri),
+                                contentDescription = "Selected Image",
+                                modifier = Modifier.size(100.dp),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_camera),
+                                contentDescription = "Upload Image",
+                                modifier = Modifier.size(40.dp),
+                                tint = Color.Gray
+                            )
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        // Cancel Button
+                        Button(
+                            onClick = onDismiss,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Gray
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(
+                                text = "Batal",
+                                style = PoppinsRegular12,
+                                color = Color.White
+                            )
+                        }
+
+                        // Simpan Button
+                        val isActive = namaOlahan.isNotBlank() && jumlah.isNotBlank() && deskripsi.isNotBlank()
+                        Button(
+                            onClick = {
+                                if (isActive) {
+                                    onSave(namaOlahan, jumlah, deskripsi, selectedImageUri)
                                     onDismiss()
                                 }
                             },
