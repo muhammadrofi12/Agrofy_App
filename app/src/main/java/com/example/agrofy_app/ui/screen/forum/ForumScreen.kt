@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import androidx.compose.foundation.background
+import androidx.compose.ui.layout.ContentScale
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.GreenPrimary
 
@@ -66,16 +67,16 @@ fun ForumPost(
             imageResource?.let {
                 Spacer(modifier = Modifier.height(10.dp))
                 Image(
-                    painter = painterResource(it), // Menggunakan parameter imageResource yang berbeda untuk setiap post
+                    painter = painterResource(it),
                     contentDescription = "Image above question",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
+                        .height(150.dp) // Menentukan tinggi agar tampak landscape
                         .clip(RoundedCornerShape(10.dp)),
+                    contentScale = ContentScale.Crop, // Membuat gambar memenuhi area
                     alignment = Alignment.Center
                 )
             }
-
             // Menampilkan teks pertanyaan setelah gambar
             Spacer(modifier = Modifier.height(10.dp))
             Text(
