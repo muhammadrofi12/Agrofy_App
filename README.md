@@ -2,7 +2,7 @@
 <hr>
 
 # ERD Agrofy
-![ERD Agrofy.png](..%2F..%2FUsers%2FM.%20Rofi%27ul%20Arham%2FDownloads%2FERD%20Agrofy.png)
+![ERD Agrofy.png](https://github.com/muhammadrofi12/Agrofy_App/tree/main/app/src/main/res/raw/erd_agrofy.png)
 
 ## Requirements
 To build and run this project, ensure you have the following software installed:
