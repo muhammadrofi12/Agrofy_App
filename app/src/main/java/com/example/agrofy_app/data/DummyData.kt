@@ -295,7 +295,6 @@ object DummyData {
         Articles(
             id = 1,
             judul = "\uD83C\uDF3DTransformasi Bonggol Jagung Menjadi Briket Arang Berkualitas\uD83C\uDF31",
-            konten = "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian. Namun, limbah ini memiliki potensi besar untuk menjadi sumber energi alternatif yang efisien.",
             deskripsi ="""
                 Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian. Namun, limbah ini memiliki potensi besar untuk menjadi sumber energi alternatif yang efisien. Proses transformasi dimulai dengan mengeringkan bonggol jagung hingga benar-benar kering, memastikan kandungan air rendah. Setelah itu, bonggol jagung dibakar menggunakan metode pirolisis, yaitu pembakaran tanpa oksigen di dalam drum tertutup. Teknik ini menghasilkan arang berkualitas tinggi tanpa membakar habis materialnya.
 
@@ -313,7 +312,6 @@ object DummyData {
         Articles(
             id = 2,
             judul = "Jerami Sebagai Sumber Bahan Organik Untuk Kesuburan Tanah",
-            konten = "Penurunan produktivitas sawah di Indonesia banyak disebabkan oleh degradasi kesuburan tanah, terutama karena rendahnya kandungan bahan organik. Saat ini, lebih dari 65% lahan sawah irigasi di Indonesia memiliki kandungan bahan organik kurang dari 2%, padahal standar kesuburan minimal adalah 3%.",
             deskripsi = """
                 Penurunan produktivitas sawah di Indonesia banyak disebabkan oleh degradasi kesuburan tanah, terutama karena rendahnya kandungan bahan organik. Saat ini, lebih dari 65% lahan sawah irigasi di Indonesia memiliki kandungan bahan organik kurang dari 2%, padahal standar kesuburan minimal adalah 3%. Salah satu penyebab utamanya adalah penggunaan pupuk kimia secara terus-menerus tanpa disertai pemupukan organik yang cukup. Kebiasaan membakar jerami setelah panen juga berkontribusi terhadap penurunan kesuburan tanah, karena menyebabkan hilangnya nutrisi penting seperti nitrogen, fosfor, dan kalium.
 
@@ -331,7 +329,6 @@ object DummyData {
         Articles(
             id = 3,
             judul = "Kompos Batang Pisang: Solusi Nutrisi Tanaman Alami",
-            konten = "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
             deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 
@@ -347,7 +344,6 @@ object DummyData {
         Articles(
             id = 4,
             judul = "Jerami Jadi Bokashi: Pupuk Hayati Penyubur Tanah",
-            konten = "Bokashi adalah pupuk kompos berbasis EM4 yang mempercepat fermentasi menjadi 7 hari. Pupuk ini memperbaiki kualitas tanah, meningkatkan hasil pertanian, mempermudah penyerapan air, dan mengurangi ke-lengket-an tanah untuk memudahkan pembajakan.",
             deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 
@@ -363,7 +359,6 @@ object DummyData {
         Articles(
             id = 5,
             judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
-            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
             deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 
@@ -379,7 +374,6 @@ object DummyData {
         Articles(
             id = 6,
             judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
-            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
             deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 
@@ -395,7 +389,6 @@ object DummyData {
         Articles(
             id = 7,
             judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
-            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
             deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 
@@ -411,7 +404,6 @@ object DummyData {
         Articles(
             id = 8,
             judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
-            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
             deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 
@@ -427,7 +419,6 @@ object DummyData {
         Articles(
             id = 9,
             judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
-            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
             deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 
@@ -443,7 +434,6 @@ object DummyData {
         Articles(
             id = 10,
             judul = "Pemuda Serang Ubah Limbah Pelepah Pisang Jadi Sumber Ekonomi",
-            konten = "Fatah Hasan (20) mengaku belajar membuat kerajinan dari sosok ayahnya dan kini dapat menghasilkan berbagai macam kerajinan dari pelepah pisang seperti vas bunga, kaligrafi, bingkai foto, kotak tisu, dan lukisan.",
             deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 

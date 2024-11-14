@@ -281,7 +281,6 @@ fun PreviewDetailArticle() {
             article = Articles(
                 id = 2,
                 judul = "Jerami Sebagai Sumber Bahan Organik Untuk Kesuburan Tanah",
-                konten = "Penurunan produktivitas sawah di Indonesia banyak disebabkan oleh degradasi kesuburan tanah...",
                 deskripsi = """
                 Penurunan produktivitas sawah di Indonesia banyak disebabkan oleh degradasi kesuburan tanah, terutama karena rendahnya kandungan bahan organik. Saat ini, lebih dari 65% lahan sawah irigasi di Indonesia memiliki kandungan bahan organik kurang dari 2%, padahal standar kesuburan minimal adalah 3%. Salah satu penyebab utamanya adalah penggunaan pupuk kimia secara terus-menerus tanpa disertai pemupukan organik yang cukup. Kebiasaan membakar jerami setelah panen juga berkontribusi terhadap penurunan kesuburan tanah, karena menyebabkan hilangnya nutrisi penting seperti nitrogen, fosfor, dan kalium.
 

@@ -86,7 +86,7 @@ fun CardArtikelItem(article: Articles, navController: NavController, modifier: M
 
                 // Deskripsi
                 Text(
-                    text = article.konten,
+                    text = article.deskripsi,
                     style = PoppinsRegular10.copy(color = Color.White),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -121,7 +121,6 @@ fun PreviewCustomCard() {
             article = Articles(
                 1,
                 "\uD83C\uDF3DTransformasi Bonggol Jagung Menjadi Briket Arang Berkualitas\uD83C\uDF31",
-                "Bonggol jagung sering dianggap sebagai limbah tak berguna dalam pertanian.",
                 deskripsi = """
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
                 

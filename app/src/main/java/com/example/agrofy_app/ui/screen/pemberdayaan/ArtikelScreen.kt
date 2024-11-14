@@ -292,7 +292,7 @@ fun ArticleCard(article: Articles, onClick: () -> Unit) {
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = article.konten,
+                    text = article.deskripsi,
                     style = PoppinsRegular12,
                     color = Color.Gray,
                     maxLines = 2,
