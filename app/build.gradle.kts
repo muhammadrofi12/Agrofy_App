@@ -62,6 +62,8 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager-indicators:0.31.3-beta")
     implementation("io.coil-kt:coil-compose:2.0.0")
     implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("androidx.compose.foundation:foundation:1.5.0")
+
 
     // exo player
     implementation("androidx.media3:media3-exoplayer:1.4.1")

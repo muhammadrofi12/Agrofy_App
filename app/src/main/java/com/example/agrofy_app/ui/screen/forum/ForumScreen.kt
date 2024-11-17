@@ -42,12 +42,12 @@ fun ForumPost(
     ) {
         Column(
             modifier = Modifier
-                .background(Color.White) // Menambahkan background putih
-                .padding(16.dp) // Menjaga padding seperti sebelumnya
+                .background(Color.White)
+                .padding(16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
-                    painter = painterResource(R.drawable.ic_author), // Pastikan ada gambar ini
+                    painter = painterResource(R.drawable.ic_author),
                     contentDescription = "Icon profil",
                     modifier = Modifier.size(40.dp).clip(CircleShape)
                 )
@@ -71,9 +71,9 @@ fun ForumPost(
                     contentDescription = "Image above question",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(150.dp) // Menentukan tinggi agar tampak landscape
+                        .height(150.dp)
                         .clip(RoundedCornerShape(10.dp)),
-                    contentScale = ContentScale.Crop, // Membuat gambar memenuhi area
+                    contentScale = ContentScale.Crop,
                     alignment = Alignment.Center
                 )
             }
@@ -144,7 +144,7 @@ fun ForumScreen(modifier: Modifier = Modifier, navController: NavController) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Action menambah diskusi */},
+                onClick =  { navController.navigate("forum") },
                 containerColor = GreenPrimary,
                 contentColor = Color.White,
                 modifier = Modifier
@@ -193,7 +193,7 @@ fun ForumScreen(modifier: Modifier = Modifier, navController: NavController) {
                 navController = navController,
                 onItemSelected = { /* Implementasi aksi */ },
                 modifier = Modifier
-                    .align(Alignment.BottomCenter) // Fix for 'align' error
+                    .align(Alignment.BottomCenter)
                     .fillMaxWidth()
             )
         }
