@@ -21,10 +21,10 @@ import com.example.agrofy_app.ui.screen.forum.ForumScreen
 import com.example.agrofy_app.ui.screen.HomeScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenLimbahScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenProgressScreen
-import com.example.agrofy_app.ui.screens.OnboardingScreen
+import com.example.agrofy_app.ui.screen.OnboardingScreen
 import com.example.agrofy_app.ui.screens.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
-import com.example.agrofy_app.ui.screen.ProfileScreen
+import com.example.agrofy_app.ui.screen.profil.ProfileScreen
 import com.example.agrofy_app.ui.screen.forum.AddForumScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenHasilScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenRiwayatScreen
@@ -39,7 +39,7 @@ import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
 data class NavigationItem(
     val title: String,
     val iconResId: Int,
-    val route: String
+    val route: String,
 )
 
 
@@ -90,7 +90,10 @@ fun MainScreen() {
                 ManajemenScreen(navController = navController)
             }
             composable("forum") {
-                ForumScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+                ForumScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
             composable("profil") {
                 ProfileScreen(navController = navController)
@@ -115,7 +118,10 @@ fun MainScreen() {
                 }
             }
             composable("komentar_artikel") {
-                KomentarScreen(navController = navController, modifier = Modifier.padding(innerPadding))
+                KomentarScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
 
             // Manajemen
@@ -141,7 +147,6 @@ fun MainScreen() {
     }
 
 }
-
 
 
 @Preview(showBackground = true)

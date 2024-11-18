@@ -22,21 +22,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.agrofy_app.R
 import com.example.agrofy_app.data.DummyData
-import com.example.agrofy_app.models.Weather
 import com.example.agrofy_app.ui.components.CardArtikelItem
 import com.example.agrofy_app.ui.components.VideoItem
 import com.example.agrofy_app.ui.components.BottomNavigationBar
-import java.util.Calendar
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.agrofy_app.ui.components.WeatherForecast
 import com.example.agrofy_app.ui.theme.BrownLight
-import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
-import com.example.agrofy_app.ui.theme.PoppinsBold10
 import com.example.agrofy_app.ui.theme.PoppinsMedium16
 import com.example.agrofy_app.ui.theme.PoppinsMedium20
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
-import com.example.agrofy_app.ui.theme.PoppinsRegular18
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
 
@@ -131,13 +127,13 @@ fun HomeScreen(navController: NavController) {
 
             // Video Pembelajaran
             item {
-                Row (
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 6.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-                ){
+                ) {
                     Text(
                         text = "Video Pembelajaran",
                         style = PoppinsSemiBold16,
@@ -166,13 +162,13 @@ fun HomeScreen(navController: NavController) {
 
             // Artikel Pembelajaran
             item {
-                Row (
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 6.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-                ){
+                ) {
                     Text(
                         text = "Artikel",
                         style = PoppinsSemiBold16,
@@ -288,82 +284,6 @@ private fun StatItem(label: String, value: String, imageRes: Int) {
                 }
             }
         }
-    }
-}
-
-
-@Composable
-private fun WeatherForecast() {
-    // Mengambil waktu terkini (jam) dari sistem
-    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-    val weatherData = DummyData.weatherForecast
-
-    // Cari indeks dari item yang aktif
-    val activeIndex = weatherData.indexOfFirst {
-        it.time.substringBefore(":").toIntOrNull() == currentHour
-    }
-
-    // Tentukan rentang indeks yang menampilkan 7 item dengan aktif di tengah (indeks ke-3 dari 7)
-    val startIndex = (activeIndex - 3).coerceAtLeast(0)
-    val endIndex = (startIndex + 6).coerceAtMost(weatherData.size - 1)
-    val displayedWeather = weatherData.subList(startIndex, endIndex + 1)
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0f))
-    ) {
-        Box {
-            Column {
-                Text(
-                    text = "Cuaca hari ini",
-                    style = PoppinsRegular18,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    displayedWeather.forEachIndexed { index, weather ->
-                        val isActive = (index == 3)
-                        WeatherItem(weather = weather, isActive = isActive)
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun WeatherItem(weather: Weather, isActive: Boolean) {
-    // cek kondisi aktif
-    val backgroundColor = if (isActive) GreenPrimary else GreenLight
-    val iconActive = if (isActive) Color.White else Color.Black
-
-    Column(
-        modifier = Modifier
-            .clip(RoundedCornerShape(4.dp))
-            .background(backgroundColor)
-            .padding(2.dp)
-            .width(42.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = weather.time,
-            style = PoppinsBold10,
-            color = iconActive,
-        )
-        Icon(
-            painter = painterResource(id = weather.icon),
-            tint = iconActive,
-            contentDescription = null,
-            modifier = Modifier.size(26.dp)
-        )
-        Text(
-            text = "${weather.temperature}°",
-            style = PoppinsBold10,
-            color = iconActive,
-        )
     }
 }
 

@@ -35,21 +35,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
-import com.example.agrofy_app.data.DummyData
-import com.example.agrofy_app.models.Weather
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.components.LimbahCardItem
 import com.example.agrofy_app.ui.components.TopAppBar
+import com.example.agrofy_app.ui.components.WeatherForecast
 import com.example.agrofy_app.ui.theme.BrownLight
 import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
-import com.example.agrofy_app.ui.theme.PoppinsBold10
 import com.example.agrofy_app.ui.theme.PoppinsMedium16
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
-import com.example.agrofy_app.ui.theme.PoppinsRegular18
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
-import java.util.Calendar
 
 @Composable
 fun ManajemenScreen(navController: NavController) {
@@ -66,11 +62,11 @@ fun ManajemenScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)) {
+                .padding(top = 56.dp)
+        ) {
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 64.dp),
+                    .fillMaxSize(),
             ) {
                 item {
                     Column {
@@ -147,7 +143,11 @@ fun ManajemenScreen(navController: NavController) {
                                         Box(
                                             modifier = Modifier
                                                 .background(Color.Transparent)
-                                                .border(width = 1.dp, color = GreenPrimary, shape = RoundedCornerShape(4.dp))
+                                                .border(
+                                                    width = 1.dp,
+                                                    color = GreenPrimary,
+                                                    shape = RoundedCornerShape(4.dp)
+                                                )
                                                 .padding(horizontal = 12.dp, vertical = 4.dp)
                                         ) {
                                             Text(
@@ -164,10 +164,30 @@ fun ManajemenScreen(navController: NavController) {
                                         modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        LimbahCardItem("Jerami", "100", "07 Nov 2024", R.drawable.jerami)
-                                        LimbahCardItem("Jerami", "100", "07 Nov 2024", R.drawable.jerami)
-                                        LimbahCardItem("Jerami", "100", "07 Nov 2024", R.drawable.jerami)
-                                        LimbahCardItem("Jerami", "100", "07 Nov 2024", R.drawable.jerami)
+                                        LimbahCardItem(
+                                            "Jerami",
+                                            "100",
+                                            "07 Nov 2024",
+                                            R.drawable.jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Jerami",
+                                            "100",
+                                            "07 Nov 2024",
+                                            R.drawable.jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Jerami",
+                                            "100",
+                                            "07 Nov 2024",
+                                            R.drawable.jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Jerami",
+                                            "100",
+                                            "07 Nov 2024",
+                                            R.drawable.jerami
+                                        )
                                     }
 
                                     Button(
@@ -192,7 +212,9 @@ fun ManajemenScreen(navController: NavController) {
                                                 painter = painterResource(id = R.drawable.back_vector_right),
                                                 contentDescription = "Arrow",
                                                 tint = Color.White,
-                                                modifier = Modifier.size(24.dp).padding(start = 4.dp)
+                                                modifier = Modifier
+                                                    .size(24.dp)
+                                                    .padding(start = 4.dp)
                                             )
                                         }
                                     }
@@ -232,7 +254,11 @@ fun ManajemenScreen(navController: NavController) {
                                         Box(
                                             modifier = Modifier
                                                 .background(Color.Transparent)
-                                                .border(width = 1.dp, color = GreenPrimary, shape = RoundedCornerShape(4.dp))
+                                                .border(
+                                                    width = 1.dp,
+                                                    color = GreenPrimary,
+                                                    shape = RoundedCornerShape(4.dp)
+                                                )
                                                 .padding(horizontal = 12.dp, vertical = 4.dp)
                                         ) {
                                             Text(
@@ -249,10 +275,30 @@ fun ManajemenScreen(navController: NavController) {
                                         modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
                                     }
 
                                     Button(
@@ -277,7 +323,9 @@ fun ManajemenScreen(navController: NavController) {
                                                 painter = painterResource(id = R.drawable.back_vector_right),
                                                 contentDescription = "Arrow",
                                                 tint = Color.White,
-                                                modifier = Modifier.size(24.dp).padding(start = 4.dp)
+                                                modifier = Modifier
+                                                    .size(24.dp)
+                                                    .padding(start = 4.dp)
                                             )
                                         }
                                     }
@@ -315,7 +363,11 @@ fun ManajemenScreen(navController: NavController) {
                                         Box(
                                             modifier = Modifier
                                                 .background(Color.Transparent)
-                                                .border(width = 1.dp, color = GreenPrimary, shape = RoundedCornerShape(4.dp))
+                                                .border(
+                                                    width = 1.dp,
+                                                    color = GreenPrimary,
+                                                    shape = RoundedCornerShape(4.dp)
+                                                )
                                                 .padding(horizontal = 12.dp, vertical = 4.dp)
                                         ) {
                                             Text(
@@ -332,10 +384,30 @@ fun ManajemenScreen(navController: NavController) {
                                         modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
                                     }
 
                                     Button(
@@ -360,7 +432,9 @@ fun ManajemenScreen(navController: NavController) {
                                                 painter = painterResource(id = R.drawable.back_vector_right),
                                                 contentDescription = "Arrow",
                                                 tint = Color.White,
-                                                modifier = Modifier.size(24.dp).padding(start = 4.dp)
+                                                modifier = Modifier
+                                                    .size(24.dp)
+                                                    .padding(start = 4.dp)
                                             )
                                         }
                                     }
@@ -398,7 +472,11 @@ fun ManajemenScreen(navController: NavController) {
                                         Box(
                                             modifier = Modifier
                                                 .background(Color.Transparent)
-                                                .border(width = 1.dp, color = GreenPrimary, shape = RoundedCornerShape(4.dp))
+                                                .border(
+                                                    width = 1.dp,
+                                                    color = GreenPrimary,
+                                                    shape = RoundedCornerShape(4.dp)
+                                                )
                                                 .padding(horizontal = 12.dp, vertical = 4.dp)
                                         ) {
                                             Text(
@@ -415,10 +493,30 @@ fun ManajemenScreen(navController: NavController) {
                                         modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Jerami", "100", "12 Des 2024", R.drawable.jerami)
-                                        LimbahCardItem("Atap Jerami", "100", "12 Des 2024", R.drawable.atap_jerami)
-                                        LimbahCardItem("Jerami", "100", "12 Des 2024", R.drawable.jerami)
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Atap Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.atap_jerami
+                                        )
+                                        LimbahCardItem(
+                                            "Jerami",
+                                            "100",
+                                            "12 Des 2024",
+                                            R.drawable.jerami
+                                        )
                                     }
 
                                     Button(
@@ -444,7 +542,9 @@ fun ManajemenScreen(navController: NavController) {
                                                 painter = painterResource(id = R.drawable.back_vector_right),
                                                 contentDescription = "Arrow",
                                                 tint = Color.White,
-                                                modifier = Modifier.size(24.dp).padding(start = 8.dp)
+                                                modifier = Modifier
+                                                    .size(24.dp)
+                                                    .padding(start = 8.dp)
                                             )
                                         }
                                     }
@@ -471,9 +571,6 @@ fun ManajemenScreen(navController: NavController) {
         }
     }
 }
-
-
-
 
 
 @Composable
@@ -542,82 +639,6 @@ private fun StatItem(label: String, value: String, imageRes: Int) {
                 }
             }
         }
-    }
-}
-
-
-@Composable
-private fun WeatherForecast() {
-    // Mengambil waktu terkini (jam) dari sistem
-    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-    val weatherData = DummyData.weatherForecast
-
-    // Cari indeks dari item yang aktif
-    val activeIndex = weatherData.indexOfFirst {
-        it.time.substringBefore(":").toIntOrNull() == currentHour
-    }
-
-    // Tentukan rentang indeks yang menampilkan 7 item dengan aktif di tengah (indeks ke-3 dari 7)
-    val startIndex = (activeIndex - 3).coerceAtLeast(0)
-    val endIndex = (startIndex + 6).coerceAtMost(weatherData.size - 1)
-    val displayedWeather = weatherData.subList(startIndex, endIndex + 1)
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0f))
-    ) {
-        Box {
-            Column {
-                Text(
-                    text = "Cuaca hari ini",
-                    style = PoppinsRegular18,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    displayedWeather.forEachIndexed { index, weather ->
-                        val isActive = (index == 3)
-                        WeatherItem(weather = weather, isActive = isActive)
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun WeatherItem(weather: Weather, isActive: Boolean) {
-    // cek kondisi aktif
-    val backgroundColor = if (isActive) GreenPrimary else GreenLight
-    val iconActive = if (isActive) Color.White else Color.Black
-
-    Column(
-        modifier = Modifier
-            .clip(RoundedCornerShape(4.dp))
-            .background(backgroundColor)
-            .padding(2.dp)
-            .width(42.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = weather.time,
-            style = PoppinsBold10,
-            color = iconActive,
-        )
-        Icon(
-            painter = painterResource(id = weather.icon),
-            tint = iconActive,
-            contentDescription = null,
-            modifier = Modifier.size(26.dp)
-        )
-        Text(
-            text = "${weather.temperature}°",
-            style = PoppinsBold10,
-            color = iconActive,
-        )
     }
 }
 
