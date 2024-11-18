@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.agrofy_app.ui.screens
+package com.example.agrofy_app.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
