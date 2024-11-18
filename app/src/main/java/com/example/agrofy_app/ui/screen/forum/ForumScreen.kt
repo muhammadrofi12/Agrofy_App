@@ -144,7 +144,7 @@ fun ForumScreen(modifier: Modifier = Modifier, navController: NavController) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick =  { navController.navigate("forum") },
+                onClick =  { navController.navigate("add_forum") },
                 containerColor = GreenPrimary,
                 contentColor = Color.White,
                 modifier = Modifier
