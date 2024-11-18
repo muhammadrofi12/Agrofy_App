@@ -1,4 +1,4 @@
-package com.example.agrofy_app.ui.screen
+package com.example.agrofy_app.ui.profil
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
