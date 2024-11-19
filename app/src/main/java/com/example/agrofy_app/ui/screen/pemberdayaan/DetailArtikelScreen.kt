@@ -182,14 +182,6 @@ fun DetailArtikelScreen(
                     }
                 }
             }
-
-            // Floating Comment Button
-            FloatingCommentButton(
-                commentCount = 60,
-                onClick = {
-                    navController.navigate("komentar_artikel")
-                },
-            )
         }
     }
 }
@@ -224,53 +216,6 @@ fun VideoButton(onClick: () -> Unit) {
         }
     }
 }
-
-@Composable
-fun FloatingCommentButton(
-    commentCount: Int,
-    onClick: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 16.dp),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        Button(
-            onClick = onClick,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = GreenLight,
-            ),
-            shape = RoundedCornerShape(50),
-            modifier = Modifier
-                .height(48.dp)
-                .shadow(4.dp, RoundedCornerShape(50)),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = 4.dp
-            )
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_comment),
-                    contentDescription = "Comment Icon",
-                    tint = Color.Black,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = commentCount.toString(),
-                    style = PoppinsRegular14,
-                    color = Color.Black
-                )
-            }
-        }
-    }
-}
-
-
 
 @Preview(showBackground = true)
 @Composable

@@ -9,31 +9,33 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.agrofy_app.data.DummyData.artikelPembelajaran
 import com.example.agrofy_app.data.DummyData.videoPembelajaran
 import com.example.agrofy_app.ui.components.BottomNavigationBar
-import com.example.agrofy_app.ui.screen.LoginScreen
-import com.example.agrofy_app.ui.screen.RegisterScreen
-import com.example.agrofy_app.ui.screen.forum.ForumScreen
 import com.example.agrofy_app.ui.screen.HomeScreen
+import com.example.agrofy_app.ui.screen.LoginScreen
+import com.example.agrofy_app.ui.screen.OnboardingScreen
+import com.example.agrofy_app.ui.screen.RegisterScreen
+import com.example.agrofy_app.ui.screen.forum.AddForumScreen
+import com.example.agrofy_app.ui.screen.forum.DetailForumScreen
+import com.example.agrofy_app.ui.screen.forum.ForumScreen
+import com.example.agrofy_app.ui.screen.manajemen.ManajemenHasilScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenLimbahScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenProgressScreen
-import com.example.agrofy_app.ui.screen.OnboardingScreen
-import com.example.agrofy_app.ui.screens.SplashScreen
-import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
-import com.example.agrofy_app.ui.screen.profil.ProfileScreen
-import com.example.agrofy_app.ui.screen.forum.AddForumScreen
-import com.example.agrofy_app.ui.screen.manajemen.ManajemenHasilScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenRiwayatScreen
 import com.example.agrofy_app.ui.screen.manajemen.ManajemenScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.ArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailVideoScreen
-import com.example.agrofy_app.ui.screen.pemberdayaan.KomentarScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
+import com.example.agrofy_app.ui.screen.profil.ProfileScreen
+import com.example.agrofy_app.ui.screens.SplashScreen
+import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 
 
 data class NavigationItem(
@@ -72,7 +74,11 @@ fun MainScreen() {
             }
         }
     ) { innerPadding ->
-        NavHost(navController = navController, startDestination = "splash") {
+        NavHost(
+            navController = navController,
+            startDestination = "splash",
+            modifier = Modifier.padding(innerPadding)
+        ) {
             composable("splash") { SplashScreen(navController = navController) }
             composable("onboarding") { OnboardingScreen(navController = navController) }
             composable("login") { LoginScreen(navController = navController) }
@@ -90,10 +96,7 @@ fun MainScreen() {
                 ManajemenScreen(navController = navController)
             }
             composable("forum") {
-                ForumScreen(
-                    navController = navController,
-                    modifier = Modifier.padding(innerPadding)
-                )
+                ForumScreen(navController = navController)
             }
             composable("profil") {
                 ProfileScreen(navController = navController)
@@ -116,12 +119,6 @@ fun MainScreen() {
                 } else {
                     println("Article with ID $articleId not found")
                 }
-            }
-            composable("komentar_artikel") {
-                KomentarScreen(
-                    navController = navController,
-                    modifier = Modifier.padding(innerPadding)
-                )
             }
 
             // Manajemen
