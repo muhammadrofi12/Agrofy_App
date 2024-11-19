@@ -1,16 +1,40 @@
 package com.example.agrofy_app.ui.screen.forum
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,20 +43,75 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
+import com.example.agrofy_app.data.DummyDataForum
+import com.example.agrofy_app.models.ForumPost
 import com.example.agrofy_app.ui.components.BottomNavigationBar
-import androidx.compose.foundation.background
-import androidx.compose.ui.layout.ContentScale
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.GreenPrimary
 
 @Composable
+fun ForumScreen(navController: NavController) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                title = "Forum Diskusi",
+                img = R.drawable.ic_forum_diskusi,
+                isIconButtonEnabled = false,
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { navController.navigate("add_forum") },
+                containerColor = GreenPrimary,
+                contentColor = Color.White,
+                modifier = Modifier
+                    .height(120.dp)
+                    .width(60.dp)
+                    .padding(bottom = 56.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.add_button),
+                    contentDescription = "Add",
+                    modifier = Modifier.size(38.dp)
+                )
+            }
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(top = 24.dp)
+        ) {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(DummyDataForum.forumPosts) { post ->
+                    ForumPost(
+                        navController = navController,
+                        post = post
+                    )
+                }
+            }
+
+            BottomNavigationBar(
+                navController = navController,
+                onItemSelected = { /* Implementasi aksi */ },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+            )
+        }
+    }
+}
+
+@Composable
 fun ForumPost(
-    authorName: String,
-    question: String,
-    likesCount: Int,
-    commentsCount: Int,
-    imageResource: Int? = null // Gambar opsional, bisa null
+    navController: NavController,
+    post: ForumPost
 ) {
+    var isLiked by remember { mutableStateOf(false) }
+    var currentLikesCount by remember { mutableIntStateOf(post.likesCount) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,30 +124,31 @@ fun ForumPost(
                 .background(Color.White)
                 .padding(16.dp)
         ) {
+            // Author Info
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
                     painter = painterResource(R.drawable.ic_author),
                     contentDescription = "Icon profil",
-                    modifier = Modifier.size(40.dp).clip(CircleShape)
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
                 )
 
                 Spacer(modifier = Modifier.width(10.dp))
 
-                Column {
-                    Text(
-                        text = authorName,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
-                }
+                Text(
+                    text = post.authorName,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
             }
 
-            // Menambahkan gambar persegi panjang vertikal jika imageResource tidak null
-            imageResource?.let {
+            // Post Image
+            post.imageResource?.let {
                 Spacer(modifier = Modifier.height(10.dp))
                 Image(
                     painter = painterResource(it),
-                    contentDescription = "Image above question",
+                    contentDescription = "Post image",
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(150.dp)
@@ -77,17 +157,17 @@ fun ForumPost(
                     alignment = Alignment.Center
                 )
             }
-            // Menampilkan teks pertanyaan setelah gambar
+
+            // Question Text
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = question,
+                text = post.question,
                 fontSize = 14.sp,
                 color = Color.Gray
             )
 
+            // Likes and Comments
             Spacer(modifier = Modifier.height(10.dp))
-
-            // Ikon "Love" dan "Comment" di kanan bawah
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -95,16 +175,23 @@ fun ForumPost(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                // Likes
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable {
+                        isLiked = !isLiked
+                        currentLikesCount += if (isLiked) 1 else -1
+                    }
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_love_active),
                         contentDescription = "Love icon",
                         modifier = Modifier.size(24.dp),
-                        tint = Color.Gray
+                        tint = if (isLiked) Color.Red else Color.Gray
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "$likesCount",
+                        text = "$currentLikesCount",
                         fontSize = 14.sp,
                         color = Color.Gray
                     )
@@ -112,7 +199,13 @@ fun ForumPost(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                // Comments
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable {
+                        navController.navigate("detail_forum/${post.id}")
+                    }
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_comment),
                         contentDescription = "Comment icon",
@@ -121,81 +214,12 @@ fun ForumPost(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "$commentsCount",
+                        text = "${post.commentsCount}",
                         fontSize = 14.sp,
                         color = Color.Gray
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun ForumScreen(modifier: Modifier = Modifier, navController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                navController = navController,
-                title = "Forum Diskusi",
-                img = R.drawable.ic_forum_diskusi,
-                isIconButtonEnabled = false,
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick =  { navController.navigate("add_forum") },
-                containerColor = GreenPrimary,
-                contentColor = Color.White,
-                modifier = Modifier
-                    .height(120.dp)
-                    .width(60.dp)
-                    .padding(bottom = 56.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.add_button),
-                    contentDescription = "Add",
-                    modifier = Modifier
-                        .size(38.dp)
-                )
-            }
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(top = 24.dp)
-        ) {
-            Column(modifier = Modifier.fillMaxSize()) {
-                // Postingan Forum pertama
-                ForumPost(
-                    authorName = "Fitri",
-                    question = "Ada yang punya tips membuat pupuk organik dari sisa panen padi? Apa saja langkah yang harus dilakukan?",
-
-                    likesCount = 137,
-                    commentsCount = 60,
-                    imageResource = null // Tidak ada gambar
-                )
-
-                // Postingan Forum kedua
-                ForumPost(
-                    authorName = "Rofy",
-                    question = "Apakah ada disini yang pernah mencoba menggunakan limbah jerami sebagai pakan ternak? Apa efeknya bagi kesehatan hewan?",
-                    likesCount = 230,
-                    commentsCount = 120,
-                    imageResource = R.drawable.jerami // Gambar ada
-                )
-            }
-
-            // BottomNavigationBar
-            BottomNavigationBar(
-                navController = navController,
-                onItemSelected = { /* Implementasi aksi */ },
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-            )
         }
     }
 }

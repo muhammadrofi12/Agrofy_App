@@ -139,6 +139,14 @@ fun MainScreen() {
             composable("add_forum") {
                 AddForumScreen(navController = navController)
             }
+            // Detail Forum
+            composable(
+                "detail_forum/{postId}",
+                arguments = listOf(navArgument("postId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val postId = backStackEntry.arguments?.getString("postId")
+                DetailForumScreen(navController, postId)
+            }
 
         }
     }
