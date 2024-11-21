@@ -293,7 +293,6 @@ fun HomeScreen(navController: NavController) {
 }
 
 
-
 @Composable
 private fun StatItem(label: String, value: String, imageRes: Int) {
     Card(

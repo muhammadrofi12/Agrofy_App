@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agrofy_app.data.api.VideoRetrofitClient
 import com.example.agrofy_app.models.VideoResponse
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,7 +32,9 @@ class VideoViewModel : ViewModel() {
             _error.value = null
 
             try {
-                val response = VideoRetrofitClient.instance.getVideos()
+                val videosDeferred = async { VideoRetrofitClient.instance.getVideos() }
+                val response = videosDeferred.await()
+
                 if (response.isSuccessful) {
                     response.body()?.let { apiResponse ->
                         val videoList = apiResponse.data

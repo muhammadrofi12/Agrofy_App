@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agrofy_app.data.api.KategoriRetrofitClient
 import com.example.agrofy_app.models.KategoriResponse
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,7 +30,9 @@ class KategoriViewModel : ViewModel() {
             _error.value = null
 
             try {
-                val response = KategoriRetrofitClient.instance.getKategori()
+                val kategoriDeferred = async { KategoriRetrofitClient.instance.getKategori() }
+                val response = kategoriDeferred.await()
+
                 if (response.isSuccessful) {
                     response.body()?.let { apiResponse ->
                         _kategori.value = apiResponse.data
