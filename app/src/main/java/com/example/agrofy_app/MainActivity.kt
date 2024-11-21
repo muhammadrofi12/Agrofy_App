@@ -14,7 +14,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.agrofy_app.data.DummyData.artikelPembelajaran
 import com.example.agrofy_app.data.DummyData.videoPembelajaran
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.screen.HomeScreen
@@ -110,16 +109,11 @@ fun MainScreen() {
                     DetailVideoScreen(video = video, navController = navController)
                 }
             }
-            composable("artikel_detail/{articleId}") { backStackEntry ->
-                val articleId = backStackEntry.arguments?.getString("articleId")?.toIntOrNull()
-                println("Navigating to artikel_detail with ID: $articleId")
-                val article = artikelPembelajaran.find { it.id == articleId }
-                if (article != null) {
-                    DetailArtikelScreen(article = article, navController = navController)
-                } else {
-                    println("Article with ID $articleId not found")
-                }
+            composable("artikel_detail/{id}") { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+                DetailArtikelScreen(artikelId = id, navController = navController)
             }
+
 
             // Manajemen
             composable("limbah") {

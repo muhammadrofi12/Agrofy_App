@@ -2,10 +2,11 @@ package com.example.agrofy_app.models
 
 import com.google.gson.annotations.SerializedName
 
-data class ArtikelResponse(
+data class VideoResponse(
     val id: Int,
-    @SerializedName("judul_artikel") val judulArtikel: String,
+    @SerializedName("judul_video") val judulVideo: String,
     val deskripsi: String,
+    val video: String,
     val thumbnail: String,
     @SerializedName("user_id") val userId: Int,
     @SerializedName("kategori_id") val kategoriId: Int,

@@ -1,7 +1,7 @@
 package com.example.agrofy_app.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -13,23 +13,31 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.agrofy_app.R
+import com.example.agrofy_app.models.VideoResponse
 import com.example.agrofy_app.models.Videos
-import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold16
 import com.example.agrofy_app.ui.theme.PoppinsMedium8
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 
 @Composable
-fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
+fun VideoItem(
+    video: VideoResponse,
+    navController: NavController,
+    modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 18.dp, vertical = 4.dp),
+            .padding(horizontal = 18.dp, vertical = 4.dp)
+            .clickable {
+                navController.navigate("video_detail/${video.id}")
+            },
         shape = RoundedCornerShape(12.dp),
     ) {
         // Thumbnail img
@@ -38,11 +46,13 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .height(160.dp)
         ) {
-            Image(
-                painter = painterResource(id = video.photo),
-                contentDescription = "Video Thumbnail",
+            // Gambar utama menggunakan AsyncImage untuk load dari URL
+            AsyncImage(
+                model = "https://73zqc05b-3000.asse.devtunnels.ms/thumb/${video.thumbnail}",
+                contentDescription = video.judulVideo,
+                modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                placeholder = painterResource(id = R.drawable.ic_image)
             )
 
             // Warna Gradient
@@ -62,19 +72,19 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
             )
 
             // Text Duration
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp)
-                    .background(Color.Black.copy(alpha = 0.3f), shape = RoundedCornerShape(12.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-            ) {
-                Text(
-                    text = video.duration,
-                    style = PoppinsMedium8,
-                    color = Color.White
-                )
-            }
+//            Box(
+//                modifier = Modifier
+//                    .align(Alignment.TopEnd)
+//                    .padding(8.dp)
+//                    .background(Color.Black.copy(alpha = 0.3f), shape = RoundedCornerShape(12.dp))
+//                    .padding(horizontal = 8.dp, vertical = 4.dp)
+//            ) {
+//                Text(
+//                    text = video.,
+//                    style = PoppinsMedium8,
+//                    color = Color.White
+//                )
+//            }
 
             Column(
                 modifier = Modifier
@@ -83,7 +93,7 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
             ) {
                 // Video judul
                 Text(
-                    text = video.judul,
+                    text = video.judulVideo,
                     style = PoppinsBold16,
                     color = Color.White,
                     maxLines = 1,
@@ -94,11 +104,12 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
 
                 // Video description
                 Text(
-                    text = video.deskripsi,
+                    text = video.deskripsi.replace("<[^>]*>".toRegex(), ""), // mengambil data tag HTML
                     style = PoppinsRegular12,
                     color = Color.White,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Justify
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -107,37 +118,37 @@ fun VideoItem(video: Videos, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewVideoItem() {
-    Agrofy_AppTheme { VideoItem(
-        video = Videos(
-            1,
-            "Pembuatan Briket Dari Bongol Jagung",
-            sub_judul = "Arang briket dari bonggol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian bonggol jagung yang kering. Proses pembuatannya meliputi pirolisis (pembakaran tanpa oksigen), penghalusan arang, pencampuran dengan bahan pengikat, pencetakan, dan pengeringan.",
-            deskripsi = """
-                Cara Membuat Arang Briket dari Bonggol Jagung 🌽
-                1. Persiapan: Bonggol jagung dikeringkan hingga benar-benar kering.
-                2. Pirolisis: Bonggol kering dibakar dalam drum tertutup tanpa oksigen agar menjadi arang, bukan abu.
-                3. Penghalusan: Arang yang dihasilkan dihancurkan menjadi serbuk halus. 
-                4. Pencampuran: Serbuk arang dicampur dengan bahan pengikat seperti tepung kanji, ditambahkan air secukupnya hingga menjadi adonan.
-                5. Pencetakan: Adonan dicetak sesuai bentuk yang diinginkan dengan tekanan yang cukup.
-                6. Pengeringan: Briket yang sudah dicetak dijemur atau dikeringkan hingga benar-benar kering.
-                
-                Keunggulan 🌟
-                1. Ramah Lingkungan: Memanfaatkan limbah pertanian.
-                2. Ekonomis: Lebih murah dan mudah didapat.
-                3. Stabil: Panas yang konsisten dan emisi rendah.
-                
-                Proses ini mengubah limbah bonggol jagung menjadi sumber energi alternatif yang efisien dan berkelanjutan!
-                """.trimIndent(),
-            25-10-2024,
-             "Jagung",
-            "03:35",
-            R.drawable.video_thumb,
-            "https://youtu.be/mMCNwUJMKNI?si=cmwTjQgzm4falwCm",
-            "Willy Candra",
-        )
-    ) }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewVideoItem() {
+//    Agrofy_AppTheme { VideoItem(
+//        video = Videos(
+//            1,
+//            "Pembuatan Briket Dari Bongol Jagung",
+//            sub_judul = "Arang briket dari bonggol jagung adalah bahan bakar alternatif yang ramah lingkungan, terbuat dari limbah pertanian bonggol jagung yang kering. Proses pembuatannya meliputi pirolisis (pembakaran tanpa oksigen), penghalusan arang, pencampuran dengan bahan pengikat, pencetakan, dan pengeringan.",
+//            deskripsi = """
+//                Cara Membuat Arang Briket dari Bonggol Jagung 🌽
+//                1. Persiapan: Bonggol jagung dikeringkan hingga benar-benar kering.
+//                2. Pirolisis: Bonggol kering dibakar dalam drum tertutup tanpa oksigen agar menjadi arang, bukan abu.
+//                3. Penghalusan: Arang yang dihasilkan dihancurkan menjadi serbuk halus.
+//                4. Pencampuran: Serbuk arang dicampur dengan bahan pengikat seperti tepung kanji, ditambahkan air secukupnya hingga menjadi adonan.
+//                5. Pencetakan: Adonan dicetak sesuai bentuk yang diinginkan dengan tekanan yang cukup.
+//                6. Pengeringan: Briket yang sudah dicetak dijemur atau dikeringkan hingga benar-benar kering.
+//
+//                Keunggulan 🌟
+//                1. Ramah Lingkungan: Memanfaatkan limbah pertanian.
+//                2. Ekonomis: Lebih murah dan mudah didapat.
+//                3. Stabil: Panas yang konsisten dan emisi rendah.
+//
+//                Proses ini mengubah limbah bonggol jagung menjadi sumber energi alternatif yang efisien dan berkelanjutan!
+//                """.trimIndent(),
+//            25-10-2024,
+//             "Jagung",
+//            "03:35",
+//            R.drawable.video_thumb,
+//            "https://youtu.be/mMCNwUJMKNI?si=cmwTjQgzm4falwCm",
+//            "Willy Candra",
+//        )
+//    ) }
+//}
 

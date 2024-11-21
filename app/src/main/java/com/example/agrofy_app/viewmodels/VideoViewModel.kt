@@ -1,21 +1,19 @@
 package com.example.agrofy_app.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agrofy_app.data.api.RetrofitClient
-import com.example.agrofy_app.models.ArtikelResponse
+import com.example.agrofy_app.data.api.VideoRetrofitClient
+import com.example.agrofy_app.models.VideoResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+class VideoViewModel : ViewModel() {
+    private val _videos = MutableStateFlow<List<VideoResponse>>(emptyList())
+    val videos: StateFlow<List<VideoResponse>> = _videos.asStateFlow()
 
-class ArtikelViewModel : ViewModel() {
-    private val _artikels = MutableStateFlow<List<ArtikelResponse>>(emptyList())
-    val artikels: StateFlow<List<ArtikelResponse>> = _artikels.asStateFlow()
-
-    private val _originalArtikels = MutableStateFlow<List<ArtikelResponse>>(emptyList()) // Change to ArtikelResponse
+    private val _originalVideos = MutableStateFlow<List<VideoResponse>>(emptyList())
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
@@ -24,20 +22,21 @@ class ArtikelViewModel : ViewModel() {
     val error: StateFlow<String?> = _error.asStateFlow()
 
     init {
-        fetchArtikels()
+        fetchVideos()
     }
 
-    private fun fetchArtikels() {
+    private fun fetchVideos() {
         viewModelScope.launch {
             _isLoading.value = true
             _error.value = null
 
             try {
-                val response = RetrofitClient.instance.getArtikels()
+                val response = VideoRetrofitClient.instance.getVideos()
                 if (response.isSuccessful) {
                     response.body()?.let { apiResponse ->
-                        _artikels.value = apiResponse.data
-                        _originalArtikels.value = apiResponse.data
+                        val videoList = apiResponse.data
+                        _originalVideos.value = videoList
+                        _videos.value = videoList
                     } ?: run {
                         _error.value = "Response body is empty"
                     }
@@ -45,21 +44,20 @@ class ArtikelViewModel : ViewModel() {
                     _error.value = "Error: ${response.code()} - ${response.message()}"
                 }
             } catch (e: Exception) {
-                Log.e("ArtikelViewModel", "Error fetching artikels", e)
                 _error.value = e.message ?: "Unknown error occurred"
-                _artikels.value = emptyList()
+                _videos.value = emptyList()
             } finally {
                 _isLoading.value = false
             }
         }
     }
 
-    fun filterArtikels(query: String = "", category: String = "Semua") {
-        val filteredArtikels = _originalArtikels.value.filter { artikel ->
-            (query.isEmpty() || artikel.judulArtikel.contains(query, ignoreCase = true)) &&
-                    (category == "Semua" || artikel.namaKategori == category)
+    fun filterVideos(query: String = "", category: String = "Semua") {
+        val filteredVideos = _originalVideos.value.filter { video ->
+            (query.isEmpty() || video.judulVideo.contains(query, ignoreCase = true)) &&
+                    (category == "Semua" || video.namaKategori == category)
         }
-        _artikels.value = filteredArtikels
+        _videos.value = filteredVideos
     }
-}
 
+}

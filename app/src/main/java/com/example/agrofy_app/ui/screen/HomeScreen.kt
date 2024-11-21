@@ -45,7 +45,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
-import com.example.agrofy_app.data.DummyData
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.components.CardArtikelItem
 import com.example.agrofy_app.ui.components.VideoItem
@@ -58,16 +57,17 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
 import com.example.agrofy_app.viewmodels.ArtikelViewModel
+import com.example.agrofy_app.viewmodels.VideoViewModel
 
 @Composable
 fun HomeScreen(navController: NavController) {
     val artikelViewModel: ArtikelViewModel = viewModel()
-    val artikels by artikelViewModel.artikels.collectAsState()
-    val isLoading by artikelViewModel.isLoading.collectAsState()
+    val videoViewModel: VideoViewModel = viewModel()
 
-//    LaunchedEffect(artikels) {
-//        Log.d("HomeScreen", "Artikels received: $artikels")
-//    }
+    val artikels by artikelViewModel.artikels.collectAsState()
+    val videos by videoViewModel.videos.collectAsState()
+    val isLoadingArtikels by artikelViewModel.isLoading.collectAsState()
+    val isLoadingVideos by videoViewModel.isLoading.collectAsState()
 
     Box(
         modifier = Modifier
@@ -79,9 +79,10 @@ fun HomeScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(bottom = 60.dp),
         ) {
+            // Header: Text Selamat Datang dan Statistik
             item {
                 Column {
-                    // Text Selamat datang
+                    // Text Selamat Datang
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -179,17 +180,43 @@ fun HomeScreen(navController: NavController) {
                         }
                     )
                 }
-
             }
 
-            items(DummyData.videoPembelajaran.take(3)) { video ->
-                VideoItem(
-                    video = video,
-                    modifier = Modifier.clickable {
-                        navController.navigate("video_detail/${video.id}")
+            if (isLoadingVideos) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(48.dp),
+                            color = GreenPrimary
+                        )
                     }
-                )
+                }
+            } else if (videos.isEmpty()) {
+                item {
+                    Text(
+                        text = "Tidak ada video yang tersedia.",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center,
+                        style = TextStyle(color = Color.Gray)
+                    )
+                }
+            } else {
+                items(videos.take(3)) { video ->
+                    VideoItem(
+                        video = video,
+                        navController = navController
+                    )
+                }
             }
+
+
 
             // Artikel Pembelajaran
             item {
@@ -214,22 +241,18 @@ fun HomeScreen(navController: NavController) {
                         }
                     )
                 }
-
             }
 
             item {
-                if (isLoading) {
+                if (isLoadingArtikels) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(48.dp),
+                            modifier = Modifier.size(48.dp),
                             color = GreenPrimary
                         )
-
                     }
                 } else if (artikels.isEmpty()) {
                     Text(
@@ -245,7 +268,7 @@ fun HomeScreen(navController: NavController) {
                         contentPadding = PaddingValues(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(artikels) { article ->
+                        items(artikels.take(6)) { article ->
                             CardArtikelItem(
                                 article = article,
                                 navController = navController
@@ -260,7 +283,6 @@ fun HomeScreen(navController: NavController) {
         BottomNavigationBar(
             navController = navController,
             onItemSelected = { selectedItem ->
-                // Logika saat item navigasi dipilih
                 println("Item yang dipilih: $selectedItem")
             },
             modifier = Modifier
@@ -269,6 +291,7 @@ fun HomeScreen(navController: NavController) {
         )
     }
 }
+
 
 
 @Composable
