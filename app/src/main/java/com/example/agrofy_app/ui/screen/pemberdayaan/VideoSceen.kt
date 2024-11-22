@@ -49,8 +49,8 @@ import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold14
-import com.example.agrofy_app.viewmodels.KategoriViewModel
-import com.example.agrofy_app.viewmodels.VideoViewModel
+import com.example.agrofy_app.viewmodels.pemberdayaan.KategoriViewModel
+import com.example.agrofy_app.viewmodels.pemberdayaan.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

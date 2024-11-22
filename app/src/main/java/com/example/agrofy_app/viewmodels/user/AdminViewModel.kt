@@ -1,9 +1,9 @@
-package com.example.agrofy_app.viewmodels
+package com.example.agrofy_app.viewmodels.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agrofy_app.data.api.AdminRetrofitClient
-import com.example.agrofy_app.models.AdminResponse
+import com.example.agrofy_app.data.api.user.AdminRetrofitClient
+import com.example.agrofy_app.models.user.AdminResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

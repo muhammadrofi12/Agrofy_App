@@ -1,11 +1,11 @@
-package com.example.agrofy_app.viewmodels
+package com.example.agrofy_app.viewmodels.pemberdayaan
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agrofy_app.data.api.AdminRetrofitClient
-import com.example.agrofy_app.data.api.RetrofitClient
-import com.example.agrofy_app.models.AdminResponse
-import com.example.agrofy_app.models.ArtikelResponse
+import com.example.agrofy_app.data.api.user.AdminRetrofitClient
+import com.example.agrofy_app.data.api.pemberdayaan.RetrofitClient
+import com.example.agrofy_app.models.user.AdminResponse
+import com.example.agrofy_app.models.pemberdayaan.ArtikelResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -58,11 +58,6 @@ class DetailArtikelViewModel : ViewModel() {
                 _error.value = e.message ?: "An error occurred"
             }
         }
-    }
-
-    // Fungsi untuk mendapatkan nama admin berdasarkan userId
-    fun getAdminNameById(userId: Int): String? {
-        return _admins.value.find { it.id == userId }?.nama_lengkap
     }
 }
 

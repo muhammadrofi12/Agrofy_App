@@ -1,4 +1,4 @@
-package com.example.agrofy_app.models
+package com.example.agrofy_app.models.pemberdayaan
 
 import com.google.gson.annotations.SerializedName
 

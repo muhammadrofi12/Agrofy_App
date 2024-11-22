@@ -2,7 +2,13 @@ package com.example.agrofy_app.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -19,11 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.agrofy_app.R
-import com.example.agrofy_app.models.VideoResponse
-import com.example.agrofy_app.models.Videos
+import com.example.agrofy_app.models.pemberdayaan.VideoResponse
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold16
-import com.example.agrofy_app.ui.theme.PoppinsMedium8
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 
 @Composable

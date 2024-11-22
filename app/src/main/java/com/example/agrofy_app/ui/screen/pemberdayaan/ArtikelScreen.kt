@@ -53,7 +53,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.agrofy_app.R
-import com.example.agrofy_app.models.ArtikelResponse
+import com.example.agrofy_app.models.pemberdayaan.ArtikelResponse
 import com.example.agrofy_app.ui.components.PemberdayaanNavigationBar
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.BrownPrimary
@@ -65,8 +65,8 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold14
 import com.example.agrofy_app.ui.theme.Warning
-import com.example.agrofy_app.viewmodels.ArtikelViewModel
-import com.example.agrofy_app.viewmodels.KategoriViewModel
+import com.example.agrofy_app.viewmodels.pemberdayaan.ArtikelViewModel
+import com.example.agrofy_app.viewmodels.pemberdayaan.KategoriViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,4 +1,4 @@
-package com.example.agrofy_app.models
+package com.example.agrofy_app.models.user
 
 data class AdminResponse(
     val id: Int,

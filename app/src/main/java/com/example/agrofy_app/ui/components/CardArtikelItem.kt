@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.agrofy_app.R
-import com.example.agrofy_app.models.ArtikelResponse
+import com.example.agrofy_app.models.pemberdayaan.ArtikelResponse
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular10
