@@ -1,157 +1,170 @@
 package com.example.agrofy_app.ui.screen.pemberdayaan
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
-import com.example.agrofy_app.models.Videos
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.components.VideoPlayer
-import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
+import com.example.agrofy_app.ui.theme.GreenActive
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold20
+import com.example.agrofy_app.viewmodels.pemberdayaan.DetailVideoViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
 fun DetailVideoScreen(
-    video: Videos,
+    videoId: Int,
     navController: NavController,
-    modifier: Modifier = Modifier
+    viewModel: DetailVideoViewModel = viewModel()
 ) {
+    val video by viewModel.video.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
+
+    LaunchedEffect(videoId) {
+        viewModel.fetchVideoById(videoId)
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 navController = navController,
-                title = "Video Pembelajaran",
+                title = "Detail Video",
                 img = R.drawable.ic_back_circle,
                 onIconButtonClick = { navController.popBackStack() }
             )
         }
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 80.dp)
-        ) {
-
-            // Video Player
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-            ) {
-                VideoPlayer(videoUrl = video.file_video)
+        when {
+            isLoading -> Box(modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = GreenActive
+                )
             }
+            error != null -> Box(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = "Error: $error",
+                    color = Color.Red,
+                    modifier = Modifier.align(Alignment.Center),
+                    style = PoppinsRegular14
+                )
+            }
+            video != null -> {
+                val currentVideo = video!!
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                        .padding(top = 8.dp)
+                ) {
+                    // Video Player
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp)
+                        ) {
+                            VideoPlayer(videoUrl = "https://73zqc05b-3000.asse.devtunnels.ms/video/${currentVideo.video}")
+                        }
+                    }
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                item {
                     // Video Details
-                    VideoDetails(video)
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp)
+                        ) {
+                            Spacer(modifier = Modifier.height(16.dp))
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                            // Title
+                            Text(
+                                text = currentVideo.judulVideo,
+                                style = PoppinsSemiBold20,
+                                color = Color.Black
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            // Date and Author
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_calendar),
+                                    contentDescription = "Calendar",
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = formatISOToDate(currentVideo.createdAt),
+                                    style = PoppinsRegular14,
+                                    color = Color.Gray
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_circle),
+                                    contentDescription = "Circle",
+                                    modifier = Modifier.size(6.dp)
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_author),
+                                    contentDescription = "Author",
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = currentVideo.namaLengkap,
+                                    style = PoppinsRegular14,
+                                    color = Color.Gray
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            // Description
+                            Text(
+                                text = currentVideo.deskripsi.replace("<[^>]*>".toRegex(), ""),
+                                style = PoppinsRegular14,
+                                color = Color.Black,
+                                textAlign = TextAlign.Justify
+                            )
+                        }
+                    }
                 }
             }
         }
-    }
-
-}
-
-@Composable
-fun VideoDetails(
-    video: Videos
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp)
-    ) {
-        // Judul
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = video.judul,
-                style = PoppinsSemiBold20,
-                color = Color.Black
-            )
-        }
-
-        // Kalender dan Author
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                // Kalender
-                Image(
-                    painter = painterResource(id = R.drawable.ic_calendar),
-                    contentDescription = "Kalender",
-                    modifier = Modifier.size(16.dp)
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = formatDate(video.tanggal),
-                    style = PoppinsRegular14,
-                    color = Color.Gray
-                )
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                Image(
-                    painter = painterResource(id = R.drawable.ic_circle),
-                    contentDescription = "Circle",
-                    modifier = Modifier
-                        .size(6.dp)
-                )
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                // Author
-                Image(
-                    painter = painterResource(id = R.drawable.ic_author),
-                    contentDescription = "Author",
-                    modifier = Modifier.size(16.dp)
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = video.author,
-                    style = PoppinsRegular14,
-                    color = Color.Gray
-                )
-            }
-
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Description
-        Text(
-            text = video.deskripsi,
-            style = PoppinsRegular14,
-            color = Color.Gray
-        )
     }
 }
 

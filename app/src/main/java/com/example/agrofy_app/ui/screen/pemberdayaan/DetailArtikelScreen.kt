@@ -44,8 +44,8 @@ import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold20
-import com.example.agrofy_app.viewmodels.AdminViewModel
-import com.example.agrofy_app.viewmodels.DetailArtikelViewModel
+import com.example.agrofy_app.viewmodels.user.AdminViewModel
+import com.example.agrofy_app.viewmodels.pemberdayaan.DetailArtikelViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -58,7 +58,6 @@ fun DetailArtikelScreen(
     adminViewModel: AdminViewModel = viewModel()
 ) {
     val artikel by viewModel.artikel.collectAsState()
-    val admins by viewModel.admins.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
 

@@ -14,7 +14,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.agrofy_app.data.DummyData.videoPembelajaran
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.screen.HomeScreen
 import com.example.agrofy_app.ui.screen.LoginScreen
@@ -33,7 +32,7 @@ import com.example.agrofy_app.ui.screen.pemberdayaan.DetailArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailVideoScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
 import com.example.agrofy_app.ui.screen.profil.ProfileScreen
-import com.example.agrofy_app.ui.screens.SplashScreen
+import com.example.agrofy_app.ui.screen.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 
 
@@ -102,12 +101,16 @@ fun MainScreen() {
             }
 
             // Detail untuk pemberdayaan
-            composable("video_detail/{videoId}") { backStackEntry ->
-                val videoId = backStackEntry.arguments?.getString("videoId")?.toIntOrNull()
-                val video = videoPembelajaran.find { it.id == videoId }
-                if (video != null) {
-                    DetailVideoScreen(video = video, navController = navController)
-                }
+//            composable("video_detail/{videoId}") { backStackEntry ->
+//                val videoId = backStackEntry.arguments?.getString("videoId")?.toIntOrNull()
+//                val video = videoPembelajaran.find { it.id == videoId }
+//                if (video != null) {
+//                    DetailVideoScreen(videoId = id, navController = navController)
+//                }
+//            }
+            composable("video_detail/{id}") { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+                DetailVideoScreen(videoId = id, navController = navController)
             }
             composable("artikel_detail/{id}") { backStackEntry ->
                 val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0

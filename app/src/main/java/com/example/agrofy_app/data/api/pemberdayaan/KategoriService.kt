@@ -1,7 +1,7 @@
-package com.example.agrofy_app.data.api
+package com.example.agrofy_app.data.api.pemberdayaan
 
 import com.example.agrofy_app.models.ApiResponse
-import com.example.agrofy_app.models.KategoriResponse
+import com.example.agrofy_app.models.pemberdayaan.KategoriResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -1,9 +1,9 @@
-package com.example.agrofy_app.viewmodels
+package com.example.agrofy_app.viewmodels.pemberdayaan
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agrofy_app.data.api.KategoriRetrofitClient
-import com.example.agrofy_app.models.KategoriResponse
+import com.example.agrofy_app.data.api.pemberdayaan.KategoriRetrofitClient
+import com.example.agrofy_app.models.pemberdayaan.KategoriResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

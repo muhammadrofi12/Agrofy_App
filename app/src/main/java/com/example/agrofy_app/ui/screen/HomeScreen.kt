@@ -56,8 +56,8 @@ import com.example.agrofy_app.ui.theme.PoppinsMedium20
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular30
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
-import com.example.agrofy_app.viewmodels.ArtikelViewModel
-import com.example.agrofy_app.viewmodels.VideoViewModel
+import com.example.agrofy_app.viewmodels.pemberdayaan.ArtikelViewModel
+import com.example.agrofy_app.viewmodels.pemberdayaan.VideoViewModel
 
 @Composable
 fun HomeScreen(navController: NavController) {
