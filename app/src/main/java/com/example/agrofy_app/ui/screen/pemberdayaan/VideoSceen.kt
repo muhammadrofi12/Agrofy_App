@@ -69,8 +69,13 @@ fun VideoScreen(
     var selectedCategory by remember { mutableStateOf("Semua") }
 
     // Tambahkan "Semua" ke daftar kategori
+    //    val categories = listOf("Semua", "Padi", "Jagung", "Pisang")
     val categories = remember(kategori) {
-        listOf("Semua") + kategori.map { it.namaKategori }
+        if (!kategori.isNullOrEmpty()) {
+            listOf("Semua") + kategori.map { it.namaKategori }
+        } else {
+            listOf("Semua")
+        }
     }
 
     // Efek untuk filter

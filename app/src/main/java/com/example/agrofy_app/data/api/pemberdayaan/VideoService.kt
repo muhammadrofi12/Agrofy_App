@@ -1,7 +1,9 @@
 package com.example.agrofy_app.data.api.pemberdayaan
 
+import com.example.agrofy_app.data.api.user.ApiClient.tokenBrearer
 import com.example.agrofy_app.models.ApiResponse
 import com.example.agrofy_app.models.pemberdayaan.VideoResponse
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -27,7 +29,17 @@ object VideoRetrofitClient {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
+    private val authInterceptor = Interceptor { chain ->
+        val originalRequest = chain.request()
+        val requestBuilder = originalRequest.newBuilder()
+        tokenBrearer?.let {
+            requestBuilder.addHeader("Authorization", it)
+        }
+        chain.proceed(requestBuilder.build())
+    }
+
     private val client = OkHttpClient.Builder()
+        .addInterceptor(authInterceptor)
         .addInterceptor(loggingInterceptor)
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(15, TimeUnit.SECONDS)

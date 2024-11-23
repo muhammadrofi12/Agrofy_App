@@ -1,7 +1,10 @@
 package com.example.agrofy_app.data.api.pemberdayaan
 
+import android.util.Log
+import com.example.agrofy_app.data.api.user.ApiClient.tokenBrearer
 import com.example.agrofy_app.models.ApiResponse
 import com.example.agrofy_app.models.pemberdayaan.KategoriResponse
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,7 +24,19 @@ object KategoriRetrofitClient {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
+    val authInterceptor = Interceptor { chain ->
+        val originalRequest = chain.request()
+        val requestBuilder = originalRequest.newBuilder()
+        tokenBrearer?.let {
+            Log.d("KategoriApiService", "Authorization Token: $it")
+            requestBuilder.addHeader("Authorization", it)
+        }
+        chain.proceed(requestBuilder.build())
+    }
+
+
     private val client = OkHttpClient.Builder()
+        .addInterceptor(authInterceptor)
         .addInterceptor(loggingInterceptor)
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(15, TimeUnit.SECONDS)
