@@ -53,8 +53,8 @@ class KategoriViewModel(application: Application) : AndroidViewModel(application
                 // Handle Response
                 if (response.isSuccessful) {
                     response.body()?.let { apiResponse ->
+                        Log.d("KategoriViewModel", "Kategori API Response: $apiResponse")
                         _kategori.value = apiResponse.data
-                        Log.d("KategoriViewModel", "Kategori Data: ${apiResponse.data}")
                     } ?: run {
                         _error.value = "Response body is empty"
                         Log.d("KategoriViewModel", "Empty Response Body")

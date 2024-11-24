@@ -109,7 +109,8 @@ fun LogoutDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
-    navController: NavController
+    navController: NavController,
+    logout: () -> Unit
 ) {
     if (showDialog) {
         AlertDialog(
@@ -117,6 +118,7 @@ fun LogoutDialog(
             confirmButton = {
                 Button(
                     onClick = {
+                        logout()
                         onConfirm()
                         navController.navigate("login") {
                             popUpTo(0) {

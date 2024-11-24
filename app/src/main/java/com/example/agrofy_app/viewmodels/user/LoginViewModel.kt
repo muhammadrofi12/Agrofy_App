@@ -44,9 +44,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     ApiClient.setToken(token)
                     // Update status menjadi Success dengan LoginResponse
                     _loginState.value = LoginUiState.Success(response.body()!!)
+                } else if (response.code() == 400) {
+                    // Jika login gagal karena email atau password salah
+                    _loginState.value = LoginUiState.Error("Email atau kata sandi salah")
                 } else {
-                    // Jika login gagal
-                    _loginState.value = LoginUiState.Error("Login gagal: ${response.message()}")
+                    // Jika ada error lain
+                    _loginState.value = LoginUiState.Error("Login gagal ${response.message()}")
                 }
             } catch (e: Exception) {
                 // Menangani error lainnya

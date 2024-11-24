@@ -1,6 +1,5 @@
 package com.example.agrofy_app.ui.screen.pemberdayaan
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -79,7 +78,6 @@ fun ArtikelScreen(
 
     val artikels by artikelViewModel.artikels.collectAsState()
     val kategori by kategoriViewModel.kategori.collectAsState()
-//    Log.d("ArtikelScreen", "Categories: $kategori")
     val isLoading by artikelViewModel.isLoading.collectAsState()
     val error by artikelViewModel.error.collectAsState()
 
@@ -89,8 +87,8 @@ fun ArtikelScreen(
     // Tambahkan "Semua" ke daftar kategori
 //    val categories = listOf("Semua", "Padi", "Jagung", "Pisang")
     val categories = remember(kategori) {
-        if (!kategori.isNullOrEmpty()) {
-            listOf("Semua") + kategori.map { it.namaKategori }
+        if (kategori.isNotEmpty()) {
+            listOf("Semua") + kategori.map { it.namaKategori }.take(3)
         } else {
             listOf("Semua")
         }
@@ -98,16 +96,9 @@ fun ArtikelScreen(
 
     // Efek untuk filter
     LaunchedEffect(searchQuery, selectedCategory) {
-        Log.d("ArtikelScreen", "Search Query: $searchQuery, Selected Category: $selectedCategory")
-        if (selectedCategory.isNotEmpty()) {
-            artikelViewModel.filterArtikels(searchQuery, selectedCategory)
-        }
+        artikelViewModel.filterArtikels(searchQuery, selectedCategory)
     }
 
-
-    LaunchedEffect(kategori) {
-        Log.d("ArtikelScreen", "Kategori: $kategori")
-    }
 
     Scaffold(
         bottomBar = {
@@ -206,7 +197,7 @@ fun ArtikelScreen(
                                 .padding(horizontal = 20.dp),
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            categories?.forEach { category ->
+                            categories.forEach { category ->
                                 val isSelected = category == selectedCategory
                                 Button(
                                     onClick = { selectedCategory = category },
