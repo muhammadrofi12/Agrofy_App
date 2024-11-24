@@ -44,8 +44,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.agrofy_app.R
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.geometry.Offset
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsMedium18
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
@@ -53,12 +57,47 @@ import com.example.agrofy_app.ui.theme.PoppinsSemiBold12
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold18
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold34
+import com.example.agrofy_app.viewmodels.user.LoginUiState
+import com.example.agrofy_app.viewmodels.user.LoginViewModel
 
 @Composable
-fun LoginScreen(navController: NavController) {
-    var email by remember { mutableStateOf("agrofy@gmail.com") }
-    var password by remember { mutableStateOf("agrofy2024") }
+fun LoginScreen(
+    navController: NavController,
+    viewModel: LoginViewModel = viewModel()
+) {
+    var email by remember { mutableStateOf("rofi12@gmail.com") }
+    var password by remember { mutableStateOf("rofi123") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    // Collect login state
+    val loginState by viewModel.loginState.collectAsState()
+
+    // Handle login state changes
+    LaunchedEffect(loginState) {
+        when (loginState) {
+            is LoginUiState.Loading -> {
+                isLoading = true
+                errorMessage = null
+            }
+            is LoginUiState.Success -> {
+                isLoading = false
+                errorMessage = null
+                navController.navigate("beranda") {
+                    popUpTo("login") { inclusive = true }
+                }
+            }
+            is LoginUiState.Error -> {
+                isLoading = false
+                errorMessage = (loginState as LoginUiState.Error).message
+            }
+            LoginUiState.Initial -> {
+                isLoading = false
+                errorMessage = null
+            }
+        }
+    }
 
     // Focus state for each TextField
     val focusRequesterEmail = remember { FocusRequester() }
@@ -66,11 +105,8 @@ fun LoginScreen(navController: NavController) {
     val isFocusedEmail = remember { mutableStateOf(false) }
     val isFocusedPassword = remember { mutableStateOf(false) }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        // background blur
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Background blur (same as before)
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -92,7 +128,7 @@ fun LoginScreen(navController: NavController) {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Text atas "Masuk"
+            // Title Section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -105,21 +141,28 @@ fun LoginScreen(navController: NavController) {
                     style = PoppinsSemiBold34,
                     color = Color.Black
                 )
+
+                // Error message
+                errorMessage?.let {
+                    Text(
+                        text = it,
+                        color = Color.Red,
+                        style = PoppinsRegular14,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
             }
 
-            // Form Login
+            // Login Form
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(4f),
                 horizontalAlignment = Alignment.Start
             ) {
-                // Label Email
+                // Email Field
                 Text(text = "Email", style = PoppinsSemiBold18, color = Color.Black)
-
                 Spacer(modifier = Modifier.height(8.dp))
-
-                // Email Input
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
@@ -139,12 +182,9 @@ fun LoginScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Label Kata Sandi
+                // Password Field
                 Text(text = "Kata Sandi", style = PoppinsSemiBold18, color = Color.Black)
-
                 Spacer(modifier = Modifier.height(8.dp))
-
-                // Password Input
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
@@ -174,7 +214,7 @@ fun LoginScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Lupa Kata Sandi
+                // Forgot Password
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
@@ -189,21 +229,31 @@ fun LoginScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Button Masuk
+                // Login Button
                 Button(
-                    onClick = { navController.navigate("beranda") },
+                    onClick = {
+                        viewModel.login(email, password)
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary),
-                    shape = RoundedCornerShape(6.dp)
+                    shape = RoundedCornerShape(6.dp),
+                    enabled = !isLoading
                 ) {
-                    Text("MASUK", style = PoppinsMedium18, color = Color.White)
+                    if (isLoading) {
+                        CircularProgressIndicator(
+                            color = Color.White,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    } else {
+                        Text("MASUK", style = PoppinsMedium18, color = Color.White)
+                    }
                 }
 
-                Spacer(modifier = Modifier.height(2.dp))
-
-                // Daftar Link
+                // Register Link
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text("Belum memiliki akun? ", style = PoppinsRegular14)
@@ -218,7 +268,7 @@ fun LoginScreen(navController: NavController) {
                 }
             }
 
-            // Section Footer
+            // Footer Section (Google Sign In)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -226,9 +276,6 @@ fun LoginScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Divider and Text
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
@@ -244,7 +291,6 @@ fun LoginScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Button Login dengan Google
                 Button(
                     onClick = { /* Handle Google Sign-In */ },
                     modifier = Modifier.fillMaxWidth(),

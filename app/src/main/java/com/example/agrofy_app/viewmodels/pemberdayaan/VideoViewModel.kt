@@ -1,8 +1,13 @@
 package com.example.agrofy_app.viewmodels.pemberdayaan
 
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agrofy_app.data.api.pemberdayaan.VideoRetrofitClient
+import com.example.agrofy_app.data.api.user.ApiClient
+import com.example.agrofy_app.data.api.user.UserPreferences
 import com.example.agrofy_app.models.pemberdayaan.VideoResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +15,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class VideoViewModel : ViewModel() {
+class VideoViewModel(application: Application) : AndroidViewModel(application) {
+    private val userPreferences = UserPreferences(application)
     private val _videos = MutableStateFlow<List<VideoResponse>>(emptyList())
     val videos: StateFlow<List<VideoResponse>> = _videos.asStateFlow()
 
@@ -23,10 +29,19 @@ class VideoViewModel : ViewModel() {
     val error: StateFlow<String?> = _error.asStateFlow()
 
     init {
-        fetchVideos()
+        viewModelScope.launch {
+            userPreferences.getToken.collect { token ->
+                ApiClient.setToken(token)
+                if (!token.isNullOrEmpty()) {
+                    fetchVideos()
+                    filterVideos()
+                }
+                Log.d("VideoViewModel", "Token set: $token")
+            }
+        }
     }
 
-    private fun fetchVideos() {
+    fun fetchVideos() {
         viewModelScope.launch {
             _isLoading.value = true
             _error.value = null

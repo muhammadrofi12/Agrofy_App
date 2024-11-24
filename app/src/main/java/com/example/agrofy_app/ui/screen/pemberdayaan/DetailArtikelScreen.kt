@@ -44,7 +44,6 @@ import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold20
-import com.example.agrofy_app.viewmodels.user.AdminViewModel
 import com.example.agrofy_app.viewmodels.pemberdayaan.DetailArtikelViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -55,7 +54,6 @@ fun DetailArtikelScreen(
     artikelId: Int,
     navController: NavController,
     viewModel: DetailArtikelViewModel = viewModel(),
-    adminViewModel: AdminViewModel = viewModel()
 ) {
     val artikel by viewModel.artikel.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -64,7 +62,6 @@ fun DetailArtikelScreen(
     // Fetch data on screen launch
     LaunchedEffect(artikelId) {
         viewModel.fetchArtikelById(artikelId)
-        adminViewModel.fetchAdmins()
     }
 
     Scaffold(
@@ -148,9 +145,8 @@ fun DetailArtikelScreen(
                                 Spacer(modifier = Modifier.width(4.dp))
 
                                 // Mengambil relasi user
-                                val adminName = adminViewModel.getAdminNameById(article.userId)
                                 Text(
-                                    text = adminName ?: "Unknown",
+                                    text = article.namaLengkap,
                                     style = PoppinsRegular14,
                                     color = Color.Gray
                                 )
