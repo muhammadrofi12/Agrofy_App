@@ -71,8 +71,8 @@ fun VideoScreen(
     // Tambahkan "Semua" ke daftar kategori
     //    val categories = listOf("Semua", "Padi", "Jagung", "Pisang")
     val categories = remember(kategori) {
-        if (!kategori.isNullOrEmpty()) {
-            listOf("Semua") + kategori.map { it.namaKategori }
+        if (kategori.isNotEmpty()) {
+            listOf("Semua") + kategori.map { it.namaKategori }.take(3)
         } else {
             listOf("Semua")
         }

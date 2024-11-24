@@ -9,6 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,6 +35,7 @@ import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
 import com.example.agrofy_app.ui.screen.profil.ProfileScreen
 import com.example.agrofy_app.ui.screen.SplashScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
+import com.example.agrofy_app.viewmodels.user.LoginViewModel
 
 
 data class NavigationItem(
@@ -57,6 +59,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val loginViewModel: LoginViewModel = viewModel()
 
     // Ambil route yang sedang aktif
     val currentRoute = navController.currentBackStackEntry?.destination?.route
@@ -81,6 +84,7 @@ fun MainScreen() {
             composable("onboarding") { OnboardingScreen(navController = navController) }
             composable("login") { LoginScreen(navController = navController) }
             composable("register") { RegisterScreen(navController = navController) }
+
             composable("beranda") {
                 HomeScreen(navController = navController)
             }
@@ -97,17 +101,12 @@ fun MainScreen() {
                 ForumScreen(navController = navController)
             }
             composable("profil") {
-                ProfileScreen(navController = navController)
+                ProfileScreen(
+                    navController = navController,
+                    loginViewModel = loginViewModel
+                )
             }
 
-            // Detail untuk pemberdayaan
-//            composable("video_detail/{videoId}") { backStackEntry ->
-//                val videoId = backStackEntry.arguments?.getString("videoId")?.toIntOrNull()
-//                val video = videoPembelajaran.find { it.id == videoId }
-//                if (video != null) {
-//                    DetailVideoScreen(videoId = id, navController = navController)
-//                }
-//            }
             composable("video_detail/{id}") { backStackEntry ->
                 val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
                 DetailVideoScreen(videoId = id, navController = navController)

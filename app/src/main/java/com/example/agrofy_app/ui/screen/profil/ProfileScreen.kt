@@ -1,5 +1,6 @@
 package com.example.agrofy_app.ui.screen.profil
 
+import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,16 +44,18 @@ import com.example.agrofy_app.ui.theme.BrownPrimary
 import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.PoppinsBold24
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold12
+import com.example.agrofy_app.viewmodels.user.LoginViewModel
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) {
     var showLogoutDialog by remember { mutableStateOf(false) }
 
     LogoutDialog(
         showDialog = showLogoutDialog,
         onDismiss = { showLogoutDialog = false },
         onConfirm = { showLogoutDialog = false },
-        navController = navController
+        navController = navController,
+        logout = { loginViewModel.logout() }
     )
 
     Box(
@@ -201,5 +204,7 @@ fun ProfileScreen(navController: NavController) {
 @Composable
 fun ProfileScreenPreview() {
     val dummyNavController = rememberNavController()
-    ProfileScreen(navController = dummyNavController)
+    val dummyViewModel = LoginViewModel(Application())
+
+    ProfileScreen(navController = dummyNavController, loginViewModel = dummyViewModel)
 }

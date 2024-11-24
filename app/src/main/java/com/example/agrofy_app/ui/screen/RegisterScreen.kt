@@ -23,9 +23,14 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +46,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.theme.GreenPrimary
@@ -49,23 +55,43 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold18
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold34
+import com.example.agrofy_app.viewmodels.user.RegisterState
+import com.example.agrofy_app.viewmodels.user.RegisterViewModel
 
 @Composable
-fun RegisterScreen(navController: NavController) {
-    var firstName by remember { mutableStateOf("Agrofy") }
-    var lastName by remember { mutableStateOf("Jaya") }
-    var email by remember { mutableStateOf("agrofy@gmail.com") }
-    var password by remember { mutableStateOf("agrofy") }
-    var confirmPassword by remember { mutableStateOf("agrofy") }
+fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
+    var name by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
 
+    val registerState = viewModel.registerState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
     // Focus state for each TextField
-    val focusRequesterFirstName = remember { FocusRequester() }
-    val focusRequesterLastName = remember { FocusRequester() }
+    val focusRequesterName = remember { FocusRequester() }
     val focusRequesterEmail = remember { FocusRequester() }
     val focusRequesterPassword = remember { FocusRequester() }
     val focusRequesterConfirmPassword = remember { FocusRequester() }
+
+    // Handle registration state changes
+    LaunchedEffect(registerState.value) {
+        when (val state = registerState.value) {
+            is RegisterState.Success -> {
+                navController.navigate("login") {
+                    popUpTo("register") { inclusive = true }
+                }
+                snackbarHostState.showSnackbar("Registration successful!")
+            }
+            is RegisterState.Error -> {
+                snackbarHostState.showSnackbar(state.message)
+            }
+            else -> {}
+        }
+    }
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -74,15 +100,19 @@ fun RegisterScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = createRadialGradientBrush(
-                    center = Offset(1500f, 500f), radius = 1200f)
+                .background(
+                    brush = createRadialGradientBrush(
+                        center = Offset(1500f, 500f), radius = 1200f
+                    )
                 )
         )
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = createRadialGradientBrush(
-                    center = Offset(0f, 2000f), radius = 800f)
+                .background(
+                    brush = createRadialGradientBrush(
+                        center = Offset(0f, 2000f), radius = 800f
+                    )
                 )
         )
 
@@ -130,41 +160,20 @@ fun RegisterScreen(navController: NavController) {
                     .weight(4f),
                 horizontalAlignment = Alignment.Start
             ) {
-                // Input Nama Depan dan Nama Belakang
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Nama Depan", style = PoppinsSemiBold18, color = Color.Black)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = firstName,
-                            onValueChange = { firstName = it },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.White, shape = RoundedCornerShape(6.dp))
-                                .border(1.dp, Color.Gray, RoundedCornerShape(6.dp))
-                                .focusRequester(focusRequesterFirstName)
-                        )
-                    }
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Nama Belakang", style = PoppinsSemiBold18, color = Color.Black)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = lastName,
-                            onValueChange = { lastName = it },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.White, shape = RoundedCornerShape(6.dp))
-                                .border(1.dp, Color.Gray, RoundedCornerShape(6.dp))
-                                .focusRequester(focusRequesterLastName)
-                        )
-                    }
-                }
+                // Input Nama Lengkap
+                Text("Nama Lengkap", style = PoppinsSemiBold18, color = Color.Black)
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    singleLine = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White, shape = RoundedCornerShape(6.dp))
+                        .border(1.dp, Color.Gray, RoundedCornerShape(6.dp))
+                        .focusRequester(focusRequesterName),
+                    placeholder = { Text("Masukan Nama Lengkap") },
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -180,7 +189,8 @@ fun RegisterScreen(navController: NavController) {
                         .fillMaxWidth()
                         .background(Color.White, shape = RoundedCornerShape(6.dp))
                         .border(1.dp, Color.Gray, RoundedCornerShape(6.dp))
-                        .focusRequester(focusRequesterEmail)
+                        .focusRequester(focusRequesterEmail),
+                    placeholder = { Text("Masukan Email") }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -207,7 +217,8 @@ fun RegisterScreen(navController: NavController) {
                         .fillMaxWidth()
                         .background(Color.White, shape = RoundedCornerShape(6.dp))
                         .border(1.dp, Color.Gray, RoundedCornerShape(6.dp))
-                        .focusRequester(focusRequesterPassword)
+                        .focusRequester(focusRequesterPassword),
+                    placeholder = { Text("Masukan Kata Sandi") }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -234,19 +245,30 @@ fun RegisterScreen(navController: NavController) {
                         .fillMaxWidth()
                         .background(Color.White, shape = RoundedCornerShape(6.dp))
                         .border(1.dp, Color.Gray, RoundedCornerShape(6.dp))
-                        .focusRequester(focusRequesterConfirmPassword)
+                        .focusRequester(focusRequesterConfirmPassword),
+                    placeholder = { Text("Masukan Ulang Kata Sandi") }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Button Daftar
                 Button(
-                    onClick = { navController.navigate("login") },
+                    onClick = {
+                        viewModel.register(name, email, password, confirmPassword)
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = GreenPrimary),
-                    shape = RoundedCornerShape(6.dp)
+                    shape = RoundedCornerShape(6.dp),
+                    enabled = registerState.value !is RegisterState.Loading
                 ) {
-                    Text("DAFTAR", style = PoppinsMedium18, color = Color.White)
+                    if (registerState.value is RegisterState.Loading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = Color.White
+                        )
+                    } else {
+                        Text("DAFTAR", style = PoppinsMedium18, color = Color.White)
+                    }
                 }
             }
 
@@ -264,7 +286,11 @@ fun RegisterScreen(navController: NavController) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Divider(modifier = Modifier.weight(1f), color = Color.Gray, thickness = 1.dp)
-                    Text("Lanjutkan dengan Google", style = PoppinsRegular14, modifier = Modifier.padding(horizontal = 8.dp))
+                    Text(
+                        "Lanjutkan dengan Google",
+                        style = PoppinsRegular14,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
                     Divider(modifier = Modifier.weight(1f), color = Color.Gray, thickness = 1.dp)
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -300,5 +326,25 @@ fun RegisterScreen(navController: NavController) {
                 }
             }
         }
+
+        // loading
+        if (registerState.value is RegisterState.Loading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .clickable(enabled = false) {}, // Disable interaction
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = GreenPrimary)
+            }
+        }
+
+        // Add SnackbarHost
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
+
     }
 }

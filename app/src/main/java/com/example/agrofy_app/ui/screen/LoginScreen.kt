@@ -50,6 +50,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsMedium18
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
@@ -142,11 +143,11 @@ fun LoginScreen(
                     color = Color.Black
                 )
 
-                // Error message
+                /// Error message
                 errorMessage?.let {
                     Text(
                         text = it,
-                        color = Color.Red,
+                        color = Error,
                         style = PoppinsRegular14,
                         modifier = Modifier.padding(top = 8.dp)
                     )

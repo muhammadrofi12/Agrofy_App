@@ -59,16 +59,25 @@ import com.example.agrofy_app.ui.theme.PoppinsRegular30
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold16
 import com.example.agrofy_app.viewmodels.pemberdayaan.ArtikelViewModel
 import com.example.agrofy_app.viewmodels.pemberdayaan.VideoViewModel
+import com.example.agrofy_app.viewmodels.user.ProfileViewModel
 
 @Composable
 fun HomeScreen(navController: NavController) {
     val artikelViewModel: ArtikelViewModel = viewModel()
     val videoViewModel: VideoViewModel = viewModel()
 
+    val profileViewModel: ProfileViewModel = viewModel()
+    val profile by profileViewModel.profile.collectAsState()
+    val isLoadingProfile by profileViewModel.isLoading.collectAsState()
+
     val artikels by artikelViewModel.artikels.collectAsState()
     val videos by videoViewModel.videos.collectAsState()
     val isLoadingArtikels by artikelViewModel.isLoading.collectAsState()
     val isLoadingVideos by videoViewModel.isLoading.collectAsState()
+
+    LaunchedEffect(Unit) {
+        profileViewModel.loadProfile()
+    }
 
     Box(
         modifier = Modifier
@@ -102,10 +111,18 @@ fun HomeScreen(navController: NavController) {
                                     .size(40.dp)
                                     .clip(CircleShape)
                             )
-                            Text(
-                                text = "Selamat Datang Rofiul!",
-                                style = PoppinsMedium20
-                            )
+                            if (isLoadingProfile) {
+                                Text(
+                                    text = "Memuat...",
+                                    style = PoppinsMedium20
+                                )
+                            } else {
+                                Text(
+                                    text = "Selamat Datang ${profile?.namaLengkap ?: "Pengguna"}!",
+                                    style = PoppinsMedium20
+                                )
+                                println("Nama pengguna: ${profile?.namaLengkap}")
+                            }
                         }
                         IconButton(onClick = { /* Action notification */ }) {
                             Icon(

@@ -3,7 +3,6 @@ package com.example.agrofy_app.viewmodels.pemberdayaan
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agrofy_app.data.api.pemberdayaan.VideoRetrofitClient
 import com.example.agrofy_app.data.api.user.ApiClient
@@ -41,7 +40,7 @@ class VideoViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun fetchVideos() {
+    private fun fetchVideos() {
         viewModelScope.launch {
             _isLoading.value = true
             _error.value = null
