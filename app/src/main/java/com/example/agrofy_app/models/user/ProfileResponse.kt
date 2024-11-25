@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ProfileResponse(
     val msg: String,
-    val data: List<UserProfile>
+    val data: UserProfile
 )
 
 data class UserProfile(

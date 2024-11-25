@@ -20,7 +20,7 @@ interface AuthService {
     @POST("api/v1/register")
     suspend fun register(@Body registerRequest: RegisterRequest) : Response<RegisterResponse>
 
-    @GET("profile")
+    @GET("api/v1/profile")
     suspend fun getProfile(@Header("Authorization") token: String): Response<ProfileResponse>
 }
 

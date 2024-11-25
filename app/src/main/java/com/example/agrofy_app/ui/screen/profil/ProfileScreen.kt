@@ -21,6 +21,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,8 +36,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.components.LogoutDialog
@@ -45,10 +49,21 @@ import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.PoppinsBold24
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold12
 import com.example.agrofy_app.viewmodels.user.LoginViewModel
+import com.example.agrofy_app.viewmodels.user.ProfileViewModel
 
 @Composable
 fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) {
     var showLogoutDialog by remember { mutableStateOf(false) }
+
+    val profileViewModel: ProfileViewModel = viewModel()
+    val profile by profileViewModel.profile.collectAsState()
+    val isLoadingProfile by profileViewModel.isLoading.collectAsState()
+
+    val defaultProfile = R.drawable.default_profile
+
+    LaunchedEffect(Unit) {
+        profileViewModel.loadProfile()
+    }
 
     LogoutDialog(
         showDialog = showLogoutDialog,
@@ -64,14 +79,23 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
             .background(Color.White),
     ) {
         // Background Image
-        Image(
-            painter = painterResource(id = R.drawable.background_image),
+        AsyncImage(
+            model = profile?.foto?.let {
+                "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
+            } ?: defaultProfile,
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(220.dp)
                 .zIndex(0f),
             contentScale = ContentScale.Crop
+        )
+
+        // Overlay gelap
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.5f))
         )
 
         // Background putih
@@ -97,9 +121,11 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
                 .zIndex(2f),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.profil),
-                contentDescription = "Profile Picture",
+            AsyncImage(
+                model = profile?.foto?.let {
+                    "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
+                } ?: defaultProfile,
+                contentDescription = "Profile: ${profile?.namaLengkap ?: "Pengguna"}",
                 modifier = Modifier
                     .size(96.dp)
                     .clip(CircleShape),
@@ -121,7 +147,7 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Rofiul",
+                    text = profile?.namaLengkap ?: "Pengguna",
                     style = PoppinsBold24,
                 )
 

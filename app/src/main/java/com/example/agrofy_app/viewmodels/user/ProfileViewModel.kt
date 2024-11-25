@@ -17,22 +17,36 @@ class ProfileViewModel : ViewModel() {
     val isLoading: StateFlow<Boolean> = _isLoading
 
     fun loadProfile() {
+        _isLoading.value = true
         viewModelScope.launch {
             try {
                 val authService = ApiClient.instance.create(AuthService::class.java)
-                val token = ApiClient.tokenBrearer ?: return@launch
-                println("Mengirim token: $token") // Debug log
+                val token = ApiClient.tokenBrearer
+                    ?: run {
+                        println("Token tidak tersedia")
+                        _isLoading.value = false
+                        return@launch
+                    }
+
                 val response = authService.getProfile(token)
-                println("Respons API: ${response.body()}") // Debug log
-                if (response.isSuccessful) {
-                    val profileResponse = response.body()
-                    println("Data profil: ${profileResponse?.data}") // Debug log
-                    _profile.value = profileResponse?.data?.firstOrNull()
-                } else {
-                    println("Gagal mengambil profil: ${response.errorBody()?.string()}")
+                _isLoading.value = false
+
+                when {
+                    response.isSuccessful -> {
+                        val profileResponse = response.body()
+                        _profile.value = profileResponse?.data
+                        println("Profil berhasil dimuat: ${profileResponse?.data}")
+                    }
+                    response.code() == 401 -> {
+                        println("Unauthorized: Token mungkin tidak valid")
+                    }
+                    else -> {
+                        println("Gagal mengambil profil: ${response.errorBody()?.string()}")
+                    }
                 }
             } catch (e: Exception) {
-                println("Error: ${e.message}")
+                _isLoading.value = false
+                println("Error mengambil profil: ${e.message}")
             }
         }
     }
