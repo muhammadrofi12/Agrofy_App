@@ -55,7 +55,6 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
 
     val profileViewModel: ProfileViewModel = viewModel()
     val profile by profileViewModel.profile.collectAsState()
-    val isLoadingProfile by profileViewModel.isLoading.collectAsState()
 
     val defaultProfile = R.drawable.default_profile
 
@@ -152,7 +151,7 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Button(
-                    onClick = { /* Handle Edit Profile */ },
+                    onClick = { navController.navigate("edit_profil") },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFAA00)),
                     contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
                     shape = RoundedCornerShape(4.dp),

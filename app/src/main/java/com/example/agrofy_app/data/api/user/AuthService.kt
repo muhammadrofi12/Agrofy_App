@@ -5,6 +5,7 @@ import com.example.agrofy_app.models.user.LoginResponse
 import com.example.agrofy_app.models.user.ProfileResponse
 import com.example.agrofy_app.models.user.RegisterRequest
 import com.example.agrofy_app.models.user.RegisterResponse
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,16 +13,31 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Part
 
 interface AuthService {
     @POST("api/v1/login")
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
     @POST("api/v1/register")
-    suspend fun register(@Body registerRequest: RegisterRequest) : Response<RegisterResponse>
+    suspend fun register(@Body registerRequest: RegisterRequest): Response<RegisterResponse>
 
     @GET("api/v1/profile")
     suspend fun getProfile(@Header("Authorization") token: String): Response<ProfileResponse>
+
+    @PUT("api/v1/profile")
+    suspend fun editProfile(
+        @Header("Authorization") token: String,
+        @Body profileData: Map<String, String>
+    ): Response<ProfileResponse>
+
+    @PUT("api/v1/profile/updatefoto")
+    suspend fun uploadProfileImage(
+        @Header("Authorization") token: String,
+        @Part("foto") foto: RequestBody
+    ): Response<ProfileResponse>
+
 }
 
 object ApiClient {
