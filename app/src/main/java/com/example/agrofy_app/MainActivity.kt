@@ -34,8 +34,10 @@ import com.example.agrofy_app.ui.screen.pemberdayaan.DetailVideoScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
 import com.example.agrofy_app.ui.screen.profil.ProfileScreen
 import com.example.agrofy_app.ui.screen.SplashScreen
+import com.example.agrofy_app.ui.screen.profil.EditProfileScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.viewmodels.user.LoginViewModel
+import com.example.agrofy_app.viewmodels.user.ProfileViewModel
 
 
 data class NavigationItem(
@@ -60,6 +62,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val navController = rememberNavController()
     val loginViewModel: LoginViewModel = viewModel()
+    val profileViewModel: ProfileViewModel = viewModel()
 
     // Ambil route yang sedang aktif
     val currentRoute = navController.currentBackStackEntry?.destination?.route
@@ -104,6 +107,12 @@ fun MainScreen() {
                 ProfileScreen(
                     navController = navController,
                     loginViewModel = loginViewModel
+                )
+            }
+            composable("edit_profil") {
+                EditProfileScreen(
+                    navController = navController,
+                    profileViewModel = profileViewModel
                 )
             }
 

@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.components.CardArtikelItem
@@ -75,6 +76,8 @@ fun HomeScreen(navController: NavController) {
     val isLoadingArtikels by artikelViewModel.isLoading.collectAsState()
     val isLoadingVideos by videoViewModel.isLoading.collectAsState()
 
+    val defaultProfile = R.drawable.default_profile
+
     LaunchedEffect(Unit) {
         profileViewModel.loadProfile()
     }
@@ -91,7 +94,10 @@ fun HomeScreen(navController: NavController) {
         ) {
             // Header: Text Selamat Datang dan Statistik
             item {
-                Column {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     // Text Selamat Datang
                     Row(
                         modifier = Modifier
@@ -102,29 +108,45 @@ fun HomeScreen(navController: NavController) {
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.weight(1f)
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.profil),
-                                contentDescription = "Profile",
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .clip(CircleShape)
-                            )
                             if (isLoadingProfile) {
                                 Text(
                                     text = "Memuat...",
                                     style = PoppinsMedium20
                                 )
                             } else {
-                                Text(
-                                    text = "Selamat Datang ${profile?.namaLengkap ?: "Pengguna"}!",
-                                    style = PoppinsMedium20
+                                AsyncImage(
+                                    model = profile?.foto?.let {
+                                        "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
+                                    } ?: defaultProfile,
+                                    contentDescription = "Profile: ${profile?.namaLengkap ?: "Pengguna"}",
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clip(CircleShape)
                                 )
-                                println("Nama pengguna: ${profile?.namaLengkap}")
+
+                                Column {
+                                    Text(
+                                        text = "Selamat Datang",
+                                        style = PoppinsMedium16,
+                                        color = Color.Gray
+                                    )
+                                    Text(
+                                        text = "${profile?.namaLengkap ?: "Pengguna"}!",
+                                        style = PoppinsMedium20
+                                    )
+                                }
+
                             }
+
                         }
-                        IconButton(onClick = { /* Action notification */ }) {
+
+                        IconButton(
+                            onClick = { /* Action notification */ },
+                            modifier = Modifier.size(40.dp)
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Notifications,
                                 contentDescription = "Notifications"
@@ -233,7 +255,6 @@ fun HomeScreen(navController: NavController) {
                     )
                 }
             }
-
 
 
             // Artikel Pembelajaran
