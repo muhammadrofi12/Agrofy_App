@@ -1,6 +1,5 @@
 package com.example.agrofy_app.ui.screen.forum
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,11 +19,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -40,17 +41,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.example.agrofy_app.R
-import com.example.agrofy_app.data.DummyDataForum
 import com.example.agrofy_app.models.ForumPost
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.GreenPrimary
+import com.example.agrofy_app.viewmodels.forum.ForumViewModel
 
 @Composable
-fun ForumScreen(navController: NavController) {
+fun ForumScreen(
+    navController: NavController,
+    viewModel: ForumViewModel = viewModel(),
+) {
+    val forumPosts by viewModel.forumPosts.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -84,8 +94,24 @@ fun ForumScreen(navController: NavController) {
                 .padding(paddingValues)
                 .padding(top = 24.dp)
         ) {
+            // Loading state
+            if (isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+
+            // Error state
+            error?.let { errorMessage ->
+                Text(
+                    text = "Error: $errorMessage",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+
+            // Posts list
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(DummyDataForum.forumPosts) { post ->
+                items(forumPosts) { post ->
                     ForumPost(
                         navController = navController,
                         post = post
@@ -107,10 +133,11 @@ fun ForumScreen(navController: NavController) {
 @Composable
 fun ForumPost(
     navController: NavController,
-    post: ForumPost
+    post: ForumPost,
 ) {
     var isLiked by remember { mutableStateOf(false) }
     var currentLikesCount by remember { mutableIntStateOf(post.likesCount) }
+    var imageLoadError by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
@@ -126,9 +153,11 @@ fun ForumPost(
         ) {
             // Author Info
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(R.drawable.ic_author),
-                    contentDescription = "Icon profil",
+                AsyncImage(
+                    model = post.authorProfileImage?.let {
+                        "https://73zqc05b-3000.asse.devtunnels.ms/profile/$it"
+                    } ?: R.drawable.default_profile,
+                    contentDescription = "Profile: ${post.authorName}",
                     modifier = Modifier
                         .size(40.dp)
                         .clip(CircleShape)
@@ -143,18 +172,25 @@ fun ForumPost(
                 )
             }
 
+            Spacer(modifier = Modifier.height(10.dp))
             // Post Image
-            post.imageResource?.let {
-                Spacer(modifier = Modifier.height(10.dp))
-                Image(
-                    painter = painterResource(it),
-                    contentDescription = "Post image",
+            if (!post.imageResource.isNullOrEmpty() && !imageLoadError) {
+                AsyncImage(
+                    model = "https://73zqc05b-3000.asse.devtunnels.ms/komunitas/${post.imageResource}",
+                    contentDescription = "Image: ${post.id}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(150.dp)
                         .clip(RoundedCornerShape(10.dp)),
                     contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center
+                    placeholder = painterResource(R.drawable.ic_image), // Tambahkan placeholder
+                    onError = { imageLoadError = true }
+                )
+            } else if (imageLoadError) {
+                Text(
+                    text = "Gagal memuat gambar",
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    color = Color.Red
                 )
             }
 
