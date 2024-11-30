@@ -5,13 +5,17 @@ import com.example.agrofy_app.models.user.LoginResponse
 import com.example.agrofy_app.models.user.ProfileResponse
 import com.example.agrofy_app.models.user.RegisterRequest
 import com.example.agrofy_app.models.user.RegisterResponse
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.FieldMap
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -32,11 +36,19 @@ interface AuthService {
         @Body profileData: Map<String, String>
     ): Response<ProfileResponse>
 
+    @PUT("api/v1/profile/password")
+    suspend fun editPassword(
+        @Header("Authorization") token: String,
+        @Body passwordData: Map<String, String>
+    ): Response<ProfileResponse>
+
+    @Multipart
     @PUT("api/v1/profile/updatefoto")
     suspend fun uploadProfileImage(
         @Header("Authorization") token: String,
-        @Part("foto") foto: RequestBody
+        @Part foto: MultipartBody.Part
     ): Response<ProfileResponse>
+
 
 }
 
