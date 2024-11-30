@@ -56,8 +56,6 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
     val profileViewModel: ProfileViewModel = viewModel()
     val profile by profileViewModel.profile.collectAsState()
 
-    val defaultProfile = R.drawable.default_profile
-
     LaunchedEffect(Unit) {
         profileViewModel.loadProfile()
     }
@@ -79,7 +77,7 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
         AsyncImage(
             model = profile?.foto?.let {
                 "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
-            } ?: defaultProfile,
+            } ?: R.drawable.default_profile,
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -121,7 +119,7 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
             AsyncImage(
                 model = profile?.foto?.let {
                     "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
-                } ?: defaultProfile,
+                } ?: R.drawable.default_profile,
                 contentDescription = "Profile: ${profile?.namaLengkap ?: "Pengguna"}",
                 modifier = Modifier
                     .size(96.dp)

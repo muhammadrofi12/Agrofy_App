@@ -1,20 +1,25 @@
 package com.example.agrofy_app.viewmodels.user
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agrofy_app.data.api.user.ApiClient
 import com.example.agrofy_app.data.api.user.AuthService
 import com.example.agrofy_app.models.user.ProfileRequest
 import com.example.agrofy_app.models.user.UserProfile
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 class ProfileViewModel : ViewModel() {
+    private val gson = Gson()
+
     private val _profile = MutableStateFlow<UserProfile?>(null)
     val profile: StateFlow<UserProfile?> = _profile
 
@@ -26,28 +31,40 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val authService = ApiClient.instance.create(AuthService::class.java)
-                val token = ApiClient.tokenBrearer
-                    ?: run {
-                        println("Token tidak tersedia")
-                        _isLoading.value = false
-                        return@launch
-                    }
+                val token = ApiClient.tokenBrearer ?: run {
+                    println("Token tidak tersedia")
+                    _isLoading.value = false
+                    return@launch
+                }
 
                 val response = authService.getProfile(token)
                 _isLoading.value = false
 
-                when {
-                    response.isSuccessful -> {
-                        val profileResponse = response.body()
-                        _profile.value = profileResponse?.data
-                        println("Profil berhasil dimuat: ${profileResponse?.data}")
+                if (response.isSuccessful) {
+                    val profileResponse = response.body()
+                    val dataElement = profileResponse?.data
+
+                    // Handling jika `data` berupa array atau objek
+                    if (dataElement != null) {
+                        when {
+                            dataElement.isJsonObject -> {
+                                _profile.value = gson.fromJson(dataElement, UserProfile::class.java)
+                            }
+
+                            dataElement.isJsonArray -> {
+                                val firstItem = dataElement.asJsonArray.firstOrNull()
+                                _profile.value = firstItem?.let {
+                                    gson.fromJson(it, UserProfile::class.java)
+                                }
+                            }
+
+                            else -> {
+                                println("Data format tidak dikenal: $dataElement")
+                            }
+                        }
                     }
-                    response.code() == 401 -> {
-                        println("Unauthorized: Token mungkin tidak valid")
-                    }
-                    else -> {
-                        println("Gagal mengambil profil: ${response.errorBody()?.string()}")
-                    }
+                } else {
+                    println("Gagal mengambil profil: ${response.errorBody()?.string()}")
                 }
             } catch (e: Exception) {
                 _isLoading.value = false
@@ -56,7 +73,12 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    fun editProfile(profileRequest: ProfileRequest, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    // Edit Profile
+    fun editProfile(
+        profileRequest: ProfileRequest,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
         viewModelScope.launch {
             _isLoading.value = true
             try {
@@ -65,16 +87,30 @@ class ProfileViewModel : ViewModel() {
 
                 val requestMap = mapOf(
                     "nama_lengkap" to profileRequest.namaLengkap,
-                    "email" to profileRequest.email,
+                    "email" to profileRequest.email
                 )
 
                 val response = authService.editProfile(token, requestMap)
                 _isLoading.value = false
 
                 if (response.isSuccessful) {
-                    val updatedProfile = response.body()?.data
-                    if (updatedProfile != null) {
-                        _profile.value = updatedProfile // Update state dengan data baru
+                    val profileResponse = response.body()
+                    val dataElement = profileResponse?.data
+
+                    // Handling jika `data` berupa array atau objek
+                    if (dataElement != null) {
+                        when {
+                            dataElement.isJsonObject -> {
+                                _profile.value = gson.fromJson(dataElement, UserProfile::class.java)
+                            }
+
+                            dataElement.isJsonArray -> {
+                                val firstItem = dataElement.asJsonArray.firstOrNull()
+                                _profile.value = firstItem?.let {
+                                    gson.fromJson(it, UserProfile::class.java)
+                                }
+                            }
+                        }
                     }
                     onSuccess()
                 } else {
@@ -87,31 +123,72 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-
+    // Edit Foto
     fun uploadPhoto(photoUri: Uri, onComplete: (Boolean, String?) -> Unit) {
         viewModelScope.launch {
-            _isLoading.value = true
             try {
                 val authService = ApiClient.instance.create(AuthService::class.java)
-                val token = ApiClient.tokenBrearer ?: return@launch onComplete(false, "Token tidak tersedia")
-
-                val requestBody = RequestBody.create(
-                    "image/*".toMediaTypeOrNull(),
-                    File(photoUri.path!!)
+                val token = ApiClient.tokenBrearer ?: return@launch onComplete(
+                    false,
+                    "Token tidak tersedia"
                 )
 
-                val response = authService.uploadProfileImage(token, requestBody)
-                _isLoading.value = false
+                val file = File(photoUri.path!!)
+                val requestBody = file
+                    .asRequestBody("image/jpeg".toMediaTypeOrNull())
+                val multipartBody =
+                    MultipartBody.Part.createFormData("foto", file.name, requestBody)
 
+                val response = authService.uploadProfileImage(token, multipartBody)
                 if (response.isSuccessful) {
-                    _profile.value = response.body()?.data
+                    loadProfile()
                     onComplete(true, null)
                 } else {
                     onComplete(false, response.errorBody()?.string())
                 }
             } catch (e: Exception) {
-                _isLoading.value = false
                 onComplete(false, e.message)
+            }
+        }
+    }
+
+    // Edit password
+    fun editPassword(
+        password: String,
+        confirmPassword: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        viewModelScope.launch {
+            try {
+                val authService = ApiClient.instance.create(AuthService::class.java)
+                val token = ApiClient.tokenBrearer ?: return@launch onError("Token tidak tersedia")
+
+                val requestMap = mapOf(
+                    "newPassword" to password,
+                    "confirmPassword" to confirmPassword
+                )
+
+
+                // Log data yang akan dikirim
+                Log.d("EditPassword", "Request Map: $requestMap")
+
+                val response = authService.editPassword(token, requestMap)
+
+                // Log status response
+                Log.d("EditPassword", "Response Code: ${response.code()}")
+                Log.d("EditPassword", "Response Body: ${response.body()}")
+                Log.d("EditPassword", "Response Error Body: ${response.errorBody()?.string()}")
+
+                if (response.isSuccessful) {
+                    onSuccess()
+                } else {
+                    onError(response.errorBody()?.string() ?: "Kesalahan tidak diketahui")
+                }
+            } catch (e: Exception) {
+                // Log jika terjadi kesalahan
+                Log.e("EditPassword", "Exception: ${e.message}", e)
+                onError(e.message ?: "Terjadi kesalahan")
             }
         }
     }
