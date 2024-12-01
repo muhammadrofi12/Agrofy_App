@@ -76,8 +76,6 @@ fun HomeScreen(navController: NavController) {
     val isLoadingArtikels by artikelViewModel.isLoading.collectAsState()
     val isLoadingVideos by videoViewModel.isLoading.collectAsState()
 
-    val defaultProfile = R.drawable.default_profile
-
     LaunchedEffect(Unit) {
         profileViewModel.loadProfile()
     }
@@ -120,7 +118,7 @@ fun HomeScreen(navController: NavController) {
                                 AsyncImage(
                                     model = profile?.foto?.let {
                                         "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
-                                    } ?: defaultProfile,
+                                    } ?: R.drawable.default_profile,
                                     contentDescription = "Profile: ${profile?.namaLengkap ?: "Pengguna"}",
                                     modifier = Modifier
                                         .size(40.dp)

@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agrofy_app.data.api.pemberdayaan.RetrofitClient
+import com.example.agrofy_app.data.api.pemberdayaan.ArtikelRetrofitClient
 import com.example.agrofy_app.data.api.user.ApiClient
 import com.example.agrofy_app.data.api.user.UserPreferences
 import com.example.agrofy_app.models.pemberdayaan.ArtikelResponse
@@ -43,7 +43,7 @@ class ArtikelViewModel(application: Application) : AndroidViewModel(application)
     private fun fetchArtikels() {
         viewModelScope.launch {
             _isLoading.value = true
-            val artikelsDeferred = async { RetrofitClient.instance.getArtikels() }
+            val artikelsDeferred = async { ArtikelRetrofitClient.instance.getArtikels() }
             val response = artikelsDeferred.await()
 
             if (response.isSuccessful) {

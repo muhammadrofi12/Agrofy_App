@@ -1,6 +1,5 @@
 package com.example.agrofy_app.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,8 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -32,23 +29,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.agrofy_app.R
+import com.example.agrofy_app.models.forum.Comment
+import com.example.agrofy_app.models.forum.ForumPost
+import com.example.agrofy_app.ui.theme.PoppinsMedium14
+import com.example.agrofy_app.ui.theme.PoppinsMedium16
+import com.example.agrofy_app.ui.theme.PoppinsRegular14
 
 @Composable
-fun DetailForum(
-    authorName: String,
-    question: String,
-    likesCount: Int,
-    commentsCount: Int,
-    imageResource: Int? = null, // Gambar opsional, bisa null
-    comments: List<com.example.agrofy_app.models.Comment>,
+fun ForumDetailHeader(
+    post: ForumPost,
 ) {
     var isLiked by remember { mutableStateOf(false) }
-    var currentLikesCount by remember { mutableIntStateOf(likesCount) }
+    var currentLikesCount by remember { mutableIntStateOf(post.likesCount) }
+    var imageLoadError by remember { mutableStateOf(false) }
+
 
     Card(
         modifier = Modifier
@@ -62,51 +61,58 @@ fun DetailForum(
                 .background(Color.White)
                 .padding(16.dp)
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(R.drawable.ic_author),
-                    contentDescription = "Icon profil",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                )
+            // User
+//            Row(verticalAlignment = Alignment.CenterVertically) {
+//                AsyncImage(
+//                    model = post.authorProfileImage?.let {
+//                        "https://73zqc05b-3000.asse.devtunnels.ms/profile/${post.authorProfileImage}"
+//                    } ?: R.drawable.default_profile,
+//                    contentDescription = "Profile: ${post.authorName}",
+//                    modifier = Modifier
+//                        .size(40.dp)
+//                        .clip(CircleShape)
+//                )
+//
+//                Spacer(modifier = Modifier.width(10.dp))
+//
+//                Text(
+//                    text = post.authorName,
+//                    style = PoppinsBold16,
+//                )
+//            }
 
-                Spacer(modifier = Modifier.width(10.dp))
-
-                Column {
-                    Text(
-                        text = authorName,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
-                }
-            }
-
-            // Menambahkan gambar persegi panjang vertikal jika imageResource tidak null
-            imageResource?.let {
-                Spacer(modifier = Modifier.height(10.dp))
-                Image(
-                    painter = painterResource(it),
-                    contentDescription = "Image above question",
+            // Image
+            Spacer(modifier = Modifier.height(8.dp))
+            if (!post.imageResource.isNullOrEmpty() && !imageLoadError) {
+                AsyncImage(
+                    model = "https://73zqc05b-3000.asse.devtunnels.ms/komunitas/${post.imageResource}",
+                    contentDescription = "Image: ${post.id}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(150.dp)
                         .clip(RoundedCornerShape(10.dp)),
                     contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center
+                    placeholder = painterResource(R.drawable.ic_image),
+                    onError = { imageLoadError = true }
+                )
+            } else if (imageLoadError) {
+                Text(
+                    text = "Gagal memuat gambar",
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    color = Color.Red
                 )
             }
-            // Text pertanyaan
+
             Spacer(modifier = Modifier.height(10.dp))
+            // Question Text
             Text(
-                text = question,
-                fontSize = 14.sp,
-                color = Color.Gray
+                text = post.question,
+                style = PoppinsMedium14,
+                textAlign = TextAlign.Justify,
             )
 
             Spacer(modifier = Modifier.height(10.dp))
-
-            // Ikon like dan comment
+            // Likes and Comments
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -114,6 +120,7 @@ fun DetailForum(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Likes
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.clickable {
@@ -137,7 +144,10 @@ fun DetailForum(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                // Comments
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_comment),
                         contentDescription = "Comment icon",
@@ -146,130 +156,96 @@ fun DetailForum(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "$commentsCount",
+                        text = "${post.commentsCount}",
                         fontSize = 14.sp,
                         color = Color.Gray
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            CommentList(comments = comments)
         }
     }
 }
 
-@Composable
-fun CommentList(comments: List<com.example.agrofy_app.models.Comment>) {
-    LazyColumn {
-        items(comments) { comment ->
-            CommentItem(comment)
-        }
-    }
-}
 
 @Composable
-fun CommentItem(comment: com.example.agrofy_app.models.Comment) {
-    var isLiked by remember { mutableStateOf(false) }
-    var currentLikes by remember { mutableIntStateOf(comment.likes) }
+fun CommentItem(comment: Comment) {
+//    var isLiked by remember { mutableStateOf(false) }
+//    var currentLikes by remember { mutableIntStateOf(comment.likes) }
 
-    Column(modifier = Modifier.padding(8.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, bottom = 4.dp)
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(R.drawable.ic_author),
-                contentDescription = null,
+            AsyncImage(
+                model = comment.userProfileImage?.let {
+                    "https://73zqc05b-3000.asse.devtunnels.ms/profile/${comment.userProfileImage}"
+                } ?: R.drawable.default_profile,
+                contentDescription = "Profile: ${comment.userName}",
                 modifier = Modifier
-                    .size(30.dp)
-                    .clip(CircleShape)
+                    .size(40.dp)
+                    .clip(CircleShape),
             )
+
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = comment.userName, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+
+            Text(
+                text = comment.userName,
+                style = PoppinsMedium16,
+            )
         }
+
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = comment.message, fontSize = 14.sp)
+
+        Text(
+            text = comment.message,
+            modifier = Modifier
+                .padding(start = 8.dp, top = 4.dp),
+            textAlign = TextAlign.Justify,
+            style = PoppinsRegular14
+        )
+
         Spacer(modifier = Modifier.height(8.dp))
 
         // Row untuk likes dan reply sebagai teks
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Menampilkan jumlah like
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "$currentLikes suka", fontSize = 12.sp, color = Color.Gray)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Balas",
-                    fontSize = 12.sp,
-                    color = Color.Blue
-                )
-            }
-
-            // Menambahkan ikon love di sudut kanan
-            Icon(
-                painter = painterResource(R.drawable.ic_love_active),
-                contentDescription = "Love Icon",
-                modifier = Modifier
-                    .size(20.dp)
-                    .clickable {
-                        isLiked = !isLiked
-                        currentLikes += if (isLiked) 1 else -1
-                    },
-                tint = if (isLiked) Color.Red else Color.Gray
-            )
-        }
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.SpaceBetween,
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            // Menampilkan jumlah like
+//            Row(verticalAlignment = Alignment.CenterVertically) {
+//                Text(text = "$currentLikes suka", fontSize = 12.sp, color = Color.Gray)
+//
+//                Spacer(modifier = Modifier.width(8.dp))
+//
+//                Text(
+//                    text = "Balas",
+//                    fontSize = 12.sp,
+//                    color = Color.Blue
+//                )
+//            }
+//
+//            // Menambahkan ikon love di sudut kanan
+//            Icon(
+//                painter = painterResource(R.drawable.ic_love_active),
+//                contentDescription = "Love Icon",
+//                modifier = Modifier
+//                    .size(20.dp)
+//                    .clickable {
+//                        isLiked = !isLiked
+//                        currentLikes += if (isLiked) 1 else -1
+//                    },
+//                tint = if (isLiked) Color.Red else Color.Gray
+//            )
+//        }
 
         // Menampilkan sub-komentar jika ada
-        if (comment.replies.isNotEmpty()) {
-            Spacer(modifier = Modifier.height(8.dp))
-            SubCommentList(subComments = comment.replies)
-        }
+//            if (comment.replies.isNotEmpty()) {
+//                Spacer(modifier = Modifier.height(8.dp))
+//                SubCommentList(subComments = comment.replies)
+//            }
+
     }
-}
-
-@Composable
-fun SubCommentList(subComments: List<com.example.agrofy_app.models.Comment>) {
-    Column {
-        subComments.forEach { subComment ->
-            CommentItem(subComment)
-        }
-    }
-}
-
-// Preview detailforum
-@Preview(showBackground = true)
-@Composable
-fun PreviewDetailForum() {
-    val dummyComments = listOf(
-        com.example.agrofy_app.models.Comment(
-            userName = "User1",
-            message = "Komentar pertama",
-            likes = 10,
-            replies = emptyList()
-        ),
-        com.example.agrofy_app.models.Comment(
-            userName = "User2",
-            message = "Komentar kedua",
-            likes = 5,
-            replies = listOf(
-                com.example.agrofy_app.models.Comment(
-                    userName = "User3",
-                    message = "Balasan untuk komentar kedua",
-                    likes = 3,
-                    replies = emptyList()
-                )
-            )
-        )
-    )
-
-    DetailForum(
-        authorName = "Rofi",
-        question = "Apa solusi untuk masalah pengelolaan limbah di pertanian organik?",
-        likesCount = 20,
-        commentsCount = dummyComments.size,
-        imageResource = R.drawable.jerami,
-        comments = dummyComments
-    )
 }

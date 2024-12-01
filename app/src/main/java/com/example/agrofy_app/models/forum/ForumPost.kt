@@ -1,4 +1,4 @@
-package com.example.agrofy_app.models
+package com.example.agrofy_app.models.forum
 
 data class ForumPost(
     val id: String,
@@ -6,6 +6,6 @@ data class ForumPost(
     val question: String,
     val likesCount: Int,
     val commentsCount: Int,
-    val imageResource: Int? = null,
-    val comments: List<Comment> = emptyList()
+    val imageResource: String? = null,
+    val authorProfileImage: String? = null
 )

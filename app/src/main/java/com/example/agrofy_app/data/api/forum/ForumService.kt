@@ -1,28 +1,40 @@
-package com.example.agrofy_app.data.api.pemberdayaan
+package com.example.agrofy_app.data.api.forum
 
 import com.example.agrofy_app.data.api.user.ApiClient.tokenBrearer
-import com.example.agrofy_app.models.ApiResponse
-import com.example.agrofy_app.models.pemberdayaan.ArtikelResponse
+import com.example.agrofy_app.models.forum.ForumDetailResponse
+import com.example.agrofy_app.models.forum.ForumResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
-interface ArtikelApiService {
-    @GET("api/v1/getartikel")
-    suspend fun getArtikels(): Response<ApiResponse<List<ArtikelResponse>>>
+data class AddCommentRequest(
+    val balasan: String
+)
 
-    // Mengambil satu data artikel by id
-    @GET("api/v1/getartikeldetail/{id}")
-    suspend fun getArtikelById(@Path("id") id: Int): Response<ApiResponse<ArtikelResponse>>
+interface ForumApiService {
+    @GET("api/v1/getkomunitas")
+    suspend fun getForum(): Response<ForumResponse>
+
+    @GET("api/v1/getkomunitasbalasan/{id}")
+    suspend fun getForumPostAndComments(@Path("id") forumId: Int): Response<ForumDetailResponse>
+
+    @POST("api/v1/tambahbalasan/{id}")
+    suspend fun addComment(
+        @Path("id") forumId: Int,
+        @Body commentBody: AddCommentRequest
+    ): Response<Any>
 }
 
-object ArtikelRetrofitClient {
+// Retrofit Client Configuration
+object ForumRetrofitClient {
     private const val BASE_URL = "https://73zqc05b-3000.asse.devtunnels.ms/"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -46,12 +58,15 @@ object ArtikelRetrofitClient {
         .writeTimeout(15, TimeUnit.SECONDS)
         .build()
 
-    val instance: ArtikelApiService by lazy {
+    val instance: ForumApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ArtikelApiService::class.java)
+            .create(ForumApiService::class.java)
     }
 }
+
+
+

@@ -2,7 +2,7 @@ package com.example.agrofy_app.viewmodels.pemberdayaan
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agrofy_app.data.api.pemberdayaan.RetrofitClient
+import com.example.agrofy_app.data.api.pemberdayaan.ArtikelRetrofitClient
 import com.example.agrofy_app.models.pemberdayaan.ArtikelResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +24,7 @@ class DetailArtikelViewModel : ViewModel() {
             _isLoading.value = true
             _error.value = null
             try {
-                val response = RetrofitClient.instance.getArtikelById(id)
+                val response = ArtikelRetrofitClient.instance.getArtikelById(id)
                 if (response.isSuccessful && response.body()?.data != null) {
                     _artikel.value = response.body()?.data
                 } else {
