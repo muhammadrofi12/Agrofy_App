@@ -1,4 +1,4 @@
-package com.example.agrofy_app.models
+package com.example.agrofy_app.models.forum
 
 data class ForumPost(
     val id: String,

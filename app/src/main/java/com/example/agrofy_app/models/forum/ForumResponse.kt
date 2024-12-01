@@ -11,7 +11,7 @@ data class ForumPostData(
     val id: Int,
     @SerializedName("user_id") val userId: Int,
     val caption: String,
-    @SerializedName("gambar") val gambarPost: String,
+    @SerializedName("gambar") val gambarPost: String?,
     val disukai: Int?,
     @SerializedName("created_at") val createdAt: String,
     @SerializedName("updated_at") val updatedAt: String,

@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,10 +47,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.agrofy_app.R
-import com.example.agrofy_app.models.ForumPost
+import com.example.agrofy_app.models.forum.ForumPost
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.GreenPrimary
+import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.viewmodels.forum.ForumViewModel
 
 @Composable
@@ -198,8 +200,8 @@ fun ForumPost(
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = post.question,
-                fontSize = 14.sp,
-                color = Color.Gray
+                style = PoppinsMedium14,
+                textAlign = TextAlign.Justify,
             )
 
             // Likes and Comments

@@ -1,5 +1,6 @@
 package com.example.agrofy_app
 
+//import com.example.agrofy_app.ui.screen.forum.DetailForumScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,16 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.screen.HomeScreen
 import com.example.agrofy_app.ui.screen.LoginScreen
 import com.example.agrofy_app.ui.screen.OnboardingScreen
 import com.example.agrofy_app.ui.screen.RegisterScreen
+import com.example.agrofy_app.ui.screen.SplashScreen
 import com.example.agrofy_app.ui.screen.forum.AddForumScreen
 import com.example.agrofy_app.ui.screen.forum.DetailForumScreen
 import com.example.agrofy_app.ui.screen.forum.ForumScreen
@@ -32,9 +32,8 @@ import com.example.agrofy_app.ui.screen.pemberdayaan.ArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailArtikelScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.DetailVideoScreen
 import com.example.agrofy_app.ui.screen.pemberdayaan.VideoScreen
-import com.example.agrofy_app.ui.screen.profil.ProfileScreen
-import com.example.agrofy_app.ui.screen.SplashScreen
 import com.example.agrofy_app.ui.screen.profil.EditProfileScreen
+import com.example.agrofy_app.ui.screen.profil.ProfileScreen
 import com.example.agrofy_app.ui.theme.Agrofy_AppTheme
 import com.example.agrofy_app.viewmodels.user.LoginViewModel
 import com.example.agrofy_app.viewmodels.user.ProfileViewModel
@@ -145,12 +144,9 @@ fun MainScreen() {
                 AddForumScreen(navController = navController)
             }
             // Detail Forum
-            composable(
-                "detail_forum/{postId}",
-                arguments = listOf(navArgument("postId") { type = NavType.StringType })
-            ) { backStackEntry ->
-                val postId = backStackEntry.arguments?.getString("postId")
-                DetailForumScreen(navController, postId)
+            composable("detail_forum/{postId}") { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("postId")?.toIntOrNull() ?: 0
+                DetailForumScreen(navController = navController, forumId = id)
             }
 
         }
