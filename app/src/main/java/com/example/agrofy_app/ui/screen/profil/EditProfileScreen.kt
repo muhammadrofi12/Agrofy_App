@@ -123,7 +123,7 @@ fun EditProfileScreen(
                     // Foto Profil
                     Image(
                         painter = rememberAsyncImagePainter(
-                            model = profile?.foto?.let {
+                            model = photoUri?.toString() ?: profile?.foto?.let {
                                 "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
                             } ?: R.drawable.default_profile
                         ),
