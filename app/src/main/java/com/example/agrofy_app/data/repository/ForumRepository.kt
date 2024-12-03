@@ -83,7 +83,6 @@ class ForumRepository(
                         userName = apiComment.namaComment,
                         message = extractTextFromHTML(apiComment.balasan),
                         userProfileImage = apiComment.foto,
-                        likes = apiComment.disukai ?: 0,
                         createdAt = apiComment.createdAt
                     )
                 } ?: emptyList()

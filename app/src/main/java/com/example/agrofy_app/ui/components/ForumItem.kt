@@ -175,38 +175,39 @@ fun CommentItem(comment: Comment) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 4.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 24.dp)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row {
             AsyncImage(
                 model = comment.userProfileImage?.let {
                     "https://73zqc05b-3000.asse.devtunnels.ms/profile/${comment.userProfileImage}"
                 } ?: R.drawable.default_profile,
                 contentDescription = "Profile: ${comment.userName}",
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(42.dp)
                     .clip(CircleShape),
             )
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp)
+            ) {
+                Text(
+                    text = comment.userName,
+                    style = PoppinsMedium16,
+                )
 
-            Text(
-                text = comment.userName,
-                style = PoppinsMedium16,
-            )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = comment.message,
+                    textAlign = TextAlign.Justify,
+                    style = PoppinsRegular14
+                )
+            }
         }
 
-        Spacer(modifier = Modifier.height(4.dp))
-
-        Text(
-            text = comment.message,
-            modifier = Modifier
-                .padding(start = 8.dp, top = 4.dp),
-            textAlign = TextAlign.Justify,
-            style = PoppinsRegular14
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         // Row untuk likes dan reply sebagai teks
 //        Row(

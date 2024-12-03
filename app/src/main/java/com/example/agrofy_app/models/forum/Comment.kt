@@ -5,6 +5,5 @@ data class Comment(
     val userName: String,
     val message: String,
     val userProfileImage: String?,
-    val likes: Int,
     val createdAt: String
 )

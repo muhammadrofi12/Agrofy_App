@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ForumDetailViewModel(
-    private val repository: ForumRepository = ForumRepository()
+    private val repository: ForumRepository = ForumRepository(),
 ) : ViewModel() {
     private val _forumPost = MutableStateFlow<ForumPost?>(null)
     val forumPost: StateFlow<ForumPost?> = _forumPost.asStateFlow()
@@ -47,7 +47,10 @@ class ForumDetailViewModel(
                         Log.d("ForumDetailViewModel", "Fetched ${comments.size} comments")
                         _comments.value = comments
                     }.onFailure { exception ->
-                        Log.e("ForumDetailViewModel", "Failed to load comments: ${exception.message}")
+                        Log.e(
+                            "ForumDetailViewModel",
+                            "Failed to load comments: ${exception.message}"
+                        )
                         _error.value = "Failed to load comments: ${exception.message}"
                     }
                 }.onFailure { exception ->
@@ -84,9 +87,5 @@ class ForumDetailViewModel(
         _error.value = message
         _isLoading.value = false
         _isPostNotFound.value = false
-    }
-
-    fun refreshDetails(forumId: Int) {
-        loadForumDetails(forumId)
     }
 }
