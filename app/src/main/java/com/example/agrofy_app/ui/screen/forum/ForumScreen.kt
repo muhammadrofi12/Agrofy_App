@@ -94,7 +94,6 @@ fun ForumScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(top = 24.dp)
         ) {
             // Loading state
             if (isLoading) {
@@ -119,7 +118,11 @@ fun ForumScreen(
                         post = post
                     )
                 }
+                item {
+                    Spacer(modifier = Modifier.height(100.dp))
+                }
             }
+
 
             BottomNavigationBar(
                 navController = navController,
@@ -144,7 +147,7 @@ fun ForumPost(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 4.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 12.dp, top = 12.dp)
             .border(2.dp, Color.Black, RoundedCornerShape(15.dp))
             .clip(RoundedCornerShape(20.dp))
     ) {
@@ -182,7 +185,7 @@ fun ForumPost(
                     contentDescription = "Image: ${post.id}",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(150.dp)
+                        .height(220.dp)
                         .clip(RoundedCornerShape(10.dp)),
                     contentScale = ContentScale.Crop,
                     placeholder = painterResource(R.drawable.ic_image), // Tambahkan placeholder

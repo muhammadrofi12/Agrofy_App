@@ -9,6 +9,7 @@ import com.example.agrofy_app.models.forum.ForumPost
 class ForumRepository(
     private val apiService: ForumApiService = ForumRetrofitClient.instance,
 ) {
+    // Get data list forum
     suspend fun getForumPosts(): Result<List<ForumPost>> {
         return try {
             val response = apiService.getForum()
@@ -41,38 +42,50 @@ class ForumRepository(
     }
 
 
-    suspend fun getForumPostDetail(forumId: Int): Result<ForumPost> {
-        return try {
-            val response = apiService.getForumPostAndComments(forumId)
-            if (response.isSuccessful) {
-                val apiData = response.body()?.data
-                if (!apiData.isNullOrEmpty()) {
-                    // Mengambil post pertama sebagai dasar
-                    val apiPost = apiData.first()
+//    suspend fun getForumPostDetail(forumId: Int): Result<ForumPost> {
+//        return try {
+//            val response = apiService.getForumPostAndComments(forumId)
+//            if (response.isSuccessful) {
+//                val apiData = response.body()?.data
+//                if (apiData != null && apiData.isNotEmpty()) {
+//                    val apiPost = apiData.first()
+//                    // Memastikan bahwa deskripsi (caption) ada
+//                    val description = extractTextFromHTML(apiPost.caption.takeIf { !it.isNullOrEmpty() } ?: "Deskripsi tidak tersedia.")
+//
+//                    Result.success(
+//                        ForumPost(
+//                            id = apiPost.id.toString(),
+//                            authorName = apiPost.namaComment,
+//                            question = description, // Menampilkan deskripsi yang valid
+//                            likesCount = apiPost.disukai ?: 0,
+//                            commentsCount = apiData.size, // Menghitung komentar berdasarkan data yang ada
+//                            imageResource = apiPost.gambarPost?.takeIf { it.isNotEmpty() },
+//                            authorProfileImage = apiPost.foto
+//                        )
+//                    )
+//                } else {
+//                    // Jika apiData kosong, tampilkan postingan dengan deskripsi default
+//                    Result.success(
+//                        ForumPost(
+//                            id = forumId.toString(),
+//                            authorName = "Anonymous",
+//                            question = "Postingan ini belum memiliki deskripsi.",
+//                            likesCount = 0,
+//                            commentsCount = 0,
+//                            imageResource = null,
+//                            authorProfileImage = null
+//                        )
+//                    )
+//                }
+//            } else {
+//                Result.failure(Exception("Error: ${response.code()}"))
+//            }
+//        } catch (e: Exception) {
+//            Result.failure(e)
+//        }
+//    }
 
-                    Result.success(
-                        ForumPost(
-                            id = apiPost.id.toString(),
-                            authorName = apiPost.namaComment,   // Nama lengkap
-                            question = extractTextFromHTML(apiPost.caption),
-                            likesCount = apiPost.disukai ?: 0,
-                            commentsCount = apiData.size,      // Total jumlah balasan
-                            imageResource = apiPost.gambarPost?.takeIf { it.isNotEmpty() },
-                            authorProfileImage = apiPost.foto  // Foto profil comment
-                        )
-                    )
-                } else {
-                    Result.failure(Exception("Post not found"))
-                }
-            } else {
-                Result.failure(Exception("Error: ${response.code()}"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
-
-
+    // Get data list komentar by forum
     suspend fun getForumComments(forumId: Int): Result<List<Comment>> {
         return try {
             val response = apiService.getForumPostAndComments(forumId)
@@ -81,7 +94,7 @@ class ForumRepository(
                     Comment(
                         id = apiComment.id,
                         userName = apiComment.namaComment,
-                        message = extractTextFromHTML(apiComment.balasan),
+                        message = apiComment.balasan?.let { extractTextFromHTML(it) },
                         userProfileImage = apiComment.foto,
                         createdAt = apiComment.createdAt
                     )
@@ -95,6 +108,8 @@ class ForumRepository(
         }
     }
 
+
+    // Add komentar
     suspend fun addComment(forumId: Int, commentText: String): Result<Boolean> {
         return try {
             val response = apiService.addComment(forumId, AddCommentRequest(commentText))
@@ -107,6 +122,9 @@ class ForumRepository(
             Result.failure(e)
         }
     }
+
+    // Add forum
+
 
     // Ekstrak HTML
     private fun extractTextFromHTML(htmlContent: String): String {

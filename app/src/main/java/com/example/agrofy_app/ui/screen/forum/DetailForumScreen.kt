@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -48,9 +47,9 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.CommentItem
-import com.example.agrofy_app.ui.components.ForumDetailHeader
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.PoppinsBold18
+import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.viewmodels.forum.ForumDetailViewModel
 import com.example.agrofy_app.viewmodels.user.ProfileViewModel
 
@@ -60,7 +59,7 @@ fun DetailForumScreen(
     forumId: Int,
     viewModel: ForumDetailViewModel = viewModel(),
 ) {
-    val forumPost by viewModel.forumPost.collectAsState()
+//    val forumPost by viewModel.forumPost.collectAsState()
     val comments by viewModel.comments.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
@@ -79,12 +78,9 @@ fun DetailForumScreen(
         profileViewModel.loadProfile()
     }
 
-    // Error handling toast or dialog can be added here
+    // Cek Eror
     error?.let { errorMessage ->
-        // Show error to user, e.g., using a Toast or Snackbar
-        // You might want to implement a custom error handling mechanism
         LaunchedEffect(errorMessage) {
-            // Clear the error after showing
             viewModel.setError("")
         }
     }
@@ -132,12 +128,12 @@ fun DetailForumScreen(
                         .fillMaxSize()
                         .padding(bottom = 80.dp)
                 ) {
-                    forumPost?.let { post ->
-                        ForumDetailHeader(
-                            post
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
+//                    forumPost?.let { post ->
+//                        ForumDetailHeader(
+//                            post
+//                        )
+//                        Spacer(modifier = Modifier.height(16.dp))
+//                    }
 
                     Text(
                         text = "Comments",
@@ -148,8 +144,23 @@ fun DetailForumScreen(
                     )
 
                     LazyColumn {
-                        items(comments) { comment ->
-                            CommentItem(comment)
+                        if (comments.isEmpty()) {
+                            item {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "Belum ada komentar. Jadilah yang pertama!",
+                                        style = PoppinsMedium14,
+                                        color = Color.Gray
+                                    )
+                                }
+                            }
+                        } else {
+                            items(comments) { comment ->
+                                CommentItem(comment)
+                            }
                         }
                     }
                 }
