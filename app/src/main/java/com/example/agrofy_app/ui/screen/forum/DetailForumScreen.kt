@@ -1,9 +1,10 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:Suppress("DEPRECATION")
 
 package com.example.agrofy_app.ui.screen.forum
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -23,7 +23,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -44,12 +43,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.CommentItem
-import com.example.agrofy_app.ui.components.ForumDetailHeader
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.PoppinsBold18
+import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.viewmodels.forum.ForumDetailViewModel
+import com.example.agrofy_app.viewmodels.user.ProfileViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun DetailForumScreen(
@@ -57,7 +60,7 @@ fun DetailForumScreen(
     forumId: Int,
     viewModel: ForumDetailViewModel = viewModel(),
 ) {
-    val forumPost by viewModel.forumPost.collectAsState()
+//    val forumPost by viewModel.forumPost.collectAsState()
     val comments by viewModel.comments.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
@@ -65,8 +68,26 @@ fun DetailForumScreen(
 
     var newCommentText by remember { mutableStateOf("") }
 
+    val profileViewModel: ProfileViewModel = viewModel()
+    val profile by profileViewModel.profile.collectAsState()
+
+    // Refesh
+    val isRefreshing = isLoading
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing)
+
     LaunchedEffect(forumId) {
         viewModel.loadForumDetails(forumId)
+    }
+
+    LaunchedEffect(Unit) {
+        profileViewModel.loadProfile()
+    }
+
+    // Cek Eror
+    error?.let { errorMessage ->
+        LaunchedEffect(errorMessage) {
+            viewModel.setError("")
+        }
     }
 
     if (isLoading) {
@@ -101,49 +122,75 @@ fun DetailForumScreen(
                 )
             }
         ) { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(top = 20.dp)
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = { viewModel.loadForumDetails(forumId) }
             ) {
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(bottom = 80.dp)
+                        .padding(paddingValues)
+                        .padding(top = 20.dp)
                 ) {
-                    forumPost?.let { post ->
-                        ForumDetailHeader(
-                            post
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
-
-                    Text(
-                        text = "Comments",
-                        style = PoppinsBold18,
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 4.dp)
-                    )
+                            .fillMaxSize()
+                            .padding(bottom = 80.dp)
+                    ) {
+//                    forumPost?.let { post ->
+//                        ForumDetailHeader(
+//                            post
+//                        )
+//                        Spacer(modifier = Modifier.height(16.dp))
+//                    }
 
-                    LazyColumn {
-                        items(comments) { comment ->
-                            CommentItem(comment)
+                        Text(
+                            text = "Comments",
+                            style = PoppinsBold18,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp, bottom = 12.dp)
+                        )
+
+                        LazyColumn {
+                            if (comments.isEmpty()) {
+                                item {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "Belum ada komentar. Jadilah yang pertama!",
+                                            style = PoppinsMedium14,
+                                            color = Color.Gray
+                                        )
+                                    }
+                                }
+                            } else {
+                                items(comments) { comment ->
+                                    CommentItem(comment)
+                                }
+                            }
                         }
                     }
                 }
             }
 
+
             // Floating comment input section
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter // Tetapkan alignment pada Box
             ) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(16.dp)
+                        .border(
+                            BorderStroke(1.dp, Color.Gray),
+                            shape = RoundedCornerShape(24.dp)
+                        ),
                     shape = RoundedCornerShape(24.dp),
                 ) {
                     Row(
@@ -153,9 +200,11 @@ fun DetailForumScreen(
                             .padding(12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.ic_author),
-                            contentDescription = "Profile Icon",
+                        AsyncImage(
+                            model = profile?.foto?.let {
+                                "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
+                            } ?: R.drawable.default_profile,
+                            contentDescription = "Profile: ${profile?.namaLengkap ?: "Pengguna"}",
                             modifier = Modifier
                                 .size(40.dp)
                                 .clip(CircleShape)
@@ -184,7 +233,7 @@ fun DetailForumScreen(
                         Button(
                             onClick = {
                                 if (newCommentText.isNotEmpty()) {
-                                    // Handle new comment
+                                    viewModel.addComment(forumId, newCommentText)
                                     newCommentText = ""
                                 }
                             },

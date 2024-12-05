@@ -39,15 +39,13 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.TopAppBar
+import com.example.agrofy_app.ui.components.formatISOToDate
 import com.example.agrofy_app.ui.theme.GreenActive
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold20
 import com.example.agrofy_app.viewmodels.pemberdayaan.DetailArtikelViewModel
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.TimeZone
 
 @Composable
 fun DetailArtikelScreen(
@@ -81,6 +79,7 @@ fun DetailArtikelScreen(
                     color = GreenActive
                 )
             }
+
             error != null -> Box(modifier = Modifier.fillMaxSize()) {
                 Text(
                     text = "Error: $error",
@@ -89,6 +88,7 @@ fun DetailArtikelScreen(
                     style = PoppinsRegular14
                 )
             }
+
             artikel != null -> {
                 val article = artikel!!
                 LazyColumn(
@@ -241,17 +241,7 @@ fun VideoButton(onClick: () -> Unit) {
     }
 }
 
-fun formatISOToDate(isoString: String): String {
-    return try {
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-        val date = inputFormat.parse(isoString)
-        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-        outputFormat.format(date!!)
-    } catch (e: Exception) {
-        "Invalid Date"
-    }
-}
+
 //@Preview(showBackground = true)
 //@Composable
 //fun PreviewDetailArticle() {

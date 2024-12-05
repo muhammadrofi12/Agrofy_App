@@ -4,8 +4,9 @@ data class ForumPost(
     val id: String,
     val authorName: String,
     val question: String,
-    val likesCount: Int,
-    val commentsCount: Int,
+    val likesCount: Int = 0,
+    val commentsCount: Int? = null,
     val imageResource: String? = null,
-    val authorProfileImage: String? = null
+    val authorProfileImage: String? = null,
+    val created: String
 )

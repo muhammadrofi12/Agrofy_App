@@ -30,13 +30,11 @@ import androidx.navigation.NavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.components.VideoPlayer
+import com.example.agrofy_app.ui.components.formatISOToDate
 import com.example.agrofy_app.ui.theme.GreenActive
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold20
 import com.example.agrofy_app.viewmodels.pemberdayaan.DetailVideoViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @Composable
 fun DetailVideoScreen(
@@ -165,19 +163,6 @@ fun DetailVideoScreen(
                 }
             }
         }
-    }
-}
-
-fun formatDate(date: Int): String {
-    val dateStr = date.toString()
-    val parser = SimpleDateFormat("yyyyMMdd", Locale("id"))
-    val formatter = SimpleDateFormat("dd MMMM yyyy", Locale("id"))
-
-    return try {
-        val parsedDate = parser.parse(dateStr)
-        formatter.format(parsedDate as Date)
-    } catch (e: Exception) {
-        dateStr
     }
 }
 

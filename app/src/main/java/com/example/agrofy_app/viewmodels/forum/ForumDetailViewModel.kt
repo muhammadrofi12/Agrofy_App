@@ -5,17 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agrofy_app.data.repository.ForumRepository
 import com.example.agrofy_app.models.forum.Comment
-import com.example.agrofy_app.models.forum.ForumPost
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ForumDetailViewModel(
-    private val repository: ForumRepository = ForumRepository()
+    private val repository: ForumRepository = ForumRepository(),
 ) : ViewModel() {
-    private val _forumPost = MutableStateFlow<ForumPost?>(null)
-    val forumPost: StateFlow<ForumPost?> = _forumPost.asStateFlow()
+//    private val _forumPost = MutableStateFlow<ForumPost?>(null)
+//    val forumPost: StateFlow<ForumPost?> = _forumPost.asStateFlow()
 
     private val _comments = MutableStateFlow<List<Comment>>(emptyList())
     val comments: StateFlow<List<Comment>> = _comments.asStateFlow()
@@ -37,24 +36,28 @@ class ForumDetailViewModel(
             _isPostNotFound.value = false
 
             try {
-                val response = repository.getForumPostDetail(forumId)
-                response.onSuccess { post ->
-                    Log.d("ForumDetailViewModel", "Successfully fetched post: ${post.id}")
-                    _forumPost.value = post
-
-                    val commentsResponse = repository.getForumComments(forumId)
-                    commentsResponse.onSuccess { comments ->
-                        Log.d("ForumDetailViewModel", "Fetched ${comments.size} comments")
-                        _comments.value = comments
-                    }.onFailure { exception ->
-                        Log.e("ForumDetailViewModel", "Failed to load comments: ${exception.message}")
-                        _error.value = "Failed to load comments: ${exception.message}"
-                    }
+                val commentsResponse = repository.getForumComments(forumId)
+                commentsResponse.onSuccess { comments ->
+                    Log.d("ForumDetailViewModel", "Fetched ${comments.size} comments")
+                    _comments.value = comments
                 }.onFailure { exception ->
-                    Log.e("ForumDetailViewModel", "Post not found: ${exception.message}")
-                    _isPostNotFound.value = true
-                    _error.value = "Post not found: ${exception.message}"
+                    Log.e(
+                        "ForumDetailViewModel",
+                        "Failed to load comments: ${exception.message}"
+                    )
+                    _error.value = "Failed to load comments: ${exception.message}"
                 }
+//                val response = repository.getForumPostDetail(forumId)
+//                response.onSuccess { post ->
+////                    Log.d("ForumDetailViewModel", "Successfully fetched post: ${post.id}")
+////                    _forumPost.value = post
+//
+//
+//                }.onFailure { exception ->
+//                    Log.e("ForumDetailViewModel", "Post not found: ${exception.message}")
+//                    _isPostNotFound.value = true
+//                    _error.value = "Post not found: ${exception.message}"
+//                }
             } catch (e: Exception) {
                 Log.e("ForumDetailViewModel", "Unexpected error: ${e.message}")
                 _error.value = "Unexpected error: ${e.message}"
@@ -84,9 +87,5 @@ class ForumDetailViewModel(
         _error.value = message
         _isLoading.value = false
         _isPostNotFound.value = false
-    }
-
-    fun refreshDetails(forumId: Int) {
-        loadForumDetails(forumId)
     }
 }

@@ -4,14 +4,18 @@ import com.example.agrofy_app.data.api.user.ApiClient.tokenBrearer
 import com.example.agrofy_app.models.forum.ForumDetailResponse
 import com.example.agrofy_app.models.forum.ForumResponse
 import okhttp3.Interceptor
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
@@ -30,6 +34,13 @@ interface ForumApiService {
     suspend fun addComment(
         @Path("id") forumId: Int,
         @Body commentBody: AddCommentRequest
+    ): Response<Any>
+
+    @Multipart
+    @POST("api/v1/tambahkomunitas")
+    suspend fun addForum(
+        @Part("caption") caption: RequestBody,
+        @Part gambar: MultipartBody.Part?
     ): Response<Any>
 }
 

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.agrofy_app.ui.screen.forum
 
 import androidx.compose.foundation.background
@@ -27,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,7 +38,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,9 +50,14 @@ import com.example.agrofy_app.R
 import com.example.agrofy_app.models.forum.ForumPost
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.components.TopAppBar
+import com.example.agrofy_app.ui.components.formatISOToDate
 import com.example.agrofy_app.ui.theme.GreenPrimary
+import com.example.agrofy_app.ui.theme.PoppinsBold16
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
+import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.viewmodels.forum.ForumViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun ForumScreen(
@@ -62,6 +67,10 @@ fun ForumScreen(
     val forumPosts by viewModel.forumPosts.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
+
+    // Refesh
+    val isRefreshing = isLoading
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing)
 
     Scaffold(
         topBar = {
@@ -90,61 +99,67 @@ fun ForumScreen(
             }
         }
     ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(top = 24.dp)
+        SwipeRefresh(
+            state = swipeRefreshState,
+            onRefresh = { viewModel.fetchForumPosts() }
         ) {
-            // Loading state
-            if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-
-            // Error state
-            error?.let { errorMessage ->
-                Text(
-                    text = "Error: $errorMessage",
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-
-            // Posts list
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(forumPosts) { post ->
-                    ForumPost(
-                        navController = navController,
-                        post = post
-                    )
-                }
-            }
-
-            BottomNavigationBar(
-                navController = navController,
-                onItemSelected = { /* Implementasi aksi */ },
+            Box(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-            )
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(50.dp),
+                        color = GreenPrimary
+                    )
+                } else if (error != null) {
+                    Text(
+                        text = "Error: $error",
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                } else {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(forumPosts) { post ->
+                            ForumPost(
+                                navController = navController,
+                                post = post
+                            )
+                        }
+                        item {
+                            Spacer(modifier = Modifier.height(100.dp))
+                        }
+                    }
+                }
+
+                BottomNavigationBar(
+                    navController = navController,
+                    onItemSelected = { /* Implementasi aksi */ },
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                )
+            }
         }
+
     }
 }
+
 
 @Composable
 fun ForumPost(
     navController: NavController,
     post: ForumPost,
 ) {
-    var isLiked by remember { mutableStateOf(false) }
-    var currentLikesCount by remember { mutableIntStateOf(post.likesCount) }
+//    var isLiked by remember { mutableStateOf(false) }
+//    var currentLikesCount by remember { mutableIntStateOf(post.likesCount) }
     var imageLoadError by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 4.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 12.dp, top = 12.dp)
             .border(2.dp, Color.Black, RoundedCornerShape(15.dp))
             .clip(RoundedCornerShape(20.dp))
     ) {
@@ -167,11 +182,18 @@ fun ForumPost(
 
                 Spacer(modifier = Modifier.width(10.dp))
 
-                Text(
-                    text = post.authorName,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
+                Column {
+                    Text(
+                        text = post.authorName,
+                        style = PoppinsBold16
+                    )
+
+                    // Kapan dibuat
+                    Text(
+                        text = formatISOToDate(post.created),
+                        style = PoppinsRegular12
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -182,7 +204,7 @@ fun ForumPost(
                     contentDescription = "Image: ${post.id}",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(150.dp)
+                        .height(220.dp)
                         .clip(RoundedCornerShape(10.dp)),
                     contentScale = ContentScale.Crop,
                     placeholder = painterResource(R.drawable.ic_image), // Tambahkan placeholder
@@ -214,26 +236,26 @@ fun ForumPost(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Likes
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.clickable {
-                        isLiked = !isLiked
-                        currentLikesCount += if (isLiked) 1 else -1
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_love_active),
-                        contentDescription = "Love icon",
-                        modifier = Modifier.size(24.dp),
-                        tint = if (isLiked) Color.Red else Color.Gray
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "$currentLikesCount",
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
-                }
+//                Row(
+//                    verticalAlignment = Alignment.CenterVertically,
+//                    modifier = Modifier.clickable {
+//                        isLiked = !isLiked
+//                        currentLikesCount += if (isLiked) 1 else -1
+//                    }
+//                ) {
+//                    Icon(
+//                        painter = painterResource(R.drawable.ic_love_active),
+//                        contentDescription = "Love icon",
+//                        modifier = Modifier.size(24.dp),
+//                        tint = if (isLiked) Color.Red else Color.Gray
+//                    )
+//                    Spacer(modifier = Modifier.width(4.dp))
+//                    Text(
+//                        text = "$currentLikesCount",
+//                        fontSize = 14.sp,
+//                        color = Color.Gray
+//                    )
+//                }
 
                 Spacer(modifier = Modifier.width(16.dp))
 
