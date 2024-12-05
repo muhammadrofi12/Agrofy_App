@@ -38,7 +38,7 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun fetchForumPosts() {
+    fun fetchForumPosts() {
         viewModelScope.launch {
             _isLoading.value = true
             val result = repository.getForumPosts()

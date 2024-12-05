@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:Suppress("DEPRECATION")
 
 package com.example.agrofy_app.ui.screen.forum
 
@@ -23,7 +23,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -52,6 +51,8 @@ import com.example.agrofy_app.ui.theme.PoppinsBold18
 import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.viewmodels.forum.ForumDetailViewModel
 import com.example.agrofy_app.viewmodels.user.ProfileViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun DetailForumScreen(
@@ -69,6 +70,10 @@ fun DetailForumScreen(
 
     val profileViewModel: ProfileViewModel = viewModel()
     val profile by profileViewModel.profile.collectAsState()
+
+    // Refesh
+    val isRefreshing = isLoading
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing)
 
     LaunchedEffect(forumId) {
         viewModel.loadForumDetails(forumId)
@@ -117,17 +122,21 @@ fun DetailForumScreen(
                 )
             }
         ) { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(top = 20.dp)
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = { viewModel.loadForumDetails(forumId) }
             ) {
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(bottom = 80.dp)
+                        .padding(paddingValues)
+                        .padding(top = 20.dp)
                 ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 80.dp)
+                    ) {
 //                    forumPost?.let { post ->
 //                        ForumDetailHeader(
 //                            post
@@ -135,36 +144,38 @@ fun DetailForumScreen(
 //                        Spacer(modifier = Modifier.height(16.dp))
 //                    }
 
-                    Text(
-                        text = "Comments",
-                        style = PoppinsBold18,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 12.dp)
-                    )
+                        Text(
+                            text = "Comments",
+                            style = PoppinsBold18,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp, bottom = 12.dp)
+                        )
 
-                    LazyColumn {
-                        if (comments.isEmpty()) {
-                            item {
-                                Box(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        text = "Belum ada komentar. Jadilah yang pertama!",
-                                        style = PoppinsMedium14,
-                                        color = Color.Gray
-                                    )
+                        LazyColumn {
+                            if (comments.isEmpty()) {
+                                item {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "Belum ada komentar. Jadilah yang pertama!",
+                                            style = PoppinsMedium14,
+                                            color = Color.Gray
+                                        )
+                                    }
                                 }
-                            }
-                        } else {
-                            items(comments) { comment ->
-                                CommentItem(comment)
+                            } else {
+                                items(comments) { comment ->
+                                    CommentItem(comment)
+                                }
                             }
                         }
                     }
                 }
             }
+
 
             // Floating comment input section
             Box(

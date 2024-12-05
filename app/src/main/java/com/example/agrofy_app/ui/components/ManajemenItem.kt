@@ -59,7 +59,6 @@ import coil.compose.AsyncImage
 import com.example.agrofy_app.R
 import com.example.agrofy_app.models.HasilOlah
 import com.example.agrofy_app.models.Limbah
-import com.example.agrofy_app.ui.screen.pemberdayaan.formatDate
 import com.example.agrofy_app.ui.theme.BrownActive
 import com.example.agrofy_app.ui.theme.Error
 import com.example.agrofy_app.ui.theme.GreenActive
@@ -705,7 +704,6 @@ fun RiwayatItem(limbah: Limbah) {
 }
 
 // List Hasil Olah
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HasilOlahCard(
     hasilOlah: HasilOlah,

@@ -10,7 +10,7 @@ data class ForumDetailResponse(
 data class ForumCommentData(
     val id: Int,
     @SerializedName("user_id") val userId: Int,
-    val balasan: String,
+    val balasan: String?,
     @SerializedName("komunitas_id") val komunitasId: Int,
     @SerializedName("created_at") val createdAt: String,
     @SerializedName("updated_at") val updatedAt: String,

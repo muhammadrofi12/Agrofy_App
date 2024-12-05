@@ -5,6 +5,11 @@ import com.example.agrofy_app.data.api.forum.ForumApiService
 import com.example.agrofy_app.data.api.forum.ForumRetrofitClient
 import com.example.agrofy_app.models.forum.Comment
 import com.example.agrofy_app.models.forum.ForumPost
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class ForumRepository(
     private val apiService: ForumApiService = ForumRetrofitClient.instance,
@@ -29,7 +34,8 @@ class ForumRepository(
                         likesCount = apiPost.disukai ?: 0,
                         commentsCount = commentsCount, // Set jumlah komentar
                         imageResource = apiPost.gambarPost?.takeIf { it.isNotEmpty() },
-                        authorProfileImage = apiPost.foto
+                        authorProfileImage = apiPost.foto,
+                        created = apiPost.createdAt
                     )
                 } ?: emptyList()
                 Result.success(forumPosts)
@@ -124,6 +130,33 @@ class ForumRepository(
     }
 
     // Add forum
+    suspend fun addForum(postText: String, imageFile: File?): Result<Boolean> {
+        return try {
+            val captionRequestBody = postText.toRequestBody("text/plain".toMediaTypeOrNull())
+
+            val imageRequestBody = imageFile?.let { file ->
+                if (!file.name.lowercase().endsWith(".jpg") &&
+                    !file.name.lowercase().endsWith(".jpeg") &&
+                    !file.name.lowercase().endsWith(".png")
+                ) {
+                    throw IllegalArgumentException("Only .jpg, .jpeg, and .png files are allowed")
+                }
+
+                val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                MultipartBody.Part.createFormData("gambar", file.name, requestFile)
+            }
+
+            val response = apiService.addForum(captionRequestBody, imageRequestBody)
+
+            if (response.isSuccessful) {
+                Result.success(true)
+            } else {
+                Result.failure(Exception("Failed to add forum post: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
 
     // Ekstrak HTML
