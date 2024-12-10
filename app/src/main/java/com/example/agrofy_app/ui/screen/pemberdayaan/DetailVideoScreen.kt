@@ -1,5 +1,8 @@
 package com.example.agrofy_app.ui.screen.pemberdayaan
 
+import android.text.Html
+import android.view.Gravity
+import android.widget.TextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,8 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.agrofy_app.R
@@ -152,11 +155,21 @@ fun DetailVideoScreen(
                             Spacer(modifier = Modifier.height(16.dp))
 
                             // Description
-                            Text(
-                                text = currentVideo.deskripsi.replace("<[^>]*>".toRegex(), ""),
-                                style = PoppinsRegular14,
-                                color = Color.Black,
-                                textAlign = TextAlign.Justify
+                            // Mengambil fungsi HTML di Android
+                            AndroidView(
+                                factory = { context ->
+                                    TextView(context).apply {
+                                        textSize = 14f
+                                        setTextColor(android.graphics.Color.BLACK)
+                                        textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+                                        gravity = Gravity.START
+                                        justify()
+                                    }
+                                },
+                                update = { textView ->
+                                    textView.text = Html.fromHtml(currentVideo.deskripsi, Html.FROM_HTML_MODE_COMPACT)
+                                },
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                     }
