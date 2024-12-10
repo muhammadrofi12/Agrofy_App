@@ -2,6 +2,9 @@
 
 package com.example.agrofy_app.ui.screen.forum
 
+import android.text.Html
+import android.view.Gravity
+import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,10 +41,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -51,9 +54,9 @@ import com.example.agrofy_app.models.forum.ForumPost
 import com.example.agrofy_app.ui.components.BottomNavigationBar
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.components.formatISOToDate
+import com.example.agrofy_app.ui.screen.pemberdayaan.justify
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold16
-import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.viewmodels.forum.ForumViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -220,10 +223,20 @@ fun ForumPost(
 
             // Question Text
             Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = post.question,
-                style = PoppinsMedium14,
-                textAlign = TextAlign.Justify,
+            AndroidView(
+                factory = { context ->
+                    TextView(context).apply {
+                        textSize = 14f
+                        setTextColor(android.graphics.Color.BLACK)
+                        textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+                        gravity = Gravity.START
+                        justify()
+                    }
+                },
+                update = { textView ->
+                    textView.text = Html.fromHtml(post.question, Html.FROM_HTML_MODE_COMPACT)
+                },
+                modifier = Modifier.fillMaxWidth()
             )
 
             // Likes and Comments

@@ -30,7 +30,7 @@ class ForumRepository(
                     ForumPost(
                         id = apiPost.id.toString(),
                         authorName = apiPost.namaLengkap,
-                        question = extractTextFromHTML(apiPost.caption),
+                        question = apiPost.caption,
                         likesCount = apiPost.disukai ?: 0,
                         commentsCount = commentsCount, // Set jumlah komentar
                         imageResource = apiPost.gambarPost?.takeIf { it.isNotEmpty() },
@@ -100,7 +100,7 @@ class ForumRepository(
                     Comment(
                         id = apiComment.id,
                         userName = apiComment.namaComment,
-                        message = apiComment.balasan?.let { extractTextFromHTML(it) },
+                        message = apiComment.balasan,
                         userProfileImage = apiComment.foto,
                         createdAt = apiComment.createdAt
                     )
@@ -159,15 +159,15 @@ class ForumRepository(
     }
 
 
-    // Ekstrak HTML
-    private fun extractTextFromHTML(htmlContent: String): String {
-        return htmlContent
-            .replace("<ol>", "")
-            .replace("</ol>", "")
-            .replace("<li>", "")
-            .replace("</li>", " ")
-            .replace("<p>", "")
-            .replace("</p>", "")
-            .trim()
-    }
+//    // Ekstrak HTML
+//    private fun extractTextFromHTML(htmlContent: String): String {
+//        return htmlContent
+//            .replace("<ol>", "")
+//            .replace("</ol>", "")
+//            .replace("<li>", "")
+//            .replace("</li>", " ")
+//            .replace("<p>", "")
+//            .replace("</p>", "")
+//            .trim()
+//    }
 }

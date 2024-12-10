@@ -1,5 +1,10 @@
 package com.example.agrofy_app.ui.screen.pemberdayaan
 
+import android.os.Build
+import android.text.Html
+import android.text.Layout
+import android.view.Gravity
+import android.widget.TextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -32,8 +37,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -187,11 +192,22 @@ fun DetailArtikelScreen(
                                 .padding(horizontal = 20.dp)
                         ) {
                             Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = article.deskripsi.replace("<[^>]*>".toRegex(), ""),
-                                style = PoppinsRegular14,
-                                color = Color.Black,
-                                textAlign = TextAlign.Justify
+
+                            // Mengambil fungsi HTML di Android
+                            AndroidView(
+                                factory = { context ->
+                                    TextView(context).apply {
+                                        textSize = 14f
+                                        setTextColor(android.graphics.Color.BLACK)
+                                        textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+                                        gravity = Gravity.START
+                                        justify()
+                                    }
+                                },
+                                update = { textView ->
+                                    textView.text = Html.fromHtml(article.deskripsi, Html.FROM_HTML_MODE_COMPACT)
+                                },
+                                modifier = Modifier.fillMaxWidth()
                             )
 
                             Spacer(modifier = Modifier.height(16.dp))
@@ -238,6 +254,12 @@ fun VideoButton(onClick: () -> Unit) {
                 modifier = Modifier.size(20.dp)
             )
         }
+    }
+}
+
+fun TextView.justify() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
     }
 }
 
