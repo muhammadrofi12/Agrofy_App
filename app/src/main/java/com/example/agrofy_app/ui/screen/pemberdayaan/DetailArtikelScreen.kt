@@ -1,5 +1,6 @@
 package com.example.agrofy_app.ui.screen.pemberdayaan
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.text.Html
 import android.text.Layout
@@ -257,6 +258,7 @@ fun VideoButton(onClick: () -> Unit) {
     }
 }
 
+@SuppressLint("WrongConstant")
 fun TextView.justify() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
