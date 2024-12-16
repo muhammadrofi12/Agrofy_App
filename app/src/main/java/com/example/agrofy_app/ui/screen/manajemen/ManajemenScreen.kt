@@ -2,7 +2,6 @@ package com.example.agrofy_app.ui.screen.manajemen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,7 +61,7 @@ fun ManajemenScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 56.dp)
+                .padding(padding)
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -139,23 +138,6 @@ fun ManajemenScreen(navController: NavController) {
                                             style = PoppinsSemiBold16,
                                             color = Color.Black
                                         )
-
-                                        Box(
-                                            modifier = Modifier
-                                                .background(Color.Transparent)
-                                                .border(
-                                                    width = 1.dp,
-                                                    color = GreenPrimary,
-                                                    shape = RoundedCornerShape(4.dp)
-                                                )
-                                                .padding(horizontal = 12.dp, vertical = 4.dp)
-                                        ) {
-                                            Text(
-                                                text = "100 kg",
-                                                style = PoppinsMedium16,
-                                                color = Color.Black
-                                            )
-                                        }
                                     }
 
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -166,25 +148,21 @@ fun ManajemenScreen(navController: NavController) {
                                     ) {
                                         LimbahCardItem(
                                             "Jerami",
-                                            "100",
                                             "07 Nov 2024",
                                             R.drawable.jerami
                                         )
                                         LimbahCardItem(
                                             "Jerami",
-                                            "100",
                                             "07 Nov 2024",
                                             R.drawable.jerami
                                         )
                                         LimbahCardItem(
                                             "Jerami",
-                                            "100",
                                             "07 Nov 2024",
                                             R.drawable.jerami
                                         )
                                         LimbahCardItem(
                                             "Jerami",
-                                            "100",
                                             "07 Nov 2024",
                                             R.drawable.jerami
                                         )
@@ -251,22 +229,22 @@ fun ManajemenScreen(navController: NavController) {
                                             color = Color.Black
                                         )
 
-                                        Box(
-                                            modifier = Modifier
-                                                .background(Color.Transparent)
-                                                .border(
-                                                    width = 1.dp,
-                                                    color = GreenPrimary,
-                                                    shape = RoundedCornerShape(4.dp)
-                                                )
-                                                .padding(horizontal = 12.dp, vertical = 4.dp)
-                                        ) {
-                                            Text(
-                                                text = "100 kg",
-                                                style = PoppinsMedium16,
-                                                color = Color.Black
-                                            )
-                                        }
+//                                        Box(
+//                                            modifier = Modifier
+//                                                .background(Color.Transparent)
+//                                                .border(
+//                                                    width = 1.dp,
+//                                                    color = GreenPrimary,
+//                                                    shape = RoundedCornerShape(4.dp)
+//                                                )
+//                                                .padding(horizontal = 12.dp, vertical = 4.dp)
+//                                        ) {
+//                                            Text(
+//                                                text = "100 kg",
+//                                                style = PoppinsMedium16,
+//                                                color = Color.Black
+//                                            )
+//                                        }
                                     }
 
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -277,25 +255,21 @@ fun ManajemenScreen(navController: NavController) {
                                     ) {
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
@@ -359,23 +333,6 @@ fun ManajemenScreen(navController: NavController) {
                                             style = PoppinsSemiBold16,
                                             color = Color.Black
                                         )
-
-                                        Box(
-                                            modifier = Modifier
-                                                .background(Color.Transparent)
-                                                .border(
-                                                    width = 1.dp,
-                                                    color = GreenPrimary,
-                                                    shape = RoundedCornerShape(4.dp)
-                                                )
-                                                .padding(horizontal = 12.dp, vertical = 4.dp)
-                                        ) {
-                                            Text(
-                                                text = "60 kg",
-                                                style = PoppinsMedium16,
-                                                color = Color.Black
-                                            )
-                                        }
                                     }
 
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -386,25 +343,21 @@ fun ManajemenScreen(navController: NavController) {
                                     ) {
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
@@ -468,23 +421,6 @@ fun ManajemenScreen(navController: NavController) {
                                             style = PoppinsSemiBold16,
                                             color = Color.Black
                                         )
-
-                                        Box(
-                                            modifier = Modifier
-                                                .background(Color.Transparent)
-                                                .border(
-                                                    width = 1.dp,
-                                                    color = GreenPrimary,
-                                                    shape = RoundedCornerShape(4.dp)
-                                                )
-                                                .padding(horizontal = 12.dp, vertical = 4.dp)
-                                        ) {
-                                            Text(
-                                                text = "60 kg",
-                                                style = PoppinsMedium16,
-                                                color = Color.Black
-                                            )
-                                        }
                                     }
 
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -495,25 +431,21 @@ fun ManajemenScreen(navController: NavController) {
                                     ) {
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
                                         LimbahCardItem(
                                             "Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.jerami
                                         )
                                         LimbahCardItem(
                                             "Atap Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.atap_jerami
                                         )
                                         LimbahCardItem(
                                             "Jerami",
-                                            "100",
                                             "12 Des 2024",
                                             R.drawable.jerami
                                         )

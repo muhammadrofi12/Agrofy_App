@@ -66,8 +66,8 @@ fun LoginScreen(
     navController: NavController,
     viewModel: LoginViewModel = viewModel()
 ) {
-    var email by remember { mutableStateOf("rofi12@gmail.com") }
-    var password by remember { mutableStateOf("rofi#123") }
+    var email by remember { mutableStateOf("yusmarni@gmail.com") }
+    var password by remember { mutableStateOf("yusmarni#123") }
     var passwordVisible by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -178,7 +178,8 @@ fun LoginScreen(
                             shape = RoundedCornerShape(6.dp)
                         )
                         .focusRequester(focusRequesterEmail)
-                        .onFocusChanged { focusState -> isFocusedEmail.value = focusState.isFocused }
+                        .onFocusChanged { focusState -> isFocusedEmail.value = focusState.isFocused },
+                    placeholder = { Text("Email") },
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -210,7 +211,8 @@ fun LoginScreen(
                             shape = RoundedCornerShape(6.dp)
                         )
                         .focusRequester(focusRequesterPassword)
-                        .onFocusChanged { focusState -> isFocusedPassword.value = focusState.isFocused }
+                        .onFocusChanged { focusState -> isFocusedPassword.value = focusState.isFocused },
+                    placeholder = { Text("Password") },
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))

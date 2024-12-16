@@ -173,12 +173,12 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel) 
                     .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                ProfileMenuItem(
-                    text = "Disimpan",
-                    iconRes = R.drawable.ic_archive_book,
-                    backgroundColor = BrownPrimary,
-                    borderColor = BrownPrimary
-                )
+//                ProfileMenuItem(
+//                    text = "Disimpan",
+//                    iconRes = R.drawable.ic_archive_book,
+//                    backgroundColor = BrownPrimary,
+//                    borderColor = BrownPrimary
+//                )
                 ProfileMenuItem(
                     text = "Pengaturan",
                     iconRes = R.drawable.ic_setting,
