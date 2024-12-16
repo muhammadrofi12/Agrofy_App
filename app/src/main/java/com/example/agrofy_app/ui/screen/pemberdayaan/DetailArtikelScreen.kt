@@ -20,12 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,8 +42,6 @@ import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.components.formatISOToDate
 import com.example.agrofy_app.ui.theme.GreenActive
-import com.example.agrofy_app.ui.theme.GreenPrimary
-import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold20
 import com.example.agrofy_app.viewmodels.pemberdayaan.DetailArtikelViewModel
@@ -211,49 +204,11 @@ fun DetailArtikelScreen(
                                 modifier = Modifier.fillMaxWidth()
                             )
 
-                            Spacer(modifier = Modifier.height(16.dp))
-
-                            // Video Button
-                            VideoButton(onClick = {
-                                // Tambahkan aksi navigasi atau tindakan lainnya di sini
-                            })
-
-                            Spacer(modifier = Modifier.height(80.dp))
+                            Spacer(modifier = Modifier.height(20.dp))
                         }
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun VideoButton(onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = GreenPrimary
-        ),
-        shape = RoundedCornerShape(4.dp),
-        modifier = Modifier
-            .height(48.dp)
-            .padding(vertical = 4.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Video",
-                style = PoppinsMedium14,
-                color = Color.White
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = "Arrow",
-                tint = Color.White,
-                modifier = Modifier.size(20.dp)
-            )
         }
     }
 }

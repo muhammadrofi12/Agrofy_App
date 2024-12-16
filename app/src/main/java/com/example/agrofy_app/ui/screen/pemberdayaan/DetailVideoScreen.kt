@@ -80,97 +80,104 @@ fun DetailVideoScreen(
             }
             video != null -> {
                 val currentVideo = video!!
-                LazyColumn(
+
+                Column (
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(padding)
-                        .padding(top = 8.dp)
+                        .padding(top = 10.dp)
                 ) {
-                    // Video Player
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp)
-                        ) {
-                            VideoPlayer(videoUrl = "https://73zqc05b-3000.asse.devtunnels.ms/video/${currentVideo.video}")
-                        }
+                    // Video Player (Sticky)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        VideoPlayer(videoUrl = "https://73zqc05b-3000.asse.devtunnels.ms/video/${currentVideo.video}")
                     }
 
-                    // Video Details
-                    item {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp)
-                        ) {
-                            Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                            // Title
-                            Text(
-                                text = currentVideo.judulVideo,
-                                style = PoppinsSemiBold20,
-                                color = Color.Black
-                            )
+                    // Content Below Video Player
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        // Video Details
+                        item {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 20.dp)
+                            ) {
+                                Spacer(modifier = Modifier.height(16.dp))
 
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            // Date and Author
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.ic_calendar),
-                                    contentDescription = "Calendar",
-                                    modifier = Modifier.size(16.dp)
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
+                                // Title
                                 Text(
-                                    text = formatISOToDate(currentVideo.createdAt),
-                                    style = PoppinsRegular14,
-                                    color = Color.Gray
+                                    text = currentVideo.judulVideo,
+                                    style = PoppinsSemiBold20,
+                                    color = Color.Black
                                 )
 
-                                Spacer(modifier = Modifier.width(12.dp))
+                                Spacer(modifier = Modifier.height(8.dp))
 
-                                Image(
-                                    painter = painterResource(id = R.drawable.ic_circle),
-                                    contentDescription = "Circle",
-                                    modifier = Modifier.size(6.dp)
+                                // Date and Author
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_calendar),
+                                        contentDescription = "Calendar",
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = formatISOToDate(currentVideo.createdAt),
+                                        style = PoppinsRegular14,
+                                        color = Color.Gray
+                                    )
+
+                                    Spacer(modifier = Modifier.width(12.dp))
+
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_circle),
+                                        contentDescription = "Circle",
+                                        modifier = Modifier.size(6.dp)
+                                    )
+
+                                    Spacer(modifier = Modifier.width(12.dp))
+
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_author),
+                                        contentDescription = "Author",
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = currentVideo.namaLengkap,
+                                        style = PoppinsRegular14,
+                                        color = Color.Gray
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                // Description
+                                AndroidView(
+                                    factory = { context ->
+                                        TextView(context).apply {
+                                            textSize = 14f
+                                            setTextColor(android.graphics.Color.BLACK)
+                                            textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
+                                            gravity = Gravity.START
+                                            justify()
+                                        }
+                                    },
+                                    update = { textView ->
+                                        textView.text = Html.fromHtml(currentVideo.deskripsi, Html.FROM_HTML_MODE_COMPACT)
+                                    },
+                                    modifier = Modifier.fillMaxWidth()
                                 )
 
-                                Spacer(modifier = Modifier.width(12.dp))
-
-                                Image(
-                                    painter = painterResource(id = R.drawable.ic_author),
-                                    contentDescription = "Author",
-                                    modifier = Modifier.size(16.dp)
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    text = currentVideo.namaLengkap,
-                                    style = PoppinsRegular14,
-                                    color = Color.Gray
-                                )
+                                Spacer(modifier = Modifier.height(20.dp))
                             }
-
-                            Spacer(modifier = Modifier.height(16.dp))
-
-                            // Description
-                            // Mengambil fungsi HTML di Android
-                            AndroidView(
-                                factory = { context ->
-                                    TextView(context).apply {
-                                        textSize = 14f
-                                        setTextColor(android.graphics.Color.BLACK)
-                                        textAlignment = TextView.TEXT_ALIGNMENT_TEXT_START
-                                        gravity = Gravity.START
-                                        justify()
-                                    }
-                                },
-                                update = { textView ->
-                                    textView.text = Html.fromHtml(currentVideo.deskripsi, Html.FROM_HTML_MODE_COMPACT)
-                                },
-                                modifier = Modifier.fillMaxWidth()
-                            )
                         }
                     }
                 }
@@ -178,6 +185,7 @@ fun DetailVideoScreen(
         }
     }
 }
+
 
 
 //@Preview(showBackground = true)

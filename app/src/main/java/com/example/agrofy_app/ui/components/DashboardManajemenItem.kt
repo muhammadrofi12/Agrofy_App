@@ -3,11 +3,6 @@
 package com.example.agrofy_app.ui.components
 
 
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
 import android.app.DatePickerDialog
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -73,7 +68,6 @@ import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.ui.theme.PoppinsBold12
 import com.example.agrofy_app.ui.theme.PoppinsBold20
-import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular10
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import java.util.Calendar
@@ -81,9 +75,8 @@ import java.util.Calendar
 @Composable
 fun LimbahCardItem(
     title: String,
-    weight: String,
     expiryDate: String,
-    img: Int
+    img: Int,
 ) {
     Card(
         modifier = Modifier
@@ -119,14 +112,6 @@ fun LimbahCardItem(
             )
 
             Spacer(modifier = Modifier.height(4.dp))
-            Text(
-
-                text = "$weight kg",
-                style = PoppinsMedium14,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
 
             Box(
                 modifier = Modifier
@@ -150,10 +135,9 @@ fun LimbahCardItem(
 fun AddLimbahModal(
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onSave: (String, String, String, String, Uri?) -> Unit
+    onSave: (String, String, String, Uri?) -> Unit,
 ) {
     var namaLimbah by remember { mutableStateOf("") }
-    var berat by remember { mutableStateOf("") }
     var tanggalMasuk by remember { mutableStateOf("") }
     var deskripsi by remember { mutableStateOf("") }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -208,13 +192,6 @@ fun AddLimbahModal(
                         label = "Nama Limbah",
                         value = namaLimbah,
                         onValueChange = { namaLimbah = it }
-                    )
-
-                    // Berat
-                    TextFieldWithLabel(
-                        label = "Berat",
-                        value = berat,
-                        onValueChange = { berat = it }
                     )
 
                     // Tanggal Masuk - Menggunakan DatePicker
@@ -310,11 +287,12 @@ fun AddLimbahModal(
                         }
 
                         // Simpan Button
-                        val isActive = namaLimbah.isNotBlank() && berat.isNotBlank() && tanggalMasuk.isNotBlank()
+                        val isActive =
+                            namaLimbah.isNotBlank()  && tanggalMasuk.isNotBlank()
                         Button(
                             onClick = {
                                 if (isActive) {
-                                    onSave(namaLimbah, berat, tanggalMasuk, deskripsi, imageUri)
+                                    onSave(namaLimbah, tanggalMasuk, deskripsi, imageUri)
                                     onDismiss()
                                 }
                             },
@@ -346,10 +324,9 @@ fun AddLimbahModal(
 fun AddHasilOlahModal(
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onSave: (String, String, String, Uri?) -> Unit
+    onSave: (String, String, Uri?) -> Unit,
 ) {
     var namaOlahan by remember { mutableStateOf("") }
-    var jumlah by remember { mutableStateOf("") }
     var deskripsi by remember { mutableStateOf("") }
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -390,13 +367,6 @@ fun AddHasilOlahModal(
                         label = "Nama Olahan",
                         value = namaOlahan,
                         onValueChange = { namaOlahan = it }
-                    )
-
-                    // Berat
-                    TextFieldWithLabel(
-                        label = "Jumlah",
-                        value = jumlah,
-                        onValueChange = { jumlah = it }
                     )
 
                     // Deskripsi
@@ -467,11 +437,12 @@ fun AddHasilOlahModal(
                         }
 
                         // Simpan Button
-                        val isActive = namaOlahan.isNotBlank() && jumlah.isNotBlank() && deskripsi.isNotBlank()
+                        val isActive =
+                            namaOlahan.isNotBlank() && deskripsi.isNotBlank()
                         Button(
                             onClick = {
                                 if (isActive) {
-                                    onSave(namaOlahan, jumlah, deskripsi, selectedImageUri)
+                                    onSave(namaOlahan,  deskripsi, selectedImageUri)
                                     onDismiss()
                                 }
                             },
@@ -504,11 +475,10 @@ fun OlahLimbahModal(
     limbah: Limbah,
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onSave: (String, String, String, String) -> Unit,
-    navController: NavController
+    onSave: (String, String, String) -> Unit,
+    navController: NavController,
 ) {
     var jenisOlahan by remember { mutableStateOf("") }
-    var berat by remember { mutableStateOf("") }
     var tanggalMasuk by remember { mutableStateOf("") }
     var tanggalSelesai by remember { mutableStateOf("") }
     var deskripsi by remember { mutableStateOf("") }
@@ -582,13 +552,6 @@ fun OlahLimbahModal(
                         label = "Jenis Olahan",
                         value = jenisOlahan,
                         onValueChange = { jenisOlahan = it }
-                    )
-
-                    // Berat
-                    TextFieldWithLabel(
-                        label = "Berat (Kg)",
-                        value = berat,
-                        onValueChange = { berat = it }
                     )
 
                     // Tanggal Section with Row
@@ -693,14 +656,13 @@ fun OlahLimbahModal(
 
                         // Save Button
                         val isActive = jenisOlahan.isNotBlank() &&
-                                berat.isNotBlank() &&
                                 tanggalMasuk.isNotBlank() &&
                                 tanggalSelesai.isNotBlank()
 
                         Button(
                             onClick = {
                                 if (isActive) {
-                                    onSave(jenisOlahan, berat, tanggalMasuk, deskripsi)
+                                    onSave(jenisOlahan, tanggalMasuk, deskripsi)
                                     onDismiss()
                                 }
                                 navController.navigate("progress")
@@ -731,7 +693,7 @@ fun OlahLimbahModal(
 fun TextFieldWithLabel(
     label: String,
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
 ) {
     var isFocused by remember { mutableStateOf(false) }
     Text(
@@ -765,7 +727,7 @@ fun ProgressDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
-    navController: NavController
+    navController: NavController,
 ) {
     if (showDialog) {
         AlertDialog(

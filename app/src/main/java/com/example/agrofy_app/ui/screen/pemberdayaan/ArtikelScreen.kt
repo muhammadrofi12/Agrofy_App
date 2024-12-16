@@ -64,7 +64,6 @@ import com.example.agrofy_app.ui.theme.PoppinsMedium14
 import com.example.agrofy_app.ui.theme.PoppinsRegular12
 import com.example.agrofy_app.ui.theme.PoppinsRegular14
 import com.example.agrofy_app.ui.theme.PoppinsSemiBold14
-import com.example.agrofy_app.ui.theme.Warning
 import com.example.agrofy_app.viewmodels.pemberdayaan.ArtikelViewModel
 import com.example.agrofy_app.viewmodels.pemberdayaan.KategoriViewModel
 
@@ -321,14 +320,14 @@ fun ArticleCard(
                             .size(24.dp)
                             .padding(start = 4.dp)
                     ) {
-                        Icon(
-                            painter = painterResource(
-                                id = if (isBookmarked) R.drawable.bookmark_bold
-                                else R.drawable.bookmark
-                            ),
-                            contentDescription = "Bookmark",
-                            tint = Warning
-                        )
+//                        Icon(
+//                            painter = painterResource(
+//                                id = if (isBookmarked) R.drawable.bookmark_bold
+//                                else R.drawable.bookmark
+//                            ),
+//                            contentDescription = "Bookmark",
+//                            tint = Warning
+//                        )
                     }
                 }
 

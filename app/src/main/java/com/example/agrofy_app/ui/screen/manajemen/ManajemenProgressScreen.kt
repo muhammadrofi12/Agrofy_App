@@ -1,18 +1,16 @@
 package com.example.agrofy_app.ui.screen.manajemen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -24,22 +22,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.agrofy_app.R
 import com.example.agrofy_app.data.DummyData
 import com.example.agrofy_app.ui.components.ProgressItem
 import com.example.agrofy_app.ui.components.TopAppBar
-import com.example.agrofy_app.ui.theme.GreenLight
 import com.example.agrofy_app.ui.theme.GreenPrimary
-import com.example.agrofy_app.ui.theme.PoppinsBold18
-import com.example.agrofy_app.ui.theme.PoppinsBold20
 
 @Composable
 fun ManajemenProgressScreen(
@@ -100,46 +93,48 @@ fun ManajemenProgressScreen(
                 }
 
                 // Total
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .background(GreenPrimary, shape = RoundedCornerShape(12.dp))
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .zIndex(2f)
-                    ) {
-                        Text(
-                            text = "Total",
-                            style = PoppinsBold20,
-                            color = Color.White
-                        )
-                    }
+//                Row(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(16.dp),
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    Box(
+//                        modifier = Modifier
+//                            .background(GreenPrimary, shape = RoundedCornerShape(12.dp))
+//                            .padding(horizontal = 16.dp, vertical = 8.dp)
+//                            .zIndex(2f)
+//                    ) {
+//                        Text(
+//                            text = "Total",
+//                            style = PoppinsBold20,
+//                            color = Color.White
+//                        )
+//                    }
+//
+//                    Box(
+//                        modifier = Modifier
+//                            .offset(x = (-20).dp)
+//                            .zIndex(1f)
+//                    ) {
+//                        Box(
+//                            modifier = Modifier
+//                                .background(GreenLight, shape = RoundedCornerShape(12.dp))
+//                                .border(width = 2.dp, color = GreenPrimary, shape = RoundedCornerShape(12.dp))
+//                                .padding(start = 28.dp, end = 16.dp, bottom = 8.dp, top = 8.dp)
+//
+//                        ) {
+//                            Text(
+//                                text = "100 kg",
+//                                style = PoppinsBold18,
+//                                color = Color.Black
+//                            )
+//                        }
+//                    }
+//
+//                }
 
-                    Box(
-                        modifier = Modifier
-                            .offset(x = (-20).dp)
-                            .zIndex(1f)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .background(GreenLight, shape = RoundedCornerShape(12.dp))
-                                .border(width = 2.dp, color = GreenPrimary, shape = RoundedCornerShape(12.dp))
-                                .padding(start = 28.dp, end = 16.dp, bottom = 8.dp, top = 8.dp)
-
-                        ) {
-                            Text(
-                                text = "100 kg",
-                                style = PoppinsBold18,
-                                color = Color.Black
-                            )
-                        }
-                    }
-
-                }
+                Spacer(modifier = Modifier.height(12.dp))
 
                 // Limbah List
                 LazyColumn(
@@ -154,6 +149,10 @@ fun ManajemenProgressScreen(
                             limbah = limbah,
                             navController = navController
                         )
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(40.dp))
                     }
                 }
             }

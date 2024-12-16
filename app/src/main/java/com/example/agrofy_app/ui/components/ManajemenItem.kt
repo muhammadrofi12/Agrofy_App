@@ -81,7 +81,9 @@ fun LimbahItem(limbah: Limbah, navController: NavController) {
     var showOlahLimbahModal by remember { mutableStateOf(false) }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp),
         colors = CardDefaults.cardColors(containerColor = GreenLight),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -110,11 +112,11 @@ fun LimbahItem(limbah: Limbah, navController: NavController) {
                         text = limbah.nama,
                         style = PoppinsBold16
                     )
-                    Text(
-                        text = "${limbah.berat} kg",
-                        style = PoppinsRegular12,
-                        color = Color.Black
-                    )
+//                    Text(
+//                        text = "${limbah.berat} kg",
+//                        style = PoppinsRegular12,
+//                        color = Color.Black
+//                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -140,7 +142,7 @@ fun LimbahItem(limbah: Limbah, navController: NavController) {
                             color = BrownActive,
                         ) {
                             Text(
-                                text = formatDate(limbah.tggl_masuk),
+                                text = formatDate(limbah.tgglMasuk),
                                 style = PoppinsRegular10,
                                 color = Color.White,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -228,7 +230,7 @@ fun LimbahItem(limbah: Limbah, navController: NavController) {
         limbah = limbah,
         showDialog = showOlahLimbahModal,
         onDismiss = { showOlahLimbahModal = false },
-        onSave = { jenisOlahan, berat, tanggalMasuk, deskripsi ->
+        onSave = { jenisOlahan, tanggalMasuk, deskripsi ->
             // Handle saving the processed waste data
         },
         navController = navController
@@ -363,11 +365,11 @@ fun ProgressItem(limbah: Limbah, navController: NavController) {
                         text = limbah.nama,
                         style = PoppinsBold16
                     )
-                    Text(
-                        text = "${limbah.berat} kg",
-                        style = PoppinsRegular12,
-                        color = Color.Black
-                    )
+//                    Text(
+//                        text = "${limbah.berat} kg",
+//                        style = PoppinsRegular12,
+//                        color = Color.Black
+//                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -397,7 +399,7 @@ fun ProgressItem(limbah: Limbah, navController: NavController) {
                                 color = BrownActive,
                             ) {
                                 Text(
-                                    text = formatDate(limbah.tggl_masuk),
+                                    text = formatDate(limbah.tgglMasuk),
                                     style = PoppinsRegular10,
                                     color = Color.White,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -427,7 +429,7 @@ fun ProgressItem(limbah: Limbah, navController: NavController) {
                                 color = BrownActive,
                             ) {
                                 Text(
-                                    text = formatDate(limbah.tggl_keluar),
+                                    text = formatDate(limbah.tgglKeluar),
                                     style = PoppinsRegular10,
                                     color = Color.White,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -622,11 +624,11 @@ fun RiwayatItem(limbah: Limbah) {
                         text = limbah.nama,
                         style = PoppinsBold16
                     )
-                    Text(
-                        text = "${limbah.berat} kg",
-                        style = PoppinsRegular12,
-                        color = Color.Black
-                    )
+//                    Text(
+//                        text = "${limbah.berat} kg",
+//                        style = PoppinsRegular12,
+//                        color = Color.Black
+//                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -652,7 +654,7 @@ fun RiwayatItem(limbah: Limbah) {
                             color = BrownActive,
                         ) {
                             Text(
-                                text = formatDate(limbah.tggl_masuk),
+                                text = formatDate(limbah.tgglMasuk),
                                 style = PoppinsRegular10,
                                 color = Color.White,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -708,7 +710,7 @@ fun RiwayatItem(limbah: Limbah) {
 fun HasilOlahCard(
     hasilOlah: HasilOlah,
     onLihatClick: () -> Unit = {},
-    onHapusClick: () -> Unit = {}
+    onHapusClick: () -> Unit = {},
 ) {
     var showModal by remember { mutableStateOf(false) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -870,12 +872,19 @@ fun HasilOlahCard(
                             painter = imageUri?.let { uri ->
                                 remember(uri) {
                                     val bitmap = try {
-                                        MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+                                        MediaStore.Images.Media.getBitmap(
+                                            context.contentResolver,
+                                            uri
+                                        )
                                     } catch (e: FileNotFoundException) {
                                         null
                                     }
                                     bitmap?.asImageBitmap()
-                                }?.let { bitmap -> androidx.compose.ui.graphics.painter.BitmapPainter(bitmap) }
+                                }?.let { bitmap ->
+                                    androidx.compose.ui.graphics.painter.BitmapPainter(
+                                        bitmap
+                                    )
+                                }
                                     ?: painterResource(id = R.drawable.atap_jerami)
                             } ?: painterResource(id = R.drawable.atap_jerami),
                             contentDescription = title.text,
