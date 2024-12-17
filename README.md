@@ -32,4 +32,7 @@ To build and run the project locally, follow these steps:
 3. Run npm install to install the dependencies.
 4. Download Database: https://drive.google.com/file/d/1puYjjBshCf4djIMFVb9RI515tXj_SaUT/view?usp=sharing
 
+email: yusmarni@gmail.com
+pw: Yusmarni#123
+
 Feel free to explore the codebase and make any contributions or improvements as needed. We appreciate your contributions to Agrofy Project!
