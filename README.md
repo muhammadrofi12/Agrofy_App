@@ -18,10 +18,18 @@ To build and run this project, ensure you have the following software installed:
 ## Getting Started
 To build and run the project locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/muhammadrofi12/Agrofy_App`
-2. Open the project in Android Studio.
-3. Ensure that the required SDK versions and dependencies are installed.
-6. Build and run the app on an emulator or physical device.
-7. Start from branch `fe`
+1. Start from branch `fe`
+2. Clone the repository: `git clone https://github.com/muhammadrofi12/Agrofy_App`
+3. Open the project in Android Studio.
+4. Ensure that the required SDK versions and dependencies are installed.
+5. Build and run the app on an emulator or physical device.
+
+## Back End API
+To build and run the project locally, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/CalvinCandra/Express_agrofy`
+2. Navigate to the project directory.
+3. Run npm install to install the dependencies.
+4. Download Database: https://drive.google.com/file/d/1puYjjBshCf4djIMFVb9RI515tXj_SaUT/view?usp=sharing
 
 Feel free to explore the codebase and make any contributions or improvements as needed. We appreciate your contributions to Agrofy Project!
