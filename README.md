@@ -31,6 +31,8 @@ To build and run the project locally, follow these steps:
 2. Navigate to the project directory.
 3. Run npm install to install the dependencies.
 4. Download Database: https://drive.google.com/file/d/1puYjjBshCf4djIMFVb9RI515tXj_SaUT/view?usp=sharing
+5. Run project 'npm start'
+6. run port '3000' and make port public, can see tutorial here https://youtu.be/dlIkexwGpNg?feature=shared
 
 email: yusmarni@gmail.com
 pw: Yusmarni#123
