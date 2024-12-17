@@ -67,7 +67,7 @@ fun LoginScreen(
     viewModel: LoginViewModel = viewModel()
 ) {
     var email by remember { mutableStateOf("yusmarni@gmail.com") }
-    var password by remember { mutableStateOf("yusmarni#123") }
+    var password by remember { mutableStateOf("Yusmarni#123") }
     var passwordVisible by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
