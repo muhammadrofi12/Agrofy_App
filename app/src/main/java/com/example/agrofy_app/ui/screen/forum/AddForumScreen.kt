@@ -57,11 +57,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.agrofy_app.R
 import com.example.agrofy_app.ui.components.TopAppBar
 import com.example.agrofy_app.ui.theme.GreenPrimary
 import com.example.agrofy_app.viewmodels.forum.AddForumViewModel
+import com.example.agrofy_app.viewmodels.user.ProfileViewModel
 import java.io.File
 
 
@@ -75,6 +77,9 @@ fun AddForumScreen(navController: NavController) {
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
     val postAdded by viewModel.postAdded.collectAsState()
+
+    val profileViewModel: ProfileViewModel = viewModel()
+    val profile by profileViewModel.profile.collectAsState()
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -145,8 +150,10 @@ fun AddForumScreen(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.profil),
+                    AsyncImage(
+                        model = profile?.foto?.let {
+                            "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
+                        } ?: R.drawable.default_profile,
                         contentDescription = "Profile picture",
                         modifier = Modifier
                             .size(40.dp)
