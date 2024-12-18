@@ -81,6 +81,10 @@ fun AddForumScreen(navController: NavController) {
     val profileViewModel: ProfileViewModel = viewModel()
     val profile by profileViewModel.profile.collectAsState()
 
+    LaunchedEffect(Unit) {
+        profileViewModel.loadProfile()
+    }
+
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -154,7 +158,7 @@ fun AddForumScreen(navController: NavController) {
                         model = profile?.foto?.let {
                             "https://73zqc05b-3000.asse.devtunnels.ms/profile/${profile?.foto}"
                         } ?: R.drawable.default_profile,
-                        contentDescription = "Profile picture",
+                        contentDescription = "Profile: ${profile?.namaLengkap ?: "Pengguna"}",
                         modifier = Modifier
                             .size(40.dp)
                             .clip(CircleShape)
